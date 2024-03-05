@@ -2,16 +2,16 @@ import mongoose from "mongoose";
 
 const CourseSchema = new mongoose.Schema({
 	semesterid: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Semester",
 	},
-	deptId: {
-		type: String,
-		required: true,
+	batchId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Batch",
 	},
 	collegeId: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "College",
 	},
 });
 

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const DepartmentSchema = new mongoose.Schema({
-	semesterId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Semester",
+	name: {
+		type: String,
+		required: true,
 	},
 	collegeId: {
 		type: mongoose.Schema.Types.ObjectId,

@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
 const ExamSchema = new mongoose.Schema({
-	semesterid: {
-		type: String,
-		required: true,
+	semesterId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Semester",
 	},
 	collegeId: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "College",
 	},
 });
 

@@ -5,6 +5,10 @@ const BatchSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Semester",
 	},
+	programId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Program",
+	},
 	startYear: {
 		type: String,
 		required: true,
