@@ -9,7 +9,22 @@ const SchemeSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	parameters: [],
+	parameters: [
+		{
+			name: {
+				type: String,
+				required: true,
+			},
+			weightage: {
+				type: Number,
+				required: true,
+				min: 0,
+				max: 100,
+			},
+		}
+	],
+}, {
+	timestamps: true,
 });
 
 const Scheme = mongoose.model("Scheme", SchemeSchema);

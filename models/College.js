@@ -8,11 +8,20 @@ const CollegeSchema = new mongoose.Schema({
 	address: {
 		type: String,
 		required: true,
-	},
+	},	
 	phone: {
 		type: String,
 		required: true,
 	},
+	email: {
+		type: String,
+	},
+	vision : {
+		type: String,
+	},
+	mission : {
+		type: String,
+	}
 });
 
 const College = mongoose.model("College", CollegeSchema);

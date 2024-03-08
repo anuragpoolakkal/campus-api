@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const AttendanceSchema = new mongoose.Schema({
+const ResultSchema = new mongoose.Schema({
 	studentId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Student",
@@ -13,27 +13,17 @@ const AttendanceSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Course",
 	},
-	date: {
-		type: Date,
-		required: true,
-	},
-	hour: {
-		type: Number,
-		required: true,
-	},
-	present: {
-		type: Boolean,
-		default: false,
-	},
-	createdBy: {
+    examId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "Faculty",
-	}
-},
-{
+		ref: "Exam",
+	},
+    result: {
+        type: Number,
+    },
+}, {
 	timestamps: true,
 });
 
-const Attendance = mongoose.model("Attendance", AttendanceSchema);
+const Result = mongoose.model("Result", ResultSchema);
 
-export default Attendance;
+export default Result;

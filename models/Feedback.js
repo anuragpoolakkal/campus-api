@@ -9,10 +9,43 @@ const FeedbackSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	facultyId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Faculty",
+	questions: [
+		{
+			question: {
+				type: String,
+				required: true,
+			},
+			settings: {
+				type: {
+					type: String,
+					enum: ['text', 'longtext', 'multiplechoice', 'rating'],
+					required: true,
+				},
+				options: {
+					type: Array,
+					required: false,
+				},
+				min: {
+					type: Number,
+					required: false,
+				},
+				max: {
+					type: Number,
+					required: false,
+				},
+			},
+		},
+	],
+courseId: {
+	type: mongoose.Schema.Types.ObjectId,
+		ref: "Course",
 	},
+createdBy: {
+	type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+	},
+}, {
+	timestamps: true,
 });
 
 const Feedback = mongoose.model("Feedback", FeedbackSchema);

@@ -9,10 +9,18 @@ const BatchSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Program",
 	},
-	startYear: {
+	name: {
 		type: String,
 		required: true,
 	},
+	startYear: {
+		type: Number,
+		required: true,
+	},
+	endYear: {
+		type: Number,
+		required: true,
+	}
 });
 
 const Batch = mongoose.model("Batch", BatchSchema);

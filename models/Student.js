@@ -9,6 +9,17 @@ const StudentSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	email: {
+		type: String,
+		required: true,
+	},
+	phone: {
+		type: String,
+		required: true,
+	},
+	address: {
+		type: String,
+	},
 	rollNo: {
 		type: String,
 		required: true,
@@ -25,7 +36,14 @@ const StudentSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
 	},
-	courses: {},
+	courses: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Course",
+		},
+	],
+}, {
+	timestamps: true,
 });
 
 const Student = mongoose.model("Student", StudentSchema);

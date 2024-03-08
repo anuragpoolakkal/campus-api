@@ -9,6 +9,12 @@ const ProgramSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Department",
 	},
+	collegeId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "College",
+	},
+}, {
+	timestamps: true,
 });
 
 const Program = mongoose.model("Program", ProgramSchema);

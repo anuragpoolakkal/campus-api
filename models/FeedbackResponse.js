@@ -9,7 +9,12 @@ const FeedbackResponseSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Student",
 	},
-	response: {},
+	responses: { // { "questionId": { "type": "text", "response": "response"}}
+		type: Object,
+		required: true,
+	},
+}, {
+	timestamps: true,
 });
 
 const FeedbackResponse = mongoose.model("FeedbackResponse", FeedbackResponseSchema);

@@ -6,8 +6,8 @@ const AdminSchema = new mongoose.Schema({
 		ref: "User",
 	},
 	collegeId: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "College",
 	},
 });
 

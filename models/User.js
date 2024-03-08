@@ -5,6 +5,11 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	gender: {
+		type: String,
+		enum: ['M', 'F'],
+		required: true,
+	},
 	email: {
 		type: String,
 		required: true,
@@ -13,8 +18,10 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	type: String,
+	type: String, // student, faculty, admin, parent
 	required: true,
+}, {
+	timestamps: true,
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -13,6 +13,12 @@ const NotificationSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Semester",
 	},
+	createdBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+	},
+}, {
+	timestamps: true,
 });
 
 const Notification = mongoose.model("Notification", NotificationSchema);

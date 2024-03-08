@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
 
 const FacultySchema = new mongoose.Schema({
-	semesterid: {
+	name:{
+		type: String,
+	},
+	email:{
+		type: String,
+	},
+	title: {
 		type: String,
 		required: true,
 	},
@@ -17,6 +23,14 @@ const FacultySchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
 	},
+	courses: [
+		{	
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Course",
+		},
+	],
+}, {
+	timestamps: true,
 });
 
 const Faculty = mongoose.model("Faculty", FacultySchema);

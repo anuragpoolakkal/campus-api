@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const TimeTableSchema = new mongoose.Schema({
-	studentId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Student",
-	},
 	semesterId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Semester",
@@ -21,10 +17,8 @@ const TimeTableSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	facultyId: {
-		type: type: mongoose.Schema.Types.ObjectId,
-		ref: "Faculty",
-	}
+}, {
+	timestamps: true,
 });
 
 const TimeTable = mongoose.model("TimeTable", TimeTableSchema);
