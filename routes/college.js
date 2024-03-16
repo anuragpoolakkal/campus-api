@@ -49,26 +49,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT (replace) a specific college by ID
-router.put("/:id", async (req, res) => {
-  try {
-    const { name, address, phone, email, vision, mission } = req.body;
-    const college = await CollegeModel.findById(req.params.id);
-    if (!college) {
-      return res.status(404).json({ message: "College not found" });
-    }
-    college.name = name;
-    college.address = address;
-    college.phone = phone;
-    college.email = email;
-    college.vision = vision;
-    college.mission = mission;
-    await college.save();
-    res.json(college);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 
 // DELETE a specific college by ID
