@@ -1,29 +1,25 @@
 import express from "express";
 import mongoose from "mongoose";
-import "dotenv/config";
-import collegeRoutes from "./routes/college.js";
+import dotenv from "dotenv";
 
 const app = express();
 
-//* localhost:8080/college/getcolleges
+dotenv.config();
 
 mongoose.set("strictQuery", true);
-const PORT = process.env.PORT || 8080;
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    console.log("Connected to the database");
   })
-  .catch((error) => console.log(`${error} did not connect`));
+  .catch((err) => {
+    console.log("Error connecting to the database", err);
+  });
 
+const PORT = process.env.PORT || 8080;
 
-
-
-
-app.get("/", (req, res) => {
-	res.send("Hello from campus API");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-app.use("/college", collegeRoutes);
-
