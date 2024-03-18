@@ -36,6 +36,26 @@
     - Assigned To: Majid
 
 
+#### User Endpoints
+
+1. **GET /user**
+   - Description: Retrieve all users.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+2. **GET /user/:id**
+   - Description: Retrieve a specific user by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+3. **POST /user**
+   - Description: Create a new user.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
 
 
 #### College Endpoints
@@ -60,15 +80,66 @@
    - Deadline: [Deadline]
    - Assigned To: [Developer Name]
    
-5. **PATCH /college/:id**
-   - Description: Partially update a specific college by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
-   
 6. **DELETE /college/:id**
    - Description: Delete a specific college data by ID.
    - Deadline: [Deadline]
    - Assigned To: [Developer Name]
+
+
+#### Faculty Endpoints
+
+1. **GET /faculty**
+   - Description: Retrieve all faculties.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+2. **GET /faculty/:id**
+   - Description: Retrieve a specific faculty by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+3. **POST /faculty**
+   - Description: Create a new faculty.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+4. **PUT /faculty/:id**
+   - Description: Update a specific faculty by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+
+
+
+#### Department Endpoints
+
+1. **GET /department**
+   - Description: Retrieve all departments.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+2. **GET /department/:id**
+   - Description: Retrieve a specific department by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+3. **POST /department**
+   - Description: Create a new department.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+4. **PUT /department/:id**
+   - Description: Update a specific department by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+
 
 
 ## Testing and Debugging

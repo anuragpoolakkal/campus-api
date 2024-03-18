@@ -12,12 +12,12 @@ const FacultySchema = new mongoose.Schema({
 		required: true,
 	},
 	deptId: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Department",
 	},
 	collegeId: {
-		type: String,
-		required: true,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "College",
 	},
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
