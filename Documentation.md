@@ -21,18 +21,18 @@
 
 1. **POST /auth/register**
    - Description: Register a new user.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: Majid
 
 
 2. **POST /auth/login**
     - Description: Login a user.
-    - Deadline: [Deadline]
+    - Deadline: 22-03-23
     - Assigned To: Majid
 
 3. **POST /auth/verify**
     - Description: Verify a user's email.
-    - Deadline: [Deadline]
+    - Deadline: 22-03-23
     - Assigned To: Majid
 
 
@@ -67,22 +67,22 @@
    
 2. **GET /college/:id**
    - Description: Retrieve a specific college by ID.
-   - Deadline: 
+   - Deadline: 22-03-23
    - Assigned To: Sreni
    
 3. **POST /college**
    - Description: Create a new college.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: Sreni
    
 4. **PUT /college/:id**
    - Description: Update a specific college by ID.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: Sreni
    
 6. **DELETE /college/:id**
    - Description: Delete a specific college data by ID.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: Sreni
 
 
@@ -96,17 +96,17 @@
 
 2. **GET /faculty/:id**
    - Description: Retrieve a specific faculty by ID.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: [Developer Name]
 
 3. **POST /faculty**
    - Description: Create a new faculty.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: [Developer Name]
 
 4. **PUT /faculty/:id**
    - Description: Update a specific faculty by ID.
-   - Deadline: [Deadline]
+   - Deadline: 22-03-23
    - Assigned To: [Developer Name]
 
 
@@ -123,26 +123,26 @@
 
 2. **GET /department/:id**
    - Description: Retrieve a specific department by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Niranjana
 
 
 3. **POST /department**
    - Description: Create a new department.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Niranjana
 
 
 4. **PUT /department/:id**
    - Description: Update a specific department by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Niranjana
 
 
 5. **DELETE /department/:id**
    - Description: Delete a specific department by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Niranjana
 
 
 #### Scheme Endpoints
@@ -154,24 +154,24 @@
 
 2. **GET /scheme/:id**
    - Description: Retrieve a specific scheme by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Ritha
 
 3. **POST /scheme**
    - Description: Create a new scheme.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Ritha
 
 4. **PUT /scheme/:id**
    - Description: Update a specific scheme by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Ritha
 
 
 5. **DELETE /scheme/:id**
    - Description: Delete a specific scheme by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Ritha
 
 
 
