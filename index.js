@@ -18,9 +18,7 @@ mongoose
   .catch((err) => {
     console.log("Error connecting to the database", err);
   });
-
-app.use("/faculty", facultyRoutes);
-
+  
 
 const PORT = process.env.PORT || 8080;
 
