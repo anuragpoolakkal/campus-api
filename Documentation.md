@@ -62,36 +62,36 @@
 
 1. **GET /college**
    - Description: Retrieve all colleges.
-   - Deadline: 
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Sreni
    
 2. **GET /college/:id**
    - Description: Retrieve a specific college by ID.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 
+   - Assigned To: Sreni
    
 3. **POST /college**
    - Description: Create a new college.
    - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Assigned To: Sreni
    
 4. **PUT /college/:id**
    - Description: Update a specific college by ID.
    - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Assigned To: Sreni
    
 6. **DELETE /college/:id**
    - Description: Delete a specific college data by ID.
    - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Assigned To: Sreni
 
 
 #### Faculty Endpoints
 
 1. **GET /faculty**
    - Description: Retrieve all faculties.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Sreelakshami
 
 
 2. **GET /faculty/:id**
@@ -117,8 +117,8 @@
 
 1. **GET /department**
    - Description: Retrieve all departments.
-   - Deadline: [Deadline]
-   - Assigned To: [Developer Name]
+   - Deadline: 22-03-23
+   - Assigned To: Niranjana
 
 
 2. **GET /department/:id**
@@ -139,6 +139,39 @@
    - Assigned To: [Developer Name]
 
 
+5. **DELETE /department/:id**
+   - Description: Delete a specific department by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+#### Scheme Endpoints
+
+1. **GET /scheme**
+   - Description: Retrieve all schemes.
+   - Deadline: 22-03-23
+   - Assigned To: Ritha
+
+2. **GET /scheme/:id**
+   - Description: Retrieve a specific scheme by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+3. **POST /scheme**
+   - Description: Create a new scheme.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+4. **PUT /scheme/:id**
+   - Description: Update a specific scheme by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
+
+
+5. **DELETE /scheme/:id**
+   - Description: Delete a specific scheme by ID.
+   - Deadline: [Deadline]
+   - Assigned To: [Developer Name]
 
 
 
