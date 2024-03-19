@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoutes from "./routes/User.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ mongoose
     console.log("Error connecting to the database", err);
   });
 
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 8080;
 
