@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import facultyRoutes from "./routes/faculty.js";
 
 const app = express();
 
@@ -18,7 +17,7 @@ mongoose
   .catch((err) => {
     console.log("Error connecting to the database", err);
   });
-  
+
 
 const PORT = process.env.PORT || 8080;
 
