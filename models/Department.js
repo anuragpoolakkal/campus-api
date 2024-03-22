@@ -10,10 +10,6 @@ const DepartmentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
     },
-    hodId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Faculty",
-    },
     vision: {
       type: String,
     },
