@@ -1,35 +1,13 @@
 {
-<<<<<<< HEAD
-	"name": "campus-api",
-	"version": "1.0.0",
-	"description": "API for Campus Management System",
-	"main": "index.js",
-	"type": "module",
-	"scripts": {
-		"start": "nodemon index.js"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"bcrypt": "^5.1.1",
-		"cors": "^2.8.5",
-		"dotenv": "^16.4.5",
-		"express": "^4.18.3",
-		"joi": "^17.12.2",
-		"jsonwebtoken": "^9.0.2",
-		"mongoose": "^8.2.2"
-	},
-	"devDependencies": {
-		"nodemon": "^3.1.0"
-	}
-=======
   "name": "campus-api",
   "version": "1.0.0",
   "description": "API for Campus Management System",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
   },
   "author": "",
   "license": "ISC",
@@ -40,12 +18,10 @@
     "express": "^4.18.3",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.2.1"
+    "mongoose": "^8.2.2",
+    "prettier": "^3.2.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  },
-  "keywords": []
->>>>>>> a81595990d5d2f3faa06214414bbd2562438dd64
+  }
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import schememodel from '../models/Scheme.js'
+import schememodel from "../models/Scheme.js";
 const router = express.Router();
 //Get:Get all schemes
 router.get("/", async (req, res) => {
@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 //Get scheme by id
 router.get("/:id", async (req, res) => {
   try {
@@ -29,18 +28,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 //post: create a scheme
 router.post("/", async (req, res) => {
   try {
-    const { totalMarks,parameters } = req.body
-    const scheme= new schememodel({
-     totalMarks,
-     parameters,
+    const { totalMarks, parameters } = req.body;
+    const scheme = new schememodel({
+      totalMarks,
+      parameters,
     });
     await scheme.save();
-    res.send({ message: "Scheme created successfully",data:scheme});
-    
+    res.send({ message: "Scheme created successfully", data: scheme });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -49,21 +46,19 @@ router.post("/", async (req, res) => {
 //put: update a scheme by id
 router.put("/:id", async (req, res) => {
   try {
-    const { totalMarks,parameters} = req.body;
-    const scheme= await schememodel.findById(req.params.id);
+    const { totalMarks, parameters } = req.body;
+    const scheme = await schememodel.findById(req.params.id);
     if (!scheme) {
       return res.status(404).json({ message: "Scheme not found" });
     }
-    scheme.totalMarks=totalMarks;
-    scheme.parameters=parameters;
+    scheme.totalMarks = totalMarks;
+    scheme.parameters = parameters;
     await scheme.save();
-    res.send({ message: "Scheme updated successfully",data:scheme});
-    
+    res.send({ message: "Scheme updated successfully", data: scheme });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-
 
 //delete scheme by id
 
@@ -74,20 +69,10 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ message: "Scheme not found" });
     }
     await scheme.deleteOne();
-    res.json({ message:" Scheme deleted successfully" });
+    res.json({ message: " Scheme deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-  export default router;
+export default router;
