@@ -1,11 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-<<<<<<< Updated upstream
 import userRoutes from "./routes/User.js";
-=======
 import collegeRoutes from "./routes/college.js";
->>>>>>> Stashed changes
 
 const app = express();
 app.get("/", (req, res) => {
@@ -26,11 +23,8 @@ mongoose
     console.error("Error connecting to the database:", err);
   });
 
-<<<<<<< Updated upstream
 app.use("/api/users", userRoutes);
-=======
 app.use("/college", collegeRoutes);
->>>>>>> Stashed changes
 
 const PORT = process.env.PORT || 8080;
 
