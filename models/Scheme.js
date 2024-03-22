@@ -28,5 +28,5 @@ const SchemeSchema = new mongoose.Schema({
 });
 
 const Scheme = mongoose.model("Scheme", SchemeSchema);
-
 export default Scheme;
+
