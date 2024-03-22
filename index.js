@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/User.js";
 import collegeRoutes from "./routes/college.js";
-
 import schemeRoutes from "./routes/scheme.js";
+
+
 dotenv.config();
 const app = express();
 app.get("/", (req, res) => {
