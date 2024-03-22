@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/User.js";
 import collegeRoutes from "./routes/college.js";
 import schemeRoutes from "./routes/scheme.js";
-
+import departmentRoutes from "./routes/Department.js";
 
 dotenv.config();
 const app = express();
@@ -27,6 +27,7 @@ mongoose
 app.use("/users", userRoutes);
 app.use("/college", collegeRoutes);
 app.use("/scheme", schemeRoutes);
+app.use("/department", departmentRoutes);
 
 const PORT = process.env.PORT || 8080;
 
