@@ -1,17 +1,17 @@
 import express from "express";
 import Faculty from "../models/Faculty.js";
-import Joi from "joi";
+import joi from "joi";
 
 const router = express.Router();
 
-const facultySchema = Joi.object({
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
-    title: Joi.string().required(),
-    deptId: Joi.string().required(),
-    collegeId: Joi.string().required(),
-    userId: Joi.string().required(),
-    courses: Joi.array().items(Joi.string()).required(),
+const facultySchema = joi.object({
+    name: joi.string().required(),
+    email: joi.string().email().required(),
+    title: joi.string().required(),
+    deptId: joi.string().required(),
+    collegeId: joi.string().required(),
+    userId: joi.string().required(),
+    courses: joi.array().items(joi.string()).required(),
 });
 
 router.get("/faculty", async (req, res) => {

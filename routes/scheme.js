@@ -1,16 +1,16 @@
 import express from "express";
 import Scheme from "../models/Scheme.js";
-import Joi from "joi";
+import joi from "joi";
 
 const router = express.Router();
 
-const schemeSchema = Joi.object({
-    totalMarks: Joi.number().required(),
-    parameters: Joi.array()
+const schemeSchema = joi.object({
+    totalMarks: joi.number().required(),
+    parameters: joi.array()
         .items(
-            Joi.object({
-                name: Joi.string().required(),
-                weightage: Joi.number().required().min(0).max(100),
+            joi.object({
+                name: joi.string().required(),
+                weightage: joi.number().required().min(0).max(100),
             }),
         )
         .required(),

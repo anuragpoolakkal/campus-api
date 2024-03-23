@@ -19,14 +19,6 @@ const signupSchema = joi.object({
     type: joi.string().valid("student", "faculty", "admin", "parent").required(),
 });
 
-const userSchema = joi.object({
-    name: joi.string().min(3).max(30).required(),
-    gender: joi.string().valid("M", "F").required(),
-    email: joi.string().email().required(),
-    password: joi.string().min(8).required(),
-    type: joi.string().required(),
-});
-
 router.post("/register", async (req, res) => {
     try {
         const { value: data, error } = signupSchema.validate(req.body);

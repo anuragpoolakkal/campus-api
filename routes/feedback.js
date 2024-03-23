@@ -1,29 +1,29 @@
 import express from "express";
 import Feedback from "../models/Feedback.js";
-import Joi from "joi";
+import joi from "joi";
 
 const router = express.Router();
 
-const feedbackSchema = Joi.object({
-    title: Joi.string().required(),
-    description: Joi.string().required(),
-    questions: Joi.array()
+const feedbackSchema = joi.object({
+    title: joi.string().required(),
+    description: joi.string().required(),
+    questions: joi.array()
         .items(
-            Joi.object({
-                question: Joi.string().required(),
-                settings: Joi.object({
-                    type: Joi.string()
+            joi.object({
+                question: joi.string().required(),
+                settings: joi.object({
+                    type: joi.string()
                         .valid("text", "longtext", "multiplechoice", "rating")
                         .required(),
-                    options: Joi.array().items(Joi.string()),
-                    min: Joi.number().when("type", { is: "rating", then: Joi.number().required() }),
-                    max: Joi.number().when("type", { is: "rating", then: Joi.number().required() }),
+                    options: joi.array().items(joi.string()),
+                    min: joi.number().when("type", { is: "rating", then: joi.number().required() }),
+                    max: joi.number().when("type", { is: "rating", then: joi.number().required() }),
                 }).required(),
             }),
         )
         .required(),
-    courseId: Joi.string().required(),
-    createdBy: Joi.string().required(),
+    courseId: joi.string().required(),
+    createdBy: joi.string().required(),
 });
 
 // Create new feedback

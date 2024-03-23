@@ -1,6 +1,6 @@
 import express from "express";
 import College from "../models/College.js";
-import Joi from "joi";
+import joi from "joi";
 
 const router = express.Router();
 
