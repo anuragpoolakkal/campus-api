@@ -177,13 +177,19 @@
 2.  **GET /student/:id**
 
     -   Description: Retrieve student details by id
+    -   Deadline: 25-03-24
+    -   Assigned To: Sreni
 
 3.  **POST /student**
 
     -   Description: Create a student
+    -   Deadline: 25-03-24
+    -   Assigned To: Sreni
 
 4.  **PUT /student/:id**
     -   Description: Update student details
+    -   Deadline: 25-03-24
+    -   Assigned To: Sreni
 
 #### Course Endpoints
 
@@ -196,20 +202,20 @@
 2. **GET /course/:id**
 
     - Description: Retrieve a specific course by ID.
-    - Deadline:
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Niranjana
 
 3. **POST /course**
 
     - Description: Create a new course.
-    - Deadline:
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Niranjana
 
 4. **PUT /course/:id**
 
     - Description: Update a specific course by ID.
-    - Deadline:
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Niranjana
 
 #### Program Endpoints
 
@@ -222,20 +228,20 @@
 2. **POST /program**
 
     - Description: Create a program
-    - Deadline:
+    - Deadline: 25-03-24
     - Assigned To: Ritha
 
 3. **PUT /program/:id**
 
     - Description: Update a program
-    - Deadline:
-    - Assigned To:
+    - Deadline: 25-03-24
+    - Assigned To: Ritha
 
 4. **DELETE /program/:id**
 
     - Description: Delete a program
-    - Deadline:
-    - Assigned To:
+    - Deadline: 25-03-24
+    - Assigned To: Ritha
 
 ## Testing and Debugging
 
