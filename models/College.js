@@ -22,6 +22,10 @@ const CollegeSchema = new mongoose.Schema({
     mission: {
         type: String,
     },
+    adminId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }
 });
 
 const College = mongoose.model("College", CollegeSchema);
