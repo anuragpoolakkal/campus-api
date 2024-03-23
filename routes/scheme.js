@@ -4,6 +4,18 @@ import Joi from "joi";
 
 const router = express.Router();
 
+const schemeSchema = Joi.object({
+    totalMarks: Joi.number().required(),
+    parameters: Joi.array()
+        .items(
+            Joi.object({
+                name: Joi.string().required(),
+                weightage: Joi.number().required().min(0).max(100),
+            }),
+        )
+        .required(),
+});
+
 // Get all schemes
 router.get("/scheme", async (req, res) => {
     try {

@@ -1,12 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRoutes from "./routes/user.js";
-import collegeRoutes from "./routes/college.js";
-import schemeRoutes from "./routes/scheme.js";
-import departmentRoutes from "./routes/department.js";
-import facultyRoutes from "./routes/faculty.js";
-import feedbackRoutes from "./routes/feedback.js";
+import userRoutes from "./routes/User.js";
+import collegeRoutes from "./routes/College.js";
+import schemeRoutes from "./routes/Scheme.js";
+import departmentRoutes from "./routes/Department.js";
+import facultyRoutes from "./routes/Faculty.js";
+import feedbackRoutes from "./routes/Feedback.js";
+import { userValidation } from "./utils/uservalidation.js";
 
 dotenv.config();
 const app = express();
@@ -28,7 +29,9 @@ mongoose
     });
 
 app.use("/users", userRoutes);
+
 app.use("/college", collegeRoutes);
+
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);

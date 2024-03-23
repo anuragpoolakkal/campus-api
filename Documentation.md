@@ -115,7 +115,7 @@
 2. **GET /department/:id**
 
     - Description: Retrieve a specific department by ID.
-    - Deadline: 22-03-23
+    - Deadline: 22-03-23`
     - Assigned To: Niranjana
 
 3. **POST /department**
@@ -165,6 +165,77 @@
     - Description: Delete a specific scheme by ID.
     - Deadline: 22-03-23
     - Assigned To: Ritha
+
+#### Student Endpoints
+
+1.  **GET /student**
+
+    -   Description: Retrieve all students.
+    -   Deadline: 25-03-24
+    -   Assigned To: Sreni
+
+2.  **GET /student/:id**
+
+    -   Description: Retrieve student details by id
+
+3.  **POST /student**
+
+    -   Description: Create a student
+
+4.  **PUT /student/:id**
+    -   Description: Update student details
+
+#### Course Endpoints
+
+1. **GET /course**
+
+    - Description: Retrieve all courses.
+    - Deadline: 25-03-24
+    - Assigned To: Niranjana
+
+2. **GET /course/:id**
+
+    - Description: Retrieve a specific course by ID.
+    - Deadline:
+    - Assigned To: [Developer Name]
+
+3. **POST /course**
+
+    - Description: Create a new course.
+    - Deadline:
+    - Assigned To: [Developer Name]
+
+4. **PUT /course/:id**
+
+    - Description: Update a specific course by ID.
+    - Deadline:
+    - Assigned To: [Developer Name]
+
+#### Program Endpoints
+
+1. **GET /program**
+
+    - Description: Retrieve all programs.
+    - Deadline: 25-03-24
+    - Assigned To: Ritha
+
+2. **POST /program**
+
+    - Description: Create a program
+    - Deadline:
+    - Assigned To: Ritha
+
+3. **PUT /program/:id**
+
+    - Description: Update a program
+    - Deadline:
+    - Assigned To:
+
+4. **DELETE /program/:id**
+
+    - Description: Delete a program
+    - Deadline:
+    - Assigned To:
 
 ## Testing and Debugging
 
