@@ -5,7 +5,6 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "precommit": "lint-staged",
         "start": "nodemon index.js",
         "format:check": "prettier --check .",
         "format:write": "prettier --write ."
@@ -39,5 +38,10 @@
             "prettier --write",
             "git add"
         ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "eslint . --fix"
+        }
     }
 }
