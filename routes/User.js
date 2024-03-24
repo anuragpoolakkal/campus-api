@@ -149,4 +149,28 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+router.get("/verify", async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized", success: false });
+    }
+
+    try {
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+
+        const userId = decoded.id;
+
+        const user = await userModel.findById(userId);
+
+        if (!user) {
+            return res.status(401).json({ message: "Unauthorized", success: false });
+        }
+
+        res.json({ message: "Authorized", data: user, success: true });
+    } catch (error) {
+        res.status(401).json({ message: "Unauthorized", success: false });
+    }
+});
+
 export default router;
