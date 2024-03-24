@@ -16,7 +16,6 @@ app.use(cors());
 app.use(morgan("dev"));
 
 mongoose.set("strictQuery", true);
-
 app.use(express.json());
 
 mongoose
@@ -41,7 +40,6 @@ app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
-
 
 
 

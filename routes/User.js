@@ -157,7 +157,7 @@ router.get("/verify", async (req, res) => {
     }
 
     try {
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const userId = decoded.id;
 
