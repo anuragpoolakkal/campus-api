@@ -42,19 +42,19 @@
 1. **GET /user**
 
     - Description: Retrieve all users.
-    - Deadline: [Deadline]
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Anurag
 
 2. **GET /user/:id**
 
     - Description: Retrieve a specific user by ID.
-    - Deadline: [Deadline]
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Anurag
 
 3. **POST /user**
     - Description: Create a new user.
-    - Deadline: [Deadline]
-    - Assigned To: [Developer Name]
+    - Deadline: 25-03-24
+    - Assigned To: Anurag
 
 #### College Endpoints
 

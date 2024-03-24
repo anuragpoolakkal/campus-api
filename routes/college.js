@@ -5,13 +5,13 @@ import joi from "joi";
 const router = express.Router();
 
 function validateCollege(college) {
-    const schema = Joi.object({
-        name: Joi.string().required(),
-        address: Joi.string().required(),
-        phone: Joi.string().required(),
-        email: Joi.string().email(),
-        vision: Joi.string(),
-        mission: Joi.string(),
+    const schema = joi.object({
+        name: joi.string().required(),
+        address: joi.string().required(),
+        phone: joi.string().required(),
+        email: joi.string().email(),
+        vision: joi.string(),
+        mission: joi.string(),
     });
     return schema.validate(college);
 }
