@@ -4,26 +4,9 @@ import joi from "joi";
 
 const router = express.Router();
 
-function validateCollege(college) {
-    const schema = joi.object({
-        name: joi.string().required(),
-        address: joi.string().required(),
-        phone: joi.string().required(),
-        email: joi.string().email(),
-        vision: joi.string(),
-        mission: joi.string(),
-    });
-    return schema.validate(college);
-}
-
 // CREATE - POST API
 router.post("/college", async (req, res) => {
     try {
-        const { error } = validateCollege(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
-
         const college = new College(req.body);
         await college.save();
         res.status(201).json(college);
