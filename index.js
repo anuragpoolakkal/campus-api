@@ -8,10 +8,12 @@ import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
 import feedbackRoutes from "./routes/feedback.js";
 import cors from "cors";
+import morgan from "morgan";
 
 dotenv.config();
 const app = express();
 app.use(cors());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
     res.send("<h1>Hello Campus API</h1>");
@@ -30,9 +32,7 @@ mongoose
     });
 
 app.use("/users", userRoutes);
-
 app.use("/college", collegeRoutes);
-
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);

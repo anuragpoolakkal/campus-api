@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
         password: joi.string().min(8).required(),
         type: joi.string().valid("student", "faculty", "admin", "parent").required(),
     });
-    
+
     try {
         const { value: data, error } = signupSchema.validate(req.body);
 
@@ -47,6 +47,11 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+    const loginSchema = joi.object({
+        email: joi.string().email().required(),
+        password: joi.string().min(8).required(),
+    });
+
     const { value: data, error } = loginSchema.validate(req.body);
 
     if (error) {
