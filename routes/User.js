@@ -105,7 +105,7 @@ router.patch("/updatepassword", async (req, res) => {
             return res.status(400).json({ message: error.details[0].message, success: false });
         }
 
-        const user = await User.findOne({ email: data.email }).select("+password");
+        const user = await userModel.findOne({ email: data.email }).select("+password");
 
         if (!user) {
             return res.status(400).json({ message: "Invalid email or password", success: false });
@@ -119,7 +119,7 @@ router.patch("/updatepassword", async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(data.newPassword, 10);
 
-        await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+        await userModel.findByIdAndUpdate(user._id, { password: hashedPassword });
 
         res.json({ message: "Password updated successfully", success: true });
     } catch (error) {
