@@ -1,7 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-
 import jwt from "jsonwebtoken";
 import joi from "joi";
 
@@ -15,6 +14,7 @@ router.post("/register", async (req, res) => {
         password: joi.string().min(8).required(),
         type: joi.string().valid("student", "faculty", "admin", "parent").required(),
     });
+    
     try {
         const { value: data, error } = signupSchema.validate(req.body);
 

@@ -29,6 +29,7 @@ export const userValidation = (req, res, next) => {
             if (err) {
                 return res.status(401).json({
                     message: "Unauthorized access",
+                    success: false,
                 });
             }
             if (user) {
@@ -39,6 +40,7 @@ export const userValidation = (req, res, next) => {
     } else {
         return res.status(401).json({
             message: "Unauthorized access",
+            success: false,
         });
     }
 };
