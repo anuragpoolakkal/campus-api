@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../models/User.js";
+import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import joi from "joi";
@@ -22,19 +22,19 @@ router.post("/register", async (req, res) => {
             return res.status(400).json({ message: error.details[0].message, success: false });
         }
 
-        const existingUser = await User.findOne({ email: data.email });
+        const existingUser = await userModel.findOne({ email: data.email });
 
         if (existingUser) {
             return res.status(400).send({ message: "User already exists" });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(data.password, 10);
 
         const user = new User({
-            name,
-            gender,
-            email,
-            type,
+            name: data.name,
+            gender: data.gender,
+            email: data.email,
+            type: data.type,
             password: hashedPassword,
         });
 
@@ -77,9 +77,13 @@ router.post("/login", async (req, res) => {
             email: user.email,
         };
 
+        console.log(payload);
+
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: "1d",
         });
+
+        console.log(token);
 
         res.json({ message: "Logged in successfully", token, success: true });
     } catch (error) {
@@ -95,27 +99,25 @@ router.patch("/updatepassword", async (req, res) => {
     });
 
     try {
-        const { error } = passwordUpdateschema.validate(req.body);
+        const { value: data, error } = passwordUpdateschema.validate(req.body);
 
         if (error) {
             return res.status(400).json({ message: error.details[0].message, success: false });
         }
 
-        const { email, oldPassword, newPassword } = req.body;
-
-        const user = await User.findOne({ email }).select("+password");
+        const user = await User.findOne({ email: data.email }).select("+password");
 
         if (!user) {
             return res.status(400).json({ message: "Invalid email or password", success: false });
         }
 
-        const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+        const isPasswordValid = await bcrypt.compare(data.oldPassword, user.password);
 
         if (!isPasswordValid) {
             return res.status(400).json({ message: "Invalid email or password", success: false });
         }
 
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const hashedPassword = await bcrypt.hash(data.newPassword, 10);
 
         await User.findByIdAndUpdate(user._id, { password: hashedPassword });
 
@@ -127,7 +129,7 @@ router.patch("/updatepassword", async (req, res) => {
 
 router.get("/", async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await userModel.find();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -137,7 +139,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id);
+        const user = await userModel.findById(id);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
