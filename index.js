@@ -6,11 +6,12 @@ import collegeRoutes from "./routes/College.js";
 import schemeRoutes from "./routes/Scheme.js";
 import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
-import feedbackRoutes from "./routes/Feedback.js";
-import { userValidation } from "./utils/uservalidation.js";
+import feedbackRoutes from "./routes/feedback.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("<h1>Hello Campus API</h1>");
