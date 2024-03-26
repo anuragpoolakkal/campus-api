@@ -8,18 +8,16 @@ import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
 import feedbackRoutes from "./routes/feedback.js";
 import cors from "cors";
+import morgan from "morgan";
 
-dotenv.config();
 const app = express();
+dotenv.config();
 app.use(cors());
-
-app.get("/", (req, res) => {
-    res.send("<h1>Hello Campus API</h1>");
-});
+app.use(morgan("dev"));
 
 mongoose.set("strictQuery", true);
-
 app.use(express.json());
+
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
@@ -29,12 +27,21 @@ mongoose
         console.error("Error connecting to the database:", err);
     });
 
+    
+
+app.get("/", (req, res) => {
+    res.send("<h1>Hello Campus API</h1>");
+});
+
+
 app.use("/users", userRoutes);
 app.use("/college", collegeRoutes);
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
+
+
 
 const PORT = process.env.PORT || 8080;
 
