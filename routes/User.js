@@ -12,7 +12,7 @@ router.post("/register", async (req, res) => {
         gender: joi.string().valid("M", "F").required(),
         email: joi.string().email().required(),
         password: joi.string().min(8).required(),
-        type: joi.string().valid("student", "faculty", "admin", "parent").required(),
+        role: joi.string().valid("student", "faculty", "admin", "parent").required(),
     });
 
     try {
@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
             name: data.name,
             gender: data.gender,
             email: data.email,
-            type: data.type,
+            role: data.role,
             password: hashedPassword,
         });
 
