@@ -1,7 +1,7 @@
 import express from "express";
 import College from "../models/College.js";
 import joi from "joi";
-``
+``;
 const router = express.Router();
 
 // CREATE - POST API
