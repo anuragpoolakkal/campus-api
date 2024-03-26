@@ -6,6 +6,8 @@ import collegeRoutes from "./routes/College.js";
 import schemeRoutes from "./routes/Scheme.js";
 import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
+import programRoutes from "./routes/Program.js";
+import feedbackRoutes from "./routes/Feedback.js";
 import cors from "cors";
 import morgan from "morgan";
 
