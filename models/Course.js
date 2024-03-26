@@ -19,12 +19,6 @@ const CourseSchema = new mongoose.Schema({
     courseCode: {
         type: String,
     },
-    faculties: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Faculty",
-        },
-    ],
 });
 
 const Course = mongoose.model("Course", CourseSchema);

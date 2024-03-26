@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema(
         },
         type: {
             type: String,
-            enum: ["student", "faculty", "admin", "parent"],
+            enum: ["admin", "principal", "faculty", "student", "parent"],
         },
     },
     {

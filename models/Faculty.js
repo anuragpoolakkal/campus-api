@@ -16,6 +16,11 @@ const FacultySchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Department",
         },
+        type: {
+            type: String,
+            required: true,
+            enum: ["hod", "tutor", "teacher"]
+        },
         collegeId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
@@ -24,12 +29,6 @@ const FacultySchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
-        courses: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Course",
-            },
-        ],
     },
     {
         timestamps: true,
