@@ -6,7 +6,8 @@ import collegeRoutes from "./routes/College.js";
 import schemeRoutes from "./routes/Scheme.js";
 import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
-import feedbackRoutes from "./routes/feedback.js";
+import feedbackRoutes from "./routes/Feedback.js";
+import studentRoutes from "./routes/Student.js";
 import cors from "cors";
 import morgan from "morgan";
 
@@ -40,6 +41,7 @@ app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
+app.use("/student", studentRoutes);
 
 
 
