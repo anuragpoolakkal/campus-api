@@ -4,19 +4,19 @@ import joi from "joi";
 
 const router = express.Router();
 
-// Validation using Joi
-const facultySchema = joi.object({
-    name: joi.string().required(),
-    email: joi.string().email().required(),
-    title: joi.string().required(),
-    deptId: joi.string().required(),
-    collegeId: joi.string().required(),
-    userId: joi.string().required(),
-    courses: joi.array().items(joi.string()).required(),
-});
-
 // CREATE -- Post API
 router.post("/", async (req, res) => {
+    // Validation using Joi
+    const facultySchema = joi.object({
+        name: joi.string().required(),
+        email: joi.string().email().required(),
+        title: joi.string().required(),
+        deptId: joi.string().required(),
+        collegeId: joi.string().required(),
+        userId: joi.string().required(),
+        courses: joi.array().items(joi.string()).required(),
+    });
+
     try {
         const { value: data, error } = facultySchema.validate(req.body);
 
@@ -68,6 +68,16 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+    const facultySchema = joi.object({
+        name: joi.string(),
+        email: joi.string().email(),
+        title: joi.string(),
+        deptId: joi.string(),
+        collegeId: joi.string(),
+        userId: joi.string(),
+        courses: joi.array().items(joi.string()),
+    });
+
     try {
         const { value: data, error } = facultySchema.validate(req.body);
         if (error) {
@@ -109,7 +119,7 @@ router.delete("/:id", async (req, res) => {
         }
 
         const faculty = await facultyModel.findByIdAndDelete(id);
-        
+
         if (!faculty) {
             return res.status(404).json({ message: "Faculty not found", success: false });
         }
