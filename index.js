@@ -29,12 +29,9 @@ mongoose
         console.error("Error connecting to the database:", err);
     });
 
-    
-
 app.get("/", (req, res) => {
     res.send("<h1>Hello Campus API</h1>");
 });
-
 
 app.use("/users", userRoutes);
 app.use("/college", collegeRoutes);
@@ -42,9 +39,7 @@ app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
-app.use("/program",programRoutes)
-
-
+app.use("/program", programRoutes);
 
 const PORT = process.env.PORT || 8080;
 
