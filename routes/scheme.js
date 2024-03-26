@@ -1,78 +1,92 @@
 import express from "express";
-import schememodel from "../models/Scheme.js";
+import Scheme from "../models/Scheme.js";
+import joi from "joi";
+
 const router = express.Router();
-//Get:Get all schemes
-router.get("/", async (req, res) => {
-  try {
-    const scheme = await schememodel.find();
 
-    if (scheme.length === 0) {
-      return res.status(404).json({ message: "No  schemes found" });
-    }
-    res.json(scheme);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+const schemeSchema = joi.object({
+    totalMarks: joi.number().required(),
+    parameters: joi.array()
+        .items(
+            joi.object({
+                name: joi.string().required(),
+                weightage: joi.number().required().min(0).max(100),
+            }),
+        )
+        .required(),
 });
 
-//Get scheme by id
-router.get("/:id", async (req, res) => {
-  try {
-    const scheme = await schememodel.findById(req.params.id);
-    if (!scheme) {
-      return res.status(404).json({ message: "Scheme not found" });
+// Get all schemes
+router.get("/scheme", async (req, res) => {
+    try {
+        const schemes = await Scheme.find();
+
+        if (schemes.length === 0) {
+            return res.status(404).json({ message: "No schemes found" });
+        }
+        res.json(schemes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    res.json(scheme);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-//post: create a scheme
-router.post("/", async (req, res) => {
-  try {
-    const { totalMarks, parameters } = req.body;
-    const scheme = new schememodel({
-      totalMarks,
-      parameters,
-    });
-    await scheme.save();
-    res.send({ message: "Scheme created successfully", data: scheme });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+// Get scheme by id
+router.get("/scheme/:id", async (req, res) => {
+    try {
+        const scheme = await Scheme.findById(req.params.id);
+        if (!scheme) {
+            return res.status(404).json({ message: "Scheme not found" });
+        }
+        res.json(scheme);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
-//put: update a scheme by id
-router.put("/:id", async (req, res) => {
-  try {
-    const { totalMarks, parameters } = req.body;
-    const scheme = await schememodel.findById(req.params.id);
-    if (!scheme) {
-      return res.status(404).json({ message: "Scheme not found" });
+// Create a scheme
+router.post("/scheme", async (req, res) => {
+    try {
+        const { totalMarks, parameters } = req.body;
+        const scheme = new Scheme({
+            totalMarks,
+            parameters,
+        });
+        await scheme.save();
+        res.status(201).json({ message: "Scheme created successfully", data: scheme });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    scheme.totalMarks = totalMarks;
-    scheme.parameters = parameters;
-    await scheme.save();
-    res.send({ message: "Scheme updated successfully", data: scheme });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
 
-//delete scheme by id
-
-router.delete("/:id", async (req, res) => {
-  try {
-    const scheme = await schememodel.findById(req.params.id);
-    if (!scheme) {
-      return res.status(404).json({ message: "Scheme not found" });
+// Update a scheme by id
+router.put("/scheme/:id", async (req, res) => {
+    try {
+        const { totalMarks, parameters } = req.body;
+        const scheme = await Scheme.findByIdAndUpdate(
+            req.params.id,
+            { totalMarks, parameters },
+            { new: true },
+        );
+        if (!scheme) {
+            return res.status(404).json({ message: "Scheme not found" });
+        }
+        res.json({ message: "Scheme updated successfully", data: scheme });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-    await scheme.deleteOne();
-    res.json({ message: " Scheme deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+});
+
+// Delete a scheme by id
+router.delete("/scheme/:id", async (req, res) => {
+    try {
+        const scheme = await Scheme.findByIdAndDelete(req.params.id);
+        if (!scheme) {
+            return res.status(404).json({ message: "Scheme not found" });
+        }
+        res.json({ message: "Scheme deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 export default router;
