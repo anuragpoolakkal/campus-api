@@ -7,18 +7,26 @@ const router = express.Router();
 const feedbackSchema = joi.object({
     title: joi.string().required(),
     description: joi.string().required(),
-    questions: joi.array()
+    questions: joi
+        .array()
         .items(
             joi.object({
                 question: joi.string().required(),
-                settings: joi.object({
-                    type: joi.string()
-                        .valid("text", "longtext", "multiplechoice", "rating")
-                        .required(),
-                    options: joi.array().items(joi.string()),
-                    min: joi.number().when("type", { is: "rating", then: joi.number().required() }),
-                    max: joi.number().when("type", { is: "rating", then: joi.number().required() }),
-                }).required(),
+                settings: joi
+                    .object({
+                        type: joi
+                            .string()
+                            .valid("text", "longtext", "multiplechoice", "rating")
+                            .required(),
+                        options: joi.array().items(joi.string()),
+                        min: joi
+                            .number()
+                            .when("type", { is: "rating", then: joi.number().required() }),
+                        max: joi
+                            .number()
+                            .when("type", { is: "rating", then: joi.number().required() }),
+                    })
+                    .required(),
             }),
         )
         .required(),

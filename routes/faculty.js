@@ -1,9 +1,10 @@
 import express from "express";
-import Faculty from "../models/Faculty.js";
+import facultyModel from "../models/Faculty.js";
 import joi from "joi";
 
 const router = express.Router();
 
+// Validation using Joi
 const facultySchema = joi.object({
     name: joi.string().required(),
     email: joi.string().email().required(),
@@ -14,57 +15,101 @@ const facultySchema = joi.object({
     courses: joi.array().items(joi.string()).required(),
 });
 
-router.get("/faculty", async (req, res) => {
+// CREATE -- Post API
+router.post("/", async (req, res) => {
     try {
-        const faculties = await Faculty.find();
-        res.status(200).json(faculties);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+        const { value: data, error } = facultySchema.validate(req.body);
 
-router.get("/faculty/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const faculty = await Faculty.findById(id);
-        if (!faculty) {
-            return res.status(404).json({ message: "Faculty not found" });
-        }
-        res.status(200).json(faculty);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-router.post("/faculty", async (req, res) => {
-    try {
-        const { error } = facultySchema.validate(req.body);
         if (error) {
-            return res.status(400).json({ message: error.details[0].message });
+            return res.status(400).json({ message: error.details[0].message, success: false });
         }
 
-        const faculty = new Faculty(req.body);
+        const faculty = new facultyModel({
+            name: data.name,
+            email: data.email,
+            title: data.title,
+        });
         await faculty.save();
-        res.status(201).json(faculty);
+        res.status(201).json({
+            message: "Faculty created successfully",
+            success: true,
+            data: faculty,
+        });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message, success: false });
     }
 });
 
-router.put("/faculty/:id", async (req, res) => {
+// READ -- Get all Faculty
+router.get("/", async (req, res) => {
     try {
-        const { error } = facultySchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
-        const { id } = req.params;
-        const faculty = await Faculty.findByIdAndUpdate(id, req.body, { new: true });
-        if (!faculty) {
+        const faculties = await facultyModel.find();
+
+        if (!faculties || faculties.length === 0) {
             return res.status(404).json({ message: "Faculty not found" });
         }
-        res.status(200).json(faculty);
+        res.send({ message: "Faculties found", data: faculties, success: true });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message, success: false });
+    }
+});
+
+// GET by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const faculty = await facultyModel.findById(req.params.id);
+        if (!faculty) {
+            return res.status(404).json({ message: "Faculty not found", success: false });
+        }
+        res.json({ message: "Faculty found", data: faculty, success: true });
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false });
+    }
+});
+
+router.put("/:id", async (req, res) => {
+    try {
+        const { value: data, error } = facultySchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message, success: false });
+        }
+        const { id } = req.params;
+        const faculty = await facultyModel.findByIdAndUpdate(
+            id,
+            {
+                name: data.name,
+                email: data.email,
+                title: data.title,
+                deptId: data.deptId,
+                collegeId: data.collegeId,
+                userId: data.userId,
+                courses: data.courses,
+            },
+            { new: true },
+        );
+        if (!faculty) {
+            return res.status(404).json({ message: "Faculty not found", success: false });
+        }
+        res.status(200).json({
+            message: "Faculty updated successfully",
+            success: true,
+            data: faculty,
+        });
+    } catch (error) {
+        res.status(400).json({ message: error.message, success: false });
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const faculty = await facultyModel.findByIdAndDelete(id);
+        if (!faculty) {
+            return res.status(404).json({ message: "Faculty not found", success: false });
+        }
+        res.json({ message: "Faculty deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false });
     }
 });
 

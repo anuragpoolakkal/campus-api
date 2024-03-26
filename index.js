@@ -6,8 +6,6 @@ import collegeRoutes from "./routes/College.js";
 import schemeRoutes from "./routes/Scheme.js";
 import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
-import feedbackRoutes from "./routes/Feedback.js";
-import studentRoutes from "./routes/Student.js";
 import cors from "cors";
 import morgan from "morgan";
 
@@ -28,12 +26,9 @@ mongoose
         console.error("Error connecting to the database:", err);
     });
 
-    
-
 app.get("/", (req, res) => {
     res.send("<h1>Hello Campus API</h1>");
 });
-
 
 app.use("/users", userRoutes);
 app.use("/college", collegeRoutes);
@@ -42,8 +37,7 @@ app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
 app.use("/student", studentRoutes);
-
-
+app.use("/program", programRoutes);
 
 const PORT = process.env.PORT || 8080;
 
