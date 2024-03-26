@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ExamSchema = new mongoose.Schema(
+const ExamRegistrationSchema = new mongoose.Schema(
     {
         studentId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +24,6 @@ const ExamSchema = new mongoose.Schema(
     },
 );
 
-const Exam = mongoose.model("Exam", ExamSchema);
+const ExamRegistration = mongoose.model("ExamRegistration", ExamRegistrationSchema);
 
-export default Exam;
+export default ExamRegistration;
