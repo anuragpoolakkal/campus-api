@@ -14,10 +14,6 @@ const SemesterSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
         },
-        batchId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Batch",
-        },
         programId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Program",

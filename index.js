@@ -30,9 +30,7 @@ mongoose
     });
 
 app.use("/users", userRoutes);
-
 app.use("/college", collegeRoutes);
-
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/faculty", facultyRoutes);
