@@ -103,7 +103,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid faculty id", success: false });
+        }
+
         const faculty = await facultyModel.findByIdAndDelete(id);
+        
         if (!faculty) {
             return res.status(404).json({ message: "Faculty not found", success: false });
         }
