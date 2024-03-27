@@ -16,7 +16,7 @@ const FacultySchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Department",
         },
-        type: {
+        role: {
             type: String,
             required: true,
             enum: ["hod", "tutor", "teacher"]
