@@ -11,10 +11,10 @@ router.post("/", async (req, res) => {
         name: joi.string().required(),
         email: joi.string().email().required(),
         title: joi.string().required(),
+        role: joi.string().valid("hod", "tutor", "teacher").required(),
         deptId: joi.string().required(),
         collegeId: joi.string().required(),
         userId: joi.string().required(),
-        courses: joi.array().items(joi.string()).required(),
     });
 
     try {
@@ -28,6 +28,10 @@ router.post("/", async (req, res) => {
             name: data.name,
             email: data.email,
             title: data.title,
+            role: data.role,
+            deptId: data.deptId,
+            collegeId: data.collegeId,
+            userId: data.userId,
         });
         await faculty.save();
         res.status(201).json({
@@ -57,10 +61,18 @@ router.get("/", async (req, res) => {
 // GET by ID
 router.get("/:id", async (req, res) => {
     try {
-        const faculty = await facultyModel.findById(req.params.id);
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid faculty id", success: false });
+        }
+
+        const faculty = await facultyModel.findById(id);
+
         if (!faculty) {
             return res.status(404).json({ message: "Faculty not found", success: false });
         }
+
         res.json({ message: "Faculty found", data: faculty, success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
@@ -72,10 +84,10 @@ router.put("/:id", async (req, res) => {
         name: joi.string(),
         email: joi.string().email(),
         title: joi.string(),
+        role: joi.string().valid("hod", "tutor", "teacher"),
         deptId: joi.string(),
         collegeId: joi.string(),
         userId: joi.string(),
-        courses: joi.array().items(joi.string()),
     });
 
     try {
@@ -90,10 +102,10 @@ router.put("/:id", async (req, res) => {
                 name: data.name,
                 email: data.email,
                 title: data.title,
+                role: data.role,
                 deptId: data.deptId,
                 collegeId: data.collegeId,
                 userId: data.userId,
-                courses: data.courses,
             },
             { new: true },
         );
