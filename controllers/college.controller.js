@@ -1,5 +1,5 @@
 import joi from "joi";
-import collegeService from "../servcies/college.service.js";
+import collegeService from "../services/college.service.js";
 import { handleError } from "../utils/utils.js";
 
 // Get college by collegeId
