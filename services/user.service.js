@@ -16,7 +16,7 @@ const register = async (userData) => {
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-    const user = new User({
+    const user = new userModel({
         name: userData.name,
         gender: userData.gender,
         email: userData.email,
