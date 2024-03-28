@@ -18,7 +18,7 @@ const validateUser = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData) {
             return res.status(401).send("Unauthorized");
         }
@@ -55,7 +55,7 @@ const validateAdmin = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData || userData.role !== "admin") {
             return res.status(401).send("Unauthorized");
         }
@@ -78,7 +78,7 @@ const validatePrincipal = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData || userData.role !== "principal") {
             return res.status(401).send("Unauthorized");
         }
@@ -101,7 +101,7 @@ const validateFaculty = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData || userData.role !== "faculty") {
             return res.status(401).send("Unauthorized");
         }
@@ -124,7 +124,7 @@ const validateStudent = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData || userData.role !== "student") {
             return res.status(401).send("Unauthorized");
         }
@@ -148,7 +148,7 @@ const validateParent = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user }).lean();
+        const userData = await userModel.findOne({ _id: user._id }).lean();
         if (!userData || userData.role !== "parent") {
             return res.status(401).send("Unauthorized");
         }
