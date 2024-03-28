@@ -1,5 +1,5 @@
 import joi from "joi";
-import courseService from "../servcies/course.service.js";
+import { courseService } from "../servcies/course.service.js";
 import { isValidObjectId } from "mongoose";
 import { handleError } from "../utils/utils.js";
 
@@ -26,16 +26,23 @@ const getCourse = async (req, res) => {
         else if (courseCode) {
             data = await courseService.fetchByCourseCode(courseCode);
         }
-        else {
+        // Get course by semesterId and collegeId
+        else if (
+            collegeId &&
+            semesterId &&
+            isValidObjectId(collegeId) &&
+            isValidObjectId(semesterId)
+        ) {
+            data = await courseService.fetchAllBySemesterAndCollege(semesterId, collegeId);
+        } else {
             throw { status: 400, message: "Invalid query parameters" };
         }
 
         return res.status(200).json({ data: data, success: true });
-    }
-    catch (error) {
+    } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 // Create a new course
 const createCourse = async (req, res) => {
@@ -59,7 +66,7 @@ const createCourse = async (req, res) => {
     } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 // Update course
 const updateCourse = async (req, res) => {
@@ -83,7 +90,7 @@ const updateCourse = async (req, res) => {
     } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 // Delete course
 const deleteCourse = async (req, res) => {
@@ -95,15 +102,14 @@ const deleteCourse = async (req, res) => {
             data: course,
             success: true,
         });
-    }
-    catch (error) {
+    } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 export default {
     getCourse,
     createCourse,
     updateCourse,
-    deleteCourse
-}
+    deleteCourse,
+};
