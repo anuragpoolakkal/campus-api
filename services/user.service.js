@@ -1,5 +1,4 @@
 // userService.js
-
 import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -10,33 +9,19 @@ const welcome = async () => {
 };
 
 const register = async (userData) => {
-    const signupSchema = joi.object({
-        name: joi.string().required(),
-        gender: joi.string().valid("M", "F").required(),
-        email: joi.string().email().required(),
-        password: joi.string().min(8).required(),
-        role: joi.string().valid("student", "faculty", "admin", "parent").required(),
-    });
-
-    const { value: data, error } = signupSchema.validate(userData);
-
-    if (error) {
-        throw { status: 400, message: error.details[0].message };
-    }
-
-    const existingUser = await userModel.findOne({ email: data.email });
+    const existingUser = await userModel.findOne({ email: userData.email });
 
     if (existingUser) {
         throw { status: 400, message: "User already exists" };
     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
 
     const user = new User({
-        name: data.name,
-        gender: data.gender,
-        email: data.email,
-        role: data.role,
+        name: userData.name,
+        gender: userData.gender,
+        email: userData.email,
+        role: userData.role,
         password: hashedPassword,
     });
 
@@ -46,24 +31,13 @@ const register = async (userData) => {
 };
 
 const login = async (email, password) => {
-    const loginSchema = joi.object({
-        email: joi.string().email().required(),
-        password: joi.string().min(8).required(),
-    });
-
-    const { value: data, error } = loginSchema.validate({ email, password });
-
-    if (error) {
-        throw { status: 400, message: error.details[0].message };
-    }
-
-    const user = await userModel.findOne({ email: data.email }).select("+password");
+    const user = await userModel.findOne({ email: email }).select("+password");
 
     if (!user) {
         throw { status: 400, message: "Invalid email or password" };
     }
 
-    const isPasswordValid = await bcrypt.compare(data.password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
         throw { status: 400, message: "Invalid email or password" };
@@ -83,35 +57,19 @@ const login = async (email, password) => {
 };
 
 const updatePassword = async (email, oldPassword, newPassword) => {
-    const passwordUpdateschema = joi.object({
-        email: joi.string().email().required(),
-        oldPassword: joi.string().min(8).required(),
-        newPassword: joi.string().min(8).required(),
-    });
-
-    const { value: data, error } = passwordUpdateschema.validate({
-        email,
-        oldPassword,
-        newPassword,
-    });
-
-    if (error) {
-        throw { status: 400, message: error.details[0].message };
-    }
-
-    const user = await userModel.findOne({ email: data.email }).select("+password");
+    const user = await userModel.findOne({ email: email }).select("+password");
 
     if (!user) {
         throw { status: 400, message: "Invalid email or password" };
     }
 
-    const isPasswordValid = await bcrypt.compare(data.oldPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
 
     if (!isPasswordValid) {
         throw { status: 400, message: "Invalid email or password" };
     }
 
-    const hashedPassword = await bcrypt.hash(data.newPassword, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await userModel.findByIdAndUpdate(user._id, { password: hashedPassword });
 
