@@ -8,10 +8,6 @@ const CourseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Semester",
     },
-    batchId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Batch",
-    },
     collegeId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "College",
@@ -19,6 +15,12 @@ const CourseSchema = new mongoose.Schema({
     courseCode: {
         type: String,
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+}, {
+    timestamps: true,
 });
 
 const Course = mongoose.model("Course", CourseSchema);
