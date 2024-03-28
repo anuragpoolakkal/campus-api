@@ -1,6 +1,6 @@
-import College from "../models/College";
-import Course from "../models/Course";
-import Semester from "../models/Semester";
+import College from "../models/College.js";
+import Course from "../models/Course.js";
+import Semester from "../models/Semester.js";
 
 //Check if the course and user belongs to the same college
 const checkCourseUserCollege = async (courseCollegeId, userCollegeId) => {

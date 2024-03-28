@@ -1,5 +1,5 @@
-import Admin from "../models/Admin";
-import College from "../models/College";
+import Admin from "../models/Admin.js";
+import College from "../models/College.js";
 
 const checkCollegeBelongsToUser = async (collegeId, userCollegeId) => {
     if (collegeId != userCollegeId) {

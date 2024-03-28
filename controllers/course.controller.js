@@ -1,7 +1,7 @@
 import joi from "joi";
-import courseService from "../servcies/course.service";
+import courseService from "../servcies/course.service.js";
 import { isValidObjectId } from "mongoose";
-import { handleError } from "../utils/utils";
+import { handleError } from "../utils/utils.js";
 
 // Get course by courseId / semesterId / collegeId / courseCode
 const getCourse = async (req, res) => {
