@@ -1,29 +1,18 @@
 import joi from "joi";
-import Admin from "../models/Admin";
-import College from "../models/College";
+import collegeService from "../servcies/college.service";
+import { handleError } from "../utils/utils.js";
 
 // Get college by collegeId
-const getCollegeById = async (req, res) => {
-    const schema = joi.object({
-        collegeId: joi.string().required(),
-    });
-
+const getCollege = async (req, res) => {
     try {
-        const data = await schema.validateAsync(req.body);
+        const college = await collegeService.fetchById(req.params.id);
 
-        const college = await College.findById(data.collegeId);
-        if (!college) {
-            return res.status(404).json({ message: "College not found", success: false });
-        }
-
-        //Check if the college belongs to the user
-        if (college._id != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
+        collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
         return res.status(200).json({ data: college, success: true });
-    } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+    }
+    catch (error) {
+        handleError(res, error);
     }
 }
 
@@ -45,28 +34,10 @@ const createCollege = async (req, res) => {
 
         // Check if the admin already has a college
         if (req.user.admin || req.user.college) {
-            return res.status(401).json({ message: "Admin already has a college", success: false })
+            throw { status: 400, message: "Admin already has a college" };
         }
 
-        const college = new College({
-            name: data.name,
-            address: data.address,
-            phone: data.phone,
-            email: data.email,
-            vision: data.vision,
-            mission: data.mission,
-            adminId: data.adminId,
-        });
-
-        await college.save();
-
-        //Assign college to admin
-        const newAdmin = await Admin({
-            userId: req.user._id,
-            collegeId: college._id,
-        });
-
-        await newAdmin.save();
+        const college = await collegeService.create(data, req.user._id);
 
         return res.status(201).json({
             message: "College registered successfully",
@@ -74,14 +45,13 @@ const createCollege = async (req, res) => {
             success: true,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+        handleError(res, error);
     }
 }
 
 // Update college details
 const updateCollege = async (req, res) => {
     const schema = joi.object({
-        collegeId: joi.string().required(),
         name: joi.string().required(),
         address: joi.string().required(),
         phone: joi.string().required(),
@@ -94,70 +64,35 @@ const updateCollege = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const college = await College.findById(data.collegeId);
-        if (!college) {
-            return res.status(404).json({ message: "College not found", success: false });
-        }
+        collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
-        //Check if the college belongs to the admin
-        if (college._id != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        await College.findByIdAndUpdate(data.collegeId, {
-            name: data.name,
-            address: data.address,
-            phone: data.phone,
-            email: data.email,
-            vision: data.vision,
-            mission: data.mission,
-        });
-
-        await college.save();
+        await collegeService.update(req.params.id, data);
 
         return res.status(201).json({
             message: "College updated successfully",
-            data: college,
             success: true,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+        handleError(res, error);
     }
 }
 
 // Delete college
 const deleteCollege = async (req, res) => {
-    const schema = joi.object({
-        collegeId: joi.string().required(),
-    });
-
     try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
+        collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
-        const college = await College.findById(data.collegeId);
-        if (!college) {
-            return res.status(404).json({ message: "College not found", success: false });
-        }
-
-        //Check if the college belongs to the admin
-        if (college._id != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        await College.findByIdAndDelete(data.collegeId);
-
-        //Unassign college from admin
-        await Admin.findOneAndDelete({ collegeId: data.collegeId });
+        await collegeService.deleteCollege(req.params.id);
 
         return res.status(200).json({ message: "College deleted successfully", success: true });
-    } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+    }
+    catch (error) {
+        handleError(res, error);
     }
 }
 
-export {
-    getCollegeById,
+export default {
+    getCollege,
     createCollege,
     updateCollege,
     deleteCollege

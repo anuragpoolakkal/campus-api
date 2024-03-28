@@ -1,17 +1,12 @@
 import express from "express";
 import { validateAdmin, validateUser } from "../middlewares/userValidation.js";
-import {
-    getCollegeById,
-    createCollege,
-    updateCollege,
-    deleteCollege
-} from "../controllers/college.controller.js";
+import collegeController from "../controllers/college.controller.js";
 
 const router = express.Router();
 
-router.post("/get-by-id", validateUser, getCollegeById);
-router.post("/create", validateAdmin, createCollege); 
-router.post("/update", validateAdmin, updateCollege); 
-router.post("/delete", validateAdmin, deleteCollege); 
+router.get("/:id", validateUser, collegeController.getCollege);
+router.post("/", validateAdmin, collegeController.createCollege);
+router.put("/:id", validateAdmin, collegeController.updateCollege);
+router.delete("/:id", validateAdmin, collegeController.deleteCollege);
 
 export default router;

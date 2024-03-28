@@ -1,107 +1,39 @@
 import joi from "joi";
-import Course from "../models/Course";
-import Semester from "../models/Semester";
+import courseService from "../servcies/course.service";
+import { isValidObjectId } from "mongoose";
+import { handleError } from "../utils/utils";
 
-// Get course by courseId
-const getCourseById = async (req, res) => {
-    const schema = joi.object({
-        courseId: joi.string().required(),
-    });
-
+// Get course by courseId / semesterId / collegeId / courseCode
+const getCourse = async (req, res) => {
     try {
-        const data = await schema.validateAsync(req.body);
+        const { courseId, semesterId, collegeId, courseCode } = req.query;
 
-        const course = await Course.findById(data.courseId);
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
+        var data;
+
+        // Get course by courseId
+        if (courseId && isValidObjectId(courseId)) {
+            data = await courseService.fetchById(courseId);
+        }
+        // Get course by semesterId
+        else if (semesterId && isValidObjectId(semesterId)) {
+            data = await courseService.fetchAllBySemester(semesterId, req.user.college._id);
+        }
+        // Get course by collegeId
+        else if (collegeId && isValidObjectId(collegeId)) {
+            data = await courseService.fetchAllByCollege(collegeId);
+        }
+        // Get course by courseCode
+        else if (courseCode) {
+            data = await courseService.fetchByCourseCode(courseCode);
+        }
+        else {
+            throw { status: 400, message: "Invalid query parameters" };
         }
 
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        res.status(200).json({ data: course, success: true });
-    } catch (error) {
-        res.status(500).json({ message: error.message, success: false });
+        return res.status(200).json({ data: data, success: true });
     }
-}
-
-// Get courses by semesterId
-const getCoursesBySemester = async (req, res) => {
-    const schema = joi.object({
-        semesterId: joi.string().required(),
-    });
-
-    try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-
-        const course = await Course.findOne({ semesterId: data.semesterId });
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
-        }
-
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        res.status(200).json({ data: course, success: true });
-    } catch (error) {
-        res.status(500).json({ message: error.message, success: false });
-    }
-}
-
-// Get courses by collegeId
-const getCoursesByCollege = async (req, res) => {
-    const schema = joi.object({
-        collegeId: joi.string().required(),
-    });
-
-    try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-
-        const course = await Course.findOne({ collegeId: data.collegeId });
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
-        }
-
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        res.status(200).json({ data: course, success: true });
-    } catch (error) {
-        res.status(500).json({ message: error.message, success: false });
-    }
-}
-
-// Get courses by courseCode
-const getCoursesByCourseCode = async (req, res) => {
-    const schema = joi.object({
-        courseCode: joi.string().required(),
-    });
-
-    try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-
-        const course = await Course.findOne({ courseCode: data.courseCode });
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
-        }
-
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        res.status(200).json({ data: course, success: true });
-    } catch (error) {
-        res.status(500).json({ message: error.message, success: false });
+    catch (error) {
+        handleError(res, error);
     }
 }
 
@@ -116,19 +48,8 @@ const createCourse = async (req, res) => {
     try {
         //Validate request body
         const data = await schema.validateAsync(req.body);
-        const semester = await Semester.findById(data.semesterId);
-        if (!semester) {
-            return res.status(404).json({ message: "Semester not found", success: false });
-        }
 
-        const course = new Course({
-            name: data.name,
-            semesterId: data.semesterId,
-            courseCode: data.courseCode,
-            collegeId: req.user.college._id,
-        });
-
-        await course.save();
+        const course = await courseService.create(data, req.user._id, req.user.college._id);
 
         return res.status(201).json({
             message: "Course created successfully",
@@ -136,14 +57,13 @@ const createCourse = async (req, res) => {
             success: true,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+        handleError(res, error);
     }
 }
 
 // Update course
 const updateCourse = async (req, res) => {
     const schema = joi.object({
-        courseId: joi.string().required(),
         name: joi.string().required(),
         semesterId: joi.string().required(),
         courseCode: joi.string().allow(""),
@@ -153,26 +73,7 @@ const updateCourse = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const course = await Course.findById(data.courseId);
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
-        }
-
-        const semester = await Semester.findById(data.semesterId);
-        if (!semester) {
-            return res.status(404).json({ message: "Semester not found", success: false });
-        }
-
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        await Course.findByIdAndUpdate(data.courseId, {
-            name: data.name,
-            semesterId: data.semesterId,
-            courseCode: data.courseCode,
-        });
+        const course = await courseService.update(req.params.id, data, req.user.college._id);
 
         return res.status(200).json({
             message: "Course updated successfully",
@@ -180,47 +81,28 @@ const updateCourse = async (req, res) => {
             success: true,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+        handleError(res, error);
     }
 }
 
 // Delete course
 const deleteCourse = async (req, res) => {
-    const schema = joi.object({
-        courseId: joi.string().required(),
-    });
-
     try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-
-        const course = await Course.findById(data.courseId);
-        if (!course) {
-            return res.status(404).json({ message: "Course not found", success: false });
-        }
-
-        //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) {
-            return res.status(401).json({ message: "Unauthorized", success: false });
-        }
-
-        await Course.findByIdAndDelete(data.courseId);
+        const course = await courseService.deleteCourse(req.params.id, req.user.college._id);
 
         return res.status(200).json({
             message: "Course deleted successfully",
             data: course,
             success: true,
         });
-    } catch (error) {
-        return res.status(500).json({ message: error.message, success: false });
+    }
+    catch (error) {
+        handleError(res, error);
     }
 }
 
-export {
-    getCourseById,
-    getCoursesBySemester,
-    getCoursesByCollege,
-    getCoursesByCourseCode,
+export default {
+    getCourse,
     createCourse,
     updateCourse,
     deleteCourse
