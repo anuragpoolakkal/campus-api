@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import collegeModel from "../models/College.js";
 import userModel from "../models/User.js";
 import joi from "joi";
-
 const router = express.Router();
 
 const CollegeSchema = joi.object({
