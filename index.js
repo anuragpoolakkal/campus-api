@@ -8,6 +8,7 @@ import departmentRoutes from "./routes/Department.js";
 import facultyRoutes from "./routes/Faculty.js";
 import programRoutes from "./routes/Program.js";
 import feedbackRoutes from "./routes/Feedback.js";
+import courseRoutes from "./routes/Course.js";
 import cors from "cors";
 import morgan from "morgan";
 
@@ -40,6 +41,7 @@ app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
 app.use("/student", studentRoutes);
 app.use("/program", programRoutes);
+app.use("/course", courseRoutes);
 
 const PORT = process.env.PORT || 8080;
 
