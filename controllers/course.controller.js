@@ -1,5 +1,4 @@
 import joi from "joi";
-//Models
 import Course from "../models/Course";
 import Semester from "../models/Semester";
 

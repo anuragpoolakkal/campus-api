@@ -1,5 +1,4 @@
 import joi from "joi";
-//Models
 import Admin from "../models/Admin";
 import College from "../models/College";
 
