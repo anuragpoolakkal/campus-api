@@ -2,7 +2,6 @@
 import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import joi from "joi";
 
 const welcome = async () => {
     return "<h1>Welcome to the user</h1>";
