@@ -1,14 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRoutes from "./routes/User.js";
-import collegeRoutes from "./routes/College.js";
-import schemeRoutes from "./routes/Scheme.js";
-import departmentRoutes from "./routes/Department.js";
-import facultyRoutes from "./routes/Faculty.js";
-import programRoutes from "./routes/Program.js";
-import feedbackRoutes from "./routes/Feedback.js";
-import courseRoutes from "./routes/Course.js";
+import userRoutes from "./routes/user.routes.js";
+import collegeRoutes from "./routes/college.routes.js";
+import schemeRoutes from "./routes/scheme.routes.js";
+import departmentRoutes from "./routes/department.routes.js";
+import facultyRoutes from "./routes/faculty.routes.js";
+import programRoutes from "./routes/program.routes.js";
+import feedbackRoutes from "./routes/feedback.routes.js";
+import courseRoutes from "./routes/course.routes.js";
 import cors from "cors";
 import morgan from "morgan";
 
@@ -33,15 +33,15 @@ app.get("/", (req, res) => {
     res.send("<h1>Hello Campus API</h1>");
 });
 
-app.use("/users", userRoutes);
 app.use("/college", collegeRoutes);
-app.use("/scheme", schemeRoutes);
-app.use("/department", departmentRoutes);
-app.use("/faculty", facultyRoutes);
-app.use("/feedback", feedbackRoutes);
-app.use("/student", studentRoutes);
-app.use("/program", programRoutes);
 app.use("/course", courseRoutes);
+app.use("/users", userRoutes);
+// app.use("/scheme", schemeRoutes);
+// app.use("/department", departmentRoutes);
+// app.use("/faculty", facultyRoutes);
+// app.use("/feedback", feedbackRoutes);
+// app.use("/student", studentRoutes);
+// app.use("/program", programRoutes);
 
 const PORT = process.env.PORT || 8080;
 
