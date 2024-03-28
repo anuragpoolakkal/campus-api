@@ -75,7 +75,7 @@ const login = async (email, password) => {
         email: user.email,
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
         expiresIn: "1d",
     });
 
@@ -133,7 +133,7 @@ const getUserById = async (userId) => {
 
 const verifyUser = async (token) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decoded.id;
         const user = await userModel.findById(userId);
         if (!user) {
