@@ -1,7 +1,5 @@
 import express from "express";
-//Middlewares
 import { validateAdmin, validateUser } from "../middlewares/userValidation.js";
-//Import functions from controller
 import {
     createCourse,
     deleteCourse,
@@ -14,12 +12,12 @@ import {
 
 const router = express.Router();
 
-router.post("/get-by-id", validateUser, getCourseById); // Get course by courseId (Any user belonging to the college can access this route)
-router.post("/get-by-semester", validateUser, getCoursesBySemester); // Get courses by semester
-router.post("/get-by-college", validateUser, getCoursesByCollege); // Get courses by collegeId
-router.post("/get-by-course-code", validateUser, getCoursesByCourseCode); // Get courses by courseCode 
-router.post("/create", validateAdmin, createCourse); // Create a new course (Only admin can access this route)
-router.post("/update", validateAdmin, updateCourse); // Update course details
-router.post("/delete", validateAdmin, deleteCourse); // Delete course
+router.post("/get-by-id", validateUser, getCourseById);
+router.post("/get-by-semester", validateUser, getCoursesBySemester);
+router.post("/get-by-college", validateUser, getCoursesByCollege);
+router.post("/get-by-course-code", validateUser, getCoursesByCourseCode);
+router.post("/create", validateAdmin, createCourse);
+router.post("/update", validateAdmin, updateCourse);
+router.post("/delete", validateAdmin, deleteCourse);
 
 export default router;

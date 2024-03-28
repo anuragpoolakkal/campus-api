@@ -10,7 +10,6 @@ const getCourseById = async (req, res) => {
     });
 
     try {
-        //Validate request body
         const data = await schema.validateAsync(req.body);
 
         const course = await Course.findById(data.courseId);
@@ -19,7 +18,7 @@ const getCourseById = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -45,7 +44,7 @@ const getCoursesBySemester = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -71,7 +70,7 @@ const getCoursesByCollege = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -97,7 +96,7 @@ const getCoursesByCourseCode = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -166,7 +165,7 @@ const updateCourse = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -202,7 +201,7 @@ const deleteCourse = async (req, res) => {
         }
 
         //Check if the course and user belongs to the same college
-        if (course.collegeId != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (course.collegeId != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 

@@ -10,7 +10,6 @@ const getCollegeById = async (req, res) => {
     });
 
     try {
-        //Validate request body
         const data = await schema.validateAsync(req.body);
 
         const college = await College.findById(data.collegeId);
@@ -19,7 +18,7 @@ const getCollegeById = async (req, res) => {
         }
 
         //Check if the college belongs to the user
-        if (college._id != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (college._id != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -46,7 +45,7 @@ const createCollege = async (req, res) => {
         const data = await schema.validateAsync(req.body);
 
         // Check if the admin already has a college
-        if (req.user.admin || req.user.college) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (req.user.admin || req.user.college) {
             return res.status(401).json({ message: "Admin already has a college", success: false })
         }
 
@@ -102,7 +101,7 @@ const updateCollege = async (req, res) => {
         }
 
         //Check if the college belongs to the admin
-        if (college._id != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (college._id != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
@@ -143,7 +142,7 @@ const deleteCollege = async (req, res) => {
         }
 
         //Check if the college belongs to the admin
-        if (college._id != req.user.college._id) { // Refer to validateAdmin in middleware/uservaldation.js
+        if (college._id != req.user.college._id) {
             return res.status(401).json({ message: "Unauthorized", success: false });
         }
 
