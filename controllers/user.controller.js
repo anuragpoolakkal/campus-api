@@ -1,5 +1,6 @@
-import { handleError } from "../utils/utils";
-import userService from "../services/userService.js";
+import joi from "joi";
+import { handleError } from "../utils/utils.js";
+import userService from "../services/user.service.js";
 
 const welcome = async (req, res) => {
     res.send(userService.welcome());
@@ -7,7 +8,7 @@ const welcome = async (req, res) => {
 
 const register = async (req, res) => {
     try {
-        const signupSchema = joi.object({
+        const schema = joi.object({
             name: joi.string().required(),
             gender: joi.string().valid("M", "F").required(),
             email: joi.string().email().required(),
@@ -15,7 +16,7 @@ const register = async (req, res) => {
             role: joi.string().valid("student", "faculty", "admin", "parent").required(),
         });
 
-        const { value: data, error } = signupSchema.validate(req.body);
+        const data = await schema.validateAsync(req.body);
 
         if (error) {
             throw { status: 400, message: error.details[0].message };
@@ -31,16 +32,12 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const loginSchema = joi.object({
+        const schema = joi.object({
             email: joi.string().email().required(),
             password: joi.string().min(8).required(),
         });
 
-        const { value: data, error } = loginSchema.validate({ email, password });
-
-        if (error) {
-            throw { status: 400, message: error.details[0].message };
-        }
+        const data = await schema.validateAsync(req.body);
 
         const { token, user } = await userService.login(data.email, data.password);
 
