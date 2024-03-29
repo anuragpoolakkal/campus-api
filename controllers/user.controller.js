@@ -18,10 +18,6 @@ const register = async (req, res) => {
 
         const data = await schema.validateAsync(req.body);
 
-        if (error) {
-            throw { status: 400, message: error.details[0].message };
-        }
-
         const user = await userService.register(data);
 
         res.status(201).json({ message: "User registered successfully", user });
