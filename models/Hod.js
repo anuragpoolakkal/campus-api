@@ -10,6 +10,11 @@ const HodSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Department",
         },
+        collegeId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "College",
+            required: true,
+        },
     },
     {
         timestamps: true,

@@ -9,6 +9,7 @@ const DepartmentSchema = new mongoose.Schema(
         collegeId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
+            required: true,
         },
         vision: {
             type: String,
@@ -19,6 +20,7 @@ const DepartmentSchema = new mongoose.Schema(
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
         },
     },
     {

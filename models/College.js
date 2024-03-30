@@ -26,6 +26,8 @@ const CollegeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+}, {
+    timestamps: true,
 });
 
 const College = mongoose.model("College", CollegeSchema);

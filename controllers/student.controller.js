@@ -40,7 +40,6 @@ const updateStudent = async (req, res) => {
             address: joi.string(),
             rollNo: joi.string().required(),
             collegeId: joi.string().required(),
-            userId: joi.string().required(),
         });
         const { value: data, error } = schema.validate(req.body);
 

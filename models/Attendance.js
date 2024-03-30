@@ -28,7 +28,8 @@ const AttendanceSchema = new mongoose.Schema(
         },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Faculty",
+            ref: "User",
+            required: true,
         },
     },
     {
