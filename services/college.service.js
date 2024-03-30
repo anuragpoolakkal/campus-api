@@ -30,7 +30,7 @@ const create = async (data, userId) => {
     await college.save();
 
     //Assign college to admin
-    const newAdmin = await adminModel({
+    const newAdmin = new adminModel({
         userId: userId,
         collegeId: college._id,
     });
