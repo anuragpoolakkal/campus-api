@@ -24,7 +24,7 @@ const create = async (data, userId) => {
         email: data.email,
         vision: data.vision,
         mission: data.mission,
-        adminId: data.adminId,
+        adminId: userId,
     });
 
     await college.save();

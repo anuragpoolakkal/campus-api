@@ -36,14 +36,14 @@ app.get("/", (req, res) => {
 app.use("/college", collegeRoutes);
 app.use("/course", courseRoutes);
 app.use("/users", userRoutes);
-// app.use("/scheme", schemeRoutes);
+app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 // app.use("/faculty", facultyRoutes);
 // app.use("/feedback", feedbackRoutes);
 // app.use("/student", studentRoutes);
 // app.use("/program", programRoutes);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
