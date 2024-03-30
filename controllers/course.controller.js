@@ -6,16 +6,12 @@ import { handleError } from "../utils/utils.js";
 // Get course by courseId / semesterId / collegeId / courseCode
 const getCourse = async (req, res) => {
     try {
-        const { courseId, semesterId, collegeId, courseCode } = req.query;
+        const { semesterId, collegeId, courseCode } = req.query;
 
         var data;
 
-        // Get course by courseId
-        if (courseId && isValidObjectId(courseId)) {
-            data = await courseService.fetchById(courseId);
-        }
         // Get course by semesterId
-        else if (semesterId && isValidObjectId(semesterId)) {
+        if (semesterId && isValidObjectId(semesterId)) {
             data = await courseService.fetchAllBySemester(semesterId, req.user.college._id);
         }
         // Get course by collegeId
@@ -39,6 +35,19 @@ const getCourse = async (req, res) => {
         }
 
         return res.status(200).json({ data: data, success: true });
+    } catch (error) {
+        handleError(res, error);
+    }
+};
+
+const getCourseById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (id) {
+            const course = await courseService.fetchById(id);
+            return res.status(200).json({ data: course, success: true });
+        }
     } catch (error) {
         handleError(res, error);
     }
@@ -109,6 +118,7 @@ const deleteCourse = async (req, res) => {
 
 export default {
     getCourse,
+    getCourseById,
     createCourse,
     updateCourse,
     deleteCourse,
