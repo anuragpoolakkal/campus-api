@@ -103,9 +103,8 @@ const update = async (courseId, data, collegeId) => {
     return course;
 };
 
-
 const deleteCourse = async (courseId, collegeId) => {
-    const course = await courseModel.findById(courseId);
+    const course = fetchById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }
