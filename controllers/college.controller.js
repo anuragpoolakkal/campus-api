@@ -16,6 +16,8 @@ const getCollege = async (req, res) => {
     }
 }
 
+
+
 // Create a new college and assign it to the admin
 const createCollege = async (req, res) => {
     const schema = joi.object({

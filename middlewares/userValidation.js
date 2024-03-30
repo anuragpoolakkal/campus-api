@@ -11,14 +11,13 @@ import principalModel from "../models/Principal.js";
 //Any user (admin, principal, faculty, student, parent) can access this route
 //College details will be added to req.user.college
 const validateUser = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user.id }).lean();
+        const userData = await userModel.findById(user.id).lean();
         if (!userData) {
             return res.status(401).send("Unauthorized");
         }
@@ -48,8 +47,7 @@ const validateUser = async (req, res, next) => {
 //Admin details will be added to req.user.admin
 //College details will be added to req.user.college
 const validateAdmin = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
@@ -73,8 +71,7 @@ const validateAdmin = async (req, res, next) => {
 //Principal details will be added to req.user.principal
 //College details will be added to req.user.college
 const validatePrincipal = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
@@ -98,8 +95,7 @@ const validatePrincipal = async (req, res, next) => {
 //Faculty details will be added to req.user.faculty
 //College details will be added to req.user.college
 const validateFaculty = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
@@ -123,14 +119,13 @@ const validateFaculty = async (req, res, next) => {
 //Student details will be added to req.user.student
 //College details will be added to req.user.college
 const validateStudent = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user.id }).lean();
+        const userData = await userModel.findById(user.id).lean();
         if (!userData || userData.role !== "student") {
             return res.status(401).send("Unauthorized");
         }
@@ -138,7 +133,7 @@ const validateStudent = async (req, res, next) => {
         req.user = userData;
         req.user.student = await studentModel.findOne({ userId: userData._id }).lean();
         if (req.user.student) {
-            req.user.college = await collegeModel.findOne({ _id: req.student.collegeId }).lean();
+            req.user.college = await collegeModel.findById(req.student.collegeId).lean();
         }
         next();
     });
@@ -149,8 +144,7 @@ const validateStudent = async (req, res, next) => {
 //Student details will be added to req.user.parent.student
 //College details will be added to req.user.college
 const validateParent = async (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (token == null) return res.status(401).send("Unauthorized");
 
@@ -164,10 +158,14 @@ const validateParent = async (req, res, next) => {
         req.user = userData;
         req.user.parent = await parentModel.findOne({ userId: userData._id }).lean();
         if (req.user.parent) {
-            req.user.parent.student = await studentModel.findOne({ _id: req.parent.studentId }).lean();
+            req.user.parent.student = await studentModel
+                .findOne({ _id: req.parent.studentId })
+                .lean();
         }
         if (req.user.parent.student) {
-            req.user.college = await collegeModel.findOne({ _id: req.parent.student.collegeId }).lean();
+            req.user.college = await collegeModel
+                .findOne({ _id: req.parent.student.collegeId })
+                .lean();
         }
         next();
     });
