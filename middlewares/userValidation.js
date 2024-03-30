@@ -18,7 +18,7 @@ const validateUser = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData) {
             return res.status(401).send("Unauthorized");
         }
@@ -55,14 +55,16 @@ const validateAdmin = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData || userData.role !== "admin") {
             return res.status(401).send("Unauthorized");
         }
 
         req.user = userData;
         req.user.admin = await adminModel.findOne({ userId: userData._id }).lean();
-        req.user.college = await collegeModel.findOne({ _id: req.admin.collegeId }).lean();
+        if (req.admin) {
+            req.user.college = await collegeModel.findOne({ _id: req.admin.collegeId }).lean();
+        }
         next();
     });
 };
@@ -78,14 +80,16 @@ const validatePrincipal = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData || userData.role !== "principal") {
             return res.status(401).send("Unauthorized");
         }
 
         req.user = userData;
         req.user.principal = await principalModel.findOne({ userId: userData._id }).lean();
-        req.user.college = await collegeModel.findOne({ _id: req.principal.collegeId }).lean();
+        if (req.user.principal) {
+            req.user.college = await collegeModel.findOne({ _id: req.principal.collegeId }).lean();
+        }
         next();
     });
 };
@@ -101,14 +105,16 @@ const validateFaculty = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData || userData.role !== "faculty") {
             return res.status(401).send("Unauthorized");
         }
 
         req.user = userData;
         req.user.faculty = await facultyModel.findOne({ userId: userData._id }).lean();
-        req.user.college = await collegeModel.findOne({ _id: req.faculty.collegeId }).lean();
+        if (req.user.faculty) {
+            req.user.college = await collegeModel.findOne({ _id: req.faculty.collegeId }).lean();
+        }
         next();
     });
 };
@@ -124,14 +130,16 @@ const validateStudent = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData || userData.role !== "student") {
             return res.status(401).send("Unauthorized");
         }
 
         req.user = userData;
         req.user.student = await studentModel.findOne({ userId: userData._id }).lean();
-        req.user.college = await collegeModel.findOne({ _id: req.student.collegeId }).lean();
+        if (req.user.student) {
+            req.user.college = await collegeModel.findOne({ _id: req.student.collegeId }).lean();
+        }
         next();
     });
 };
@@ -148,15 +156,19 @@ const validateParent = async (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
         if (err) return res.status(401).send("Unauthorized");
-        const userData = await userModel.findOne({ _id: user._id }).lean();
+        const userData = await userModel.findOne({ _id: user.id }).lean();
         if (!userData || userData.role !== "parent") {
             return res.status(401).send("Unauthorized");
         }
 
         req.user = userData;
         req.user.parent = await parentModel.findOne({ userId: userData._id }).lean();
-        req.user.parent.student = await studentModel.findOne({ _id: req.parent.studentId }).lean();
-        req.user.college = await collegeModel.findOne({ _id: req.parent.student.collegeId }).lean();
+        if (req.user.parent) {
+            req.user.parent.student = await studentModel.findOne({ _id: req.parent.studentId }).lean();
+        }
+        if (req.user.parent.student) {
+            req.user.college = await collegeModel.findOne({ _id: req.parent.student.collegeId }).lean();
+        }
         next();
     });
 };
