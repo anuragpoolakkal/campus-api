@@ -60,8 +60,8 @@ const validateAdmin = async (req, res, next) => {
 
         req.user = userData;
         req.user.admin = await adminModel.findOne({ userId: userData._id }).lean();
-        if (req.admin) {
-            req.user.college = await collegeModel.findOne({ _id: req.admin.collegeId }).lean();
+        if (req.user.admin) {
+            req.user.college = await collegeModel.findById(req.user.admin.collegeId).lean();
         }
         next();
     });
