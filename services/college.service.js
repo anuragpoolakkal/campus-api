@@ -41,16 +41,15 @@ const create = async (data, userId) => {
 };
 
 const update = async (collegeId, data) => {
-    const college = await fetchById(collegeId);
+    const college = await collegeModel.findByIdAndUpdate(
+        collegeId,
+        { $set: data },
+        { runValidators: true },
+    );
 
-    college.name = data.name;
-    college.address = data.address;
-    college.phone = data.phone;
-    college.email = data.email;
-    college.vision = data.vision;
-    college.mission = data.mission;
-
-    await college.save();
+    if (!college) {
+        throw { status: 404, message: "College not found" };
+    }
 
     return college;
 };
