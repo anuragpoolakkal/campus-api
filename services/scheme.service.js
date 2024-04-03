@@ -2,55 +2,44 @@ import courseModel from "../models/Course.js";
 import schemeModel from "../models/Scheme.js";
 import mongoose from "mongoose";
 
-const fetchById =async (schemeId) =>{
+const fetchById = async (schemeId) => {
+    const scheme = await schemeModel.findById(schemeId);
 
-const scheme=await schemeModel.findById(schemeId);
-
-if(!scheme){
-
-    throw {status:404,message:"Scheme not found"};
-}
-
-return scheme;
-
-
-};
-
-
-const fetchByCourse =async (courseId)=>{
-
-    const course=await courseModel.findById(courseId);
-    if(!course)
-    {
-        throw{
-
-            status:404, message:"Course not found"
-        };
+    if (!scheme) {
+        throw { status: 404, message: "Scheme not found" };
     }
-    
-    const scheme =await schemeModel.findOne({courseId:courseId});
 
     return scheme;
-
-
 };
 
+const fetchByCourse = async (courseId) => {
+    const course = await courseModel.findById(courseId);
+    if (!course) {
+        throw {
+            status: 404,
+            message: "Course not found",
+        };
+    }
 
-const create = async (data) => 
-{
+    const scheme = await schemeModel.findOne({ courseId: courseId });
+
+    return scheme;
+};
+
+const create = async (data) => {
     const course = await courseModel.findById(data.courseId);
     if (!course) {
         throw { status: 404, message: "course not found" };
     }
-  const scheme = new schemeModel({
-  totalMarks: data.totalMarks,
-  parameters: data.parameters,
-        });
+    const scheme = new schemeModel({
+        totalMarks: data.totalMarks,
+        parameters: data.parameters,
+    });
 
-        await scheme.save();
-        return scheme;
-  };
-  
+    await scheme.save();
+    return scheme;
+};
+
 const update = async (schemeId, data) => {
     const scheme = await schemeModel.findById(schemeId);
     if (!scheme) {
@@ -58,8 +47,7 @@ const update = async (schemeId, data) => {
     }
     await schemeModel.findByIdAndUpdate(schemeId, {
         totalMarks: data.totalMarks,
-       parameters:data.parameters,
-       
+        parameters: data.parameters,
     });
 
     return scheme;
@@ -75,12 +63,10 @@ const deleteScheme = async (schemeId) => {
     return scheme;
 };
 
-export default{
-
-  fetchById,
-  fetchByCourse,
-  create,
-  update,
-  deleteScheme,
+export default {
+    fetchById,
+    fetchByCourse,
+    create,
+    update,
+    deleteScheme,
 };
-

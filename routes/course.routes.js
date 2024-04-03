@@ -11,3 +11,4 @@ router.put("/:id", validateAdmin, courseController.updateCourse);
 router.delete("/:id", validateAdmin, courseController.deleteCourse);
 
 export default router;
+

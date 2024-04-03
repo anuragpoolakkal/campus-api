@@ -1,16 +1,17 @@
 import joi from "joi";
 import DepartmentService from "../services/department.service.js";
 import { handleError } from "../utils/utils.js";
+import logger from "../utils/logger.js";
 
 const getDepartment = async (req, res) => {
     try {
         const department = await DepartmentService.fetchAllByCollege(req.user.college._id);
+        logger.error(`Department fetched successfully`);
         return res.status(200).json({ data: department, success: true });
-    }
-    catch (error) {
+    } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 // Get department by departmentId
 const getDepartmentbyID = async (req, res) => {
@@ -20,11 +21,10 @@ const getDepartmentbyID = async (req, res) => {
         DepartmentService.checkDepartmentUserCollege(req.params.id, req.user.college._id);
 
         return res.status(200).json({ data: department, success: true });
-    }
-    catch (error) {
+    } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 // Create a new college and assign it to the admin
 const createDepartment = async (req, res) => {
@@ -49,7 +49,7 @@ const createDepartment = async (req, res) => {
     } catch (error) {
         handleError(res, error);
     }
-}
+};
 
 const updateDepartment = async (req, res) => {
     const schema = joi.object({
