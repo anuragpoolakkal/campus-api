@@ -81,7 +81,8 @@ const create = async (data, userId, collegeId) => {
 };
 
 const update = async (courseId, data, collegeId) => {
-    const course = await courseModel.findById(courseId);
+    const course = fetchById(courseId);
+
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }

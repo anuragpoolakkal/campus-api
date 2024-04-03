@@ -26,7 +26,12 @@ const register = async (userData) => {
 
     await user.save();
 
-    return user;
+    return {
+        name: user.name,
+        gender: user.gender,
+        email: user.email,
+        role: user.email,
+    };
 };
 
 const login = async (email, password) => {
@@ -48,11 +53,16 @@ const login = async (email, password) => {
         email: user.email,
     };
 
-    const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
-        expiresIn: "1d",
-    });
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET);
 
-    return { token, user };
+    return {
+        token,
+        user: {
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        },
+    };
 };
 
 const updatePassword = async (email, oldPassword, newPassword) => {
