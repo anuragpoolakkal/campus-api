@@ -14,10 +14,13 @@ const ExamSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
         },
-    },
-    {
-        timestamps: true,
-    },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
+    }, {
+    timestamps: true,
+}
 );
 
 const Exam = mongoose.model("Exam", ExamSchema);

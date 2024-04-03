@@ -16,8 +16,6 @@ const getCollege = async (req, res) => {
     }
 }
 
-
-
 // Create a new college and assign it to the admin
 const createCollege = async (req, res) => {
     const schema = joi.object({
@@ -27,7 +25,6 @@ const createCollege = async (req, res) => {
         email: joi.string().email(),
         vision: joi.string(),
         mission: joi.string(),
-        adminId: joi.string().required(),
     });
 
     try {
@@ -65,7 +62,7 @@ const updateCollege = async (req, res) => {
     try {
         //Validate request body
         const data = await schema.validateAsync(req.body);
-
+        
         collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
         await collegeService.update(req.params.id, data);
@@ -82,6 +79,11 @@ const updateCollege = async (req, res) => {
 // Delete college
 const deleteCollege = async (req, res) => {
     try {
+        const college = await collegeService.fetchById(req.params.id);
+        if (!college) {
+            throw { status: 404, message: "College not found" };
+        }
+
         collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
         await collegeService.deleteCollege(req.params.id);

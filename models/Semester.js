@@ -13,6 +13,7 @@ const SemesterSchema = new mongoose.Schema(
         collegeId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
+            required: true,
         },
         programId: {
             type: mongoose.Schema.Types.ObjectId,

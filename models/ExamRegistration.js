@@ -18,10 +18,9 @@ const ExamRegistrationSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Exam",
         },
-    },
-    {
-        timestamps: true,
-    },
+    }, {
+    timestamps: true,
+}
 );
 
 const ExamRegistration = mongoose.model("ExamRegistration", ExamRegistrationSchema);

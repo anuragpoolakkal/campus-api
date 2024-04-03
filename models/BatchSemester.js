@@ -22,10 +22,13 @@ const BatchSemesterSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
-    },
-    {
-        timestamps: true,
-    },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
+    }, {
+    timestamps: true,
+}
 );
 
 const BatchSemester = mongoose.model("BatchSemester", BatchSemesterSchema);

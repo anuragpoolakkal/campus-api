@@ -47,13 +47,9 @@ app.use("/college", collegeRoutes);
 app.use("/course", courseRoutes);
 app.use("/users", userRoutes);
 app.use("/program", programRoutes);
+app.use("/scheme", schemeRoutes);
+app.use("/department", departmentRoutes);
 
-app.use("/test", (req, res) => {
-    res.send("this is from test route");
-});
-
-// app.use("/scheme", schemeRoutes);
-// app.use("/department", departmentRoutes);
 // app.use("/faculty", facultyRoutes);
 // app.use("/feedback", feedbackRoutes);
 // app.use("/student", studentRoutes);

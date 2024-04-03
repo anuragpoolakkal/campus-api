@@ -12,11 +12,9 @@ const StudentSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true,
         },
         phone: {
             type: String,
-            required: true,
         },
         address: {
             type: String,
@@ -32,10 +30,12 @@ const StudentSchema = new mongoose.Schema(
         collegeId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "College",
+            required: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
         },
     },
     {

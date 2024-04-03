@@ -24,13 +24,13 @@ const create = async (data, userId) => {
         email: data.email,
         vision: data.vision,
         mission: data.mission,
-        adminId: data.adminId,
+        createdBy: userId,
     });
 
     await college.save();
 
     //Assign college to admin
-    const newAdmin = await adminModel({
+    const newAdmin = new adminModel({
         userId: userId,
         collegeId: college._id,
     });
@@ -57,7 +57,7 @@ const update = async (collegeId, data) => {
 const deleteCollege = async (collegeId) => {
     const college = await fetchById(collegeId);
 
-    await college.delete();
+    await collegeModel.findByIdAndDelete(collegeId);
     //Unassign college from admin
     await adminModel.findOneAndDelete({ collegeId: collegeId });
 

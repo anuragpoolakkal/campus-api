@@ -22,10 +22,12 @@ const CollegeSchema = new mongoose.Schema({
     mission: {
         type: String,
     },
-    adminId: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
+}, {
+    timestamps: true,
 });
 
 const College = mongoose.model("College", CollegeSchema);
