@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const HodSchema = new mongoose.Schema(
     {
-        name: {
-            type: String,
-            required: true,
+        facultyId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Faculty",
         },
         departmentId: {
             type: mongoose.Schema.Types.ObjectId,
