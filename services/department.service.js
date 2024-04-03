@@ -28,12 +28,13 @@ const fetchAllByCollege = async (collegeId) => {
     return department;
 };
 
-const create = async (data, collegeId) => {
+const create = async (data, userId, collegeId) => {
     const department = new DepartmentModel({
         name: data.name,
         collegeId: collegeId,
         vision: data.vision,
-        mission: data.mission
+        mission: data.mission,
+        createdBy: userId
     });
 
     await department.save();
@@ -48,7 +49,7 @@ const update = async (departmentId, data, collegeId) => {
     }
 
     //Check if the course and user belongs to the same college
-    checkDepartmentUserCollege(department.collegeId, collegeId);
+    //checkDepartmentUserCollege(department.collegeId, collegeId);
 
     await DepartmentModel.findByIdAndUpdate(departmentId, {
         name: data.name,

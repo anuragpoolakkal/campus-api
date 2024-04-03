@@ -353,3 +353,57 @@
 [2024-04-03T12:31:07.072] [INFO] default - Connected to the database
 [2024-04-03T12:31:13.703] [INFO] default - Server is running on port 5000
 [2024-04-03T12:31:14.530] [INFO] default - Connected to the database
+[2024-04-03T16:07:05.627] [INFO] default - Server is running on port 5000
+[2024-04-03T16:07:15.660] [INFO] default - Connected to the database
+[2024-04-03T16:07:44.711] [ERROR] default - Department fetched successfully
+[2024-04-03T16:08:47.513] [INFO] default - Server is running on port 5000
+[2024-04-03T16:08:52.885] [INFO] default - Connected to the database
+[2024-04-03T16:09:46.607] [INFO] default - Server is running on port 5000
+[2024-04-03T16:09:48.463] [INFO] default - Connected to the database
+[2024-04-03T16:10:02.097] [INFO] default - Server is running on port 5000
+[2024-04-03T16:10:07.219] [INFO] default - Connected to the database
+[2024-04-03T16:10:21.059] [INFO] default - Server is running on port 5000
+[2024-04-03T16:10:21.829] [INFO] default - Connected to the database
+[2024-04-03T16:10:35.079] [INFO] default - Server is running on port 5000
+[2024-04-03T16:10:36.049] [INFO] default - Connected to the database
+[2024-04-03T16:11:09.355] [INFO] default - Server is running on port 5000
+[2024-04-03T16:11:16.344] [INFO] default - Connected to the database
+[2024-04-03T16:11:32.877] [INFO] default - Server is running on port 5000
+[2024-04-03T16:11:33.531] [INFO] default - Connected to the database
+[2024-04-03T16:11:53.632] [INFO] default - Server is running on port 5000
+[2024-04-03T16:11:54.374] [INFO] default - Connected to the database
+[2024-04-03T16:12:29.788] [INFO] default - Server is running on port 5000
+[2024-04-03T16:12:35.227] [INFO] default - Connected to the database
+[2024-04-03T16:14:08.373] [ERROR] default - Department fetched successfully
+[2024-04-03T16:15:32.972] [INFO] default - Server is running on port 5000
+[2024-04-03T16:15:38.361] [INFO] default - Connected to the database
+[2024-04-03T16:16:08.451] [ERROR] default - Department fetched successfully
+[2024-04-03T16:19:29.393] [INFO] default - Server is running on port 5000
+[2024-04-03T16:19:34.751] [INFO] default - Connected to the database
+[2024-04-03T18:00:59.042] [INFO] default - Server is running on port 5000
+[2024-04-03T18:01:05.566] [INFO] default - Connected to the database
+[2024-04-03T18:01:57.676] [INFO] default - Server is running on port 5000
+[2024-04-03T18:01:58.507] [INFO] default - Connected to the database
+[2024-04-03T18:02:14.665] [ERROR] default - Department fetched successfully
+[2024-04-03T18:18:23.586] [INFO] default - Server is running on port 5000
+[2024-04-03T18:18:30.047] [INFO] default - Connected to the database
+[2024-04-03T18:18:32.640] [INFO] default - Server is running on port 5000
+[2024-04-03T18:18:33.316] [INFO] default - Connected to the database
+[2024-04-03T18:25:15.175] [INFO] default - Server is running on port 5000
+[2024-04-03T18:25:20.264] [INFO] default - Connected to the database
+[2024-04-03T18:25:44.500] [INFO] default - Server is running on port 5000
+[2024-04-03T18:25:45.085] [INFO] default - Connected to the database
+[2024-04-03T18:25:50.865] [INFO] default - Server is running on port 5000
+[2024-04-03T18:25:51.565] [INFO] default - Connected to the database
+[2024-04-03T18:25:58.771] [INFO] default - Server is running on port 5000
+[2024-04-03T18:25:59.638] [INFO] default - Connected to the database
+[2024-04-03T18:26:06.807] [ERROR] default - Department fetched successfully
+[2024-04-03T18:27:17.256] [INFO] default - Server is running on port 5000
+[2024-04-03T18:27:22.664] [INFO] default - Connected to the database
+[2024-04-03T18:27:31.101] [ERROR] default - Department fetched successfully
+[2024-04-03T18:28:02.667] [INFO] default - Server is running on port 5000
+[2024-04-03T18:28:03.306] [INFO] default - Connected to the database
+[2024-04-03T18:28:42.101] [ERROR] default - Department fetched successfully
+[2024-04-03T18:29:38.127] [ERROR] default - Department fetched successfully
+[2024-04-03T18:30:00.766] [ERROR] default - Department fetched successfully
+[2024-04-03T18:30:51.387] [ERROR] default - Department fetched successfully
