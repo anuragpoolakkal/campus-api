@@ -353,6 +353,7 @@
 [2024-04-03T12:31:07.072] [INFO] default - Connected to the database
 [2024-04-03T12:31:13.703] [INFO] default - Server is running on port 5000
 [2024-04-03T12:31:14.530] [INFO] default - Connected to the database
+<<<<<<< HEAD
 [2024-04-03T16:07:05.627] [INFO] default - Server is running on port 5000
 [2024-04-03T16:07:15.660] [INFO] default - Connected to the database
 [2024-04-03T16:07:44.711] [ERROR] default - Department fetched successfully
@@ -407,3 +408,16 @@
 [2024-04-03T18:29:38.127] [ERROR] default - Department fetched successfully
 [2024-04-03T18:30:00.766] [ERROR] default - Department fetched successfully
 [2024-04-03T18:30:51.387] [ERROR] default - Department fetched successfully
+=======
+[2024-04-04T01:52:09.446] [INFO] default - Server is running on port 8080
+[2024-04-04T01:52:10.410] [INFO] default - Connected to the database
+[2024-04-04T01:52:46.697] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:53:04.416] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:53:15.642] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:53:28.023] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:53:36.102] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:53:55.150] [ERROR] default - Error logging in user: [object Object]
+[2024-04-04T01:54:11.127] [INFO] default - User logged in successfully: [object Object]
+[2024-04-04T01:56:02.923] [INFO] default - User logged in successfully: [object Object]
+[2024-04-04T01:56:33.677] [INFO] default - User logged in successfully: [object Object]
+>>>>>>> 2c83f56e617b26767b659e65518950eff7a39fb0

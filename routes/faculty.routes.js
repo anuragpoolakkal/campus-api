@@ -10,6 +10,7 @@ router.post("/", async (req, res) => {
     const facultySchema = joi.object({
         name: joi.string().required(),
         email: joi.string().email().required(),
+        password: joi.string().required(),
         title: joi.string().required(),
         role: joi.string().valid("hod", "tutor", "teacher").required(),
         deptId: joi.string().required(),

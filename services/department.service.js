@@ -64,6 +64,7 @@ const deleteDepartment = async (departmentId) => {
     const department = await fetchById(departmentId);
 
     await DepartmentModel.findByIdAndDelete(departmentId);
+    
     return department;
 };
 
