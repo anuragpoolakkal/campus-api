@@ -18,7 +18,7 @@ const getDepartmentbyID = async (req, res) => {
     try {
         const department = await DepartmentService.fetchById(req.params.id);
 
-        DepartmentService.checkDepartmentUserCollege(req.params.id, req.user.college._id);
+        //DepartmentService.checkDepartmentUserCollege(req.params.id, req.user.college._id);
 
         return res.status(200).json({ data: department, success: true });
     } catch (error) {
@@ -30,7 +30,6 @@ const getDepartmentbyID = async (req, res) => {
 const createDepartment = async (req, res) => {
     const schema = joi.object({
         name: joi.string().required(),
-        collegeId: joi.string().required(),
         vision: joi.string().required(),
         mission: joi.string().required(),
     });
@@ -39,7 +38,7 @@ const createDepartment = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const department = await DepartmentService.create(data, data.collegeId);
+        const department = await DepartmentService.create(data, req.user._id, req.user.college._id);
 
         return res.status(201).json({
             message: "Department registered successfully",
@@ -54,7 +53,6 @@ const createDepartment = async (req, res) => {
 const updateDepartment = async (req, res) => {
     const schema = joi.object({
         name: joi.string().required(),
-        collegeId: joi.string().required(),
         vision: joi.string().required(),
         mission: joi.string().required(),
     });
@@ -63,7 +61,7 @@ const updateDepartment = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const department = await DepartmentService.update(req.params.id, data, data.collegeId);
+        const department = await DepartmentService.update(req.params.id, data, req.user.college._id);
 
         return res.status(200).json({
             message: "Department updated successfully",
