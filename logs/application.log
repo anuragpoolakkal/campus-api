@@ -421,3 +421,106 @@
 [2024-04-04T01:56:02.923] [INFO] default - User logged in successfully: [object Object]
 [2024-04-04T01:56:33.677] [INFO] default - User logged in successfully: [object Object]
 >>>>>>> 2c83f56e617b26767b659e65518950eff7a39fb0
+[2024-04-05T16:04:54.540] [INFO] default - Server is running on port 5000
+[2024-04-05T16:04:55.437] [INFO] default - Connected to the database
+[2024-04-05T16:05:17.679] [INFO] default - User logged in successfully: [object Object]
+[2024-04-05T16:22:20.407] [INFO] default - Server is running on port 5000
+[2024-04-05T16:22:25.374] [INFO] default - Connected to the database
+[2024-04-05T16:22:47.767] [INFO] default - Server is running on port 5000
+[2024-04-05T16:22:48.632] [INFO] default - Connected to the database
+[2024-04-05T16:23:48.700] [INFO] default - Server is running on port 5000
+[2024-04-05T16:23:53.933] [INFO] default - Connected to the database
+[2024-04-05T16:24:48.479] [INFO] default - Server is running on port 5000
+[2024-04-05T16:24:50.383] [INFO] default - Connected to the database
+[2024-04-05T18:53:05.657] [INFO] default - Server is running on port 5000
+[2024-04-05T18:53:10.591] [INFO] default - Connected to the database
+[2024-04-05T18:53:18.520] [ERROR] default - Department fetched successfully
+[2024-04-05T18:53:54.352] [ERROR] default - Department fetched successfully
+[2024-04-05T19:00:39.524] [ERROR] default - Department fetched successfully
+[2024-04-05T19:09:36.147] [INFO] default - Server is running on port 5000
+[2024-04-05T19:09:41.482] [INFO] default - Connected to the database
+[2024-04-05T19:20:33.904] [INFO] default - Server is running on port 5000
+[2024-04-05T19:20:38.849] [INFO] default - Connected to the database
+[2024-04-05T19:20:39.680] [INFO] default - feedback created successfully
+[2024-04-05T19:21:04.695] [INFO] default - Feedback with id 661001af12ca1da30f6fa204 fetched successfully
+[2024-04-05T19:21:40.606] [ERROR] default - ReferenceError: schemeId is not defined
+    at Object.update (file:///D:/nj/campus-api/services/feedback.service.js:47:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async updateFeedback (file:///D:/nj/campus-api/controllers/feedback.controller.js:86:26)
+[2024-04-05T19:22:10.407] [INFO] default - Server is running on port 5000
+[2024-04-05T19:22:15.862] [INFO] default - Connected to the database
+[2024-04-05T19:22:16.557] [INFO] default - Feedback updated successfully
+[2024-04-05T19:22:23.482] [ERROR] default - TypeError: FeedbackService.deleteScheme is not a function
+    at deleteFeedback (file:///D:/nj/campus-api/controllers/feedback.controller.js:102:48)
+    at Layer.handle [as handle_request] (D:\nj\campus-api\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\nj\campus-api\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/nj/campus-api/middlewares/userValidation.js:43:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2024-04-05T19:23:00.758] [INFO] default - Server is running on port 5000
+[2024-04-05T19:23:01.365] [INFO] default - Connected to the database
+[2024-04-05T19:23:05.901] [INFO] default - Feedback deleted successfully
+[2024-04-05T19:23:18.088] [INFO] default - feedback created successfully
+[2024-04-05T19:24:16.835] [INFO] default - Server is running on port 5000
+[2024-04-05T19:24:22.421] [INFO] default - Connected to the database
+[2024-04-05T19:24:59.511] [INFO] default - Server is running on port 5000
+[2024-04-05T19:25:00.056] [INFO] default - Connected to the database
+[2024-04-05T19:25:13.486] [INFO] default - Server is running on port 5000
+[2024-04-05T19:25:14.081] [INFO] default - Connected to the database
+[2024-04-05T19:25:31.167] [INFO] default - Server is running on port 5000
+[2024-04-05T19:25:36.457] [INFO] default - Connected to the database
+[2024-04-05T19:25:47.898] [INFO] default - Server is running on port 5000
+[2024-04-05T19:25:48.534] [INFO] default - Connected to the database
+[2024-04-05T19:25:54.557] [ERROR] default - ReferenceError: collegeModel is not defined
+    at Object.fetchAllByCollege (file:///D:/nj/campus-api/services/feedback.service.js:15:21)
+    at getFeedback (file:///D:/nj/campus-api/controllers/feedback.controller.js:24:48)
+    at Layer.handle [as handle_request] (D:\nj\campus-api\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\nj\campus-api\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/nj/campus-api/middlewares/userValidation.js:68:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2024-04-05T19:27:14.145] [INFO] default - Server is running on port 5000
+[2024-04-05T19:27:19.506] [INFO] default - Connected to the database
+[2024-04-05T19:27:23.158] [ERROR] default - Feedback fetched successfully
+[2024-04-05T19:32:40.869] [INFO] default - Server is running on port 5000
+[2024-04-05T19:32:46.124] [INFO] default - Connected to the database
+[2024-04-05T19:33:46.417] [INFO] default - Server is running on port 5000
+[2024-04-05T19:33:51.890] [INFO] default - Connected to the database
+[2024-04-05T20:04:20.977] [INFO] default - Server is running on port 5000
+[2024-04-05T20:04:27.299] [INFO] default - Connected to the database
+[2024-04-05T20:19:45.655] [INFO] default - Server is running on port 5000
+[2024-04-05T20:19:51.192] [INFO] default - Connected to the database
+[2024-04-05T20:20:04.106] [ERROR] default - { status: 404, message: 'feedback not found' }
+[2024-04-05T20:22:46.572] [INFO] default - Server is running on port 5000
+[2024-04-05T20:22:54.895] [INFO] default - Connected to the database
+[2024-04-05T20:56:02.789] [INFO] default - Server is running on port 5000
+[2024-04-05T20:56:08.351] [INFO] default - Connected to the database
+[2024-04-05T20:56:18.128] [ERROR] default - ReferenceError: userModel is not defined
+    at Object.getAllFaculty (file:///D:/nj/campus-api/services/feedback.service.js:27:19)
+    at getFeedback (file:///D:/nj/campus-api/controllers/feedback.controller.js:24:48)
+    at Layer.handle [as handle_request] (D:\nj\campus-api\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\nj\campus-api\node_modules\express\lib\router\route.js:149:13)
+    at file:///D:/nj/campus-api/middlewares/userValidation.js:68:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2024-04-05T20:57:01.470] [INFO] default - Server is running on port 5000
+[2024-04-05T20:57:02.516] [INFO] default - Connected to the database
+[2024-04-05T20:57:10.349] [ERROR] default - Feedback fetched successfully
+[2024-04-05T20:57:36.101] [ERROR] default - Feedback fetched successfully
+[2024-04-05T20:58:43.391] [INFO] default - feedback created successfully
+[2024-04-05T20:59:28.847] [ERROR] default - Feedback fetched successfully
+[2024-04-05T20:59:39.980] [INFO] default - Feedback with id 661018abd46bbe79479513c4 fetched successfully
+[2024-04-05T21:00:09.395] [ERROR] default - Feedback fetched successfully
+[2024-04-05T21:07:30.710] [ERROR] default - Feedback fetched successfully
+[2024-04-05T21:07:37.937] [INFO] default - feedback created successfully
+[2024-04-05T21:08:41.041] [INFO] default - Feedback updated successfully
+[2024-04-05T21:08:57.504] [INFO] default - Feedback with id 66101ac1d46bbe79479513e2 fetched successfully
+[2024-04-05T21:09:06.224] [ERROR] default - Feedback fetched successfully
+[2024-04-05T21:09:32.629] [INFO] default - Feedback deleted successfully
+[2024-04-05T21:09:45.998] [INFO] default - feedback created successfully
+[2024-04-05T21:10:10.801] [INFO] default - Feedback updated successfully
+[2024-04-05T21:10:21.563] [INFO] default - Feedback with id 66101b41d46bbe7947951404 fetched successfully
+[2024-04-05T21:10:31.688] [ERROR] default - Feedback fetched successfully
+[2024-04-05T21:11:54.444] [ERROR] default - Department fetched successfully
+[2024-04-05T21:12:22.850] [ERROR] default - Department fetched successfully
+[2024-04-05T21:12:51.514] [INFO] default - Department created successfully
+[2024-04-05T21:13:32.350] [INFO] default - Department updated successfully
+[2024-04-05T21:15:07.354] [INFO] default - Department deleted successfully
+[2024-04-05T21:15:23.831] [INFO] default - Department created successfully

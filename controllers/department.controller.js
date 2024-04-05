@@ -9,6 +9,7 @@ const getDepartment = async (req, res) => {
         logger.error(`Department fetched successfully`);
         return res.status(200).json({ data: department, success: true });
     } catch (error) {
+        logger.error(error);
         handleError(res, error);
     }
 };
@@ -17,11 +18,12 @@ const getDepartment = async (req, res) => {
 const getDepartmentbyID = async (req, res) => {
     try {
         const department = await DepartmentService.fetchById(req.params.id);
-
+        logger.error(`Department fetched successfully`);
         //DepartmentService.checkDepartmentUserCollege(req.params.id, req.user.college._id);
 
         return res.status(200).json({ data: department, success: true });
     } catch (error) {
+        logger.error(error);
         handleError(res, error);
     }
 };
@@ -39,13 +41,14 @@ const createDepartment = async (req, res) => {
         const data = await schema.validateAsync(req.body);
 
         const department = await DepartmentService.create(data, req.user._id, req.user.college._id);
-
+        logger.info("Department created successfully");
         return res.status(201).json({
             message: "Department registered successfully",
             data: department,
             success: true,
         });
     } catch (error) {
+        logger.error(error);
         handleError(res, error);
     }
 };
@@ -62,6 +65,8 @@ const updateDepartment = async (req, res) => {
         const data = await schema.validateAsync(req.body);
 
         const department = await DepartmentService.update(req.params.id, data, req.user.college._id);
+        
+        logger.info("Department updated successfully");
 
         return res.status(200).json({
             message: "Department updated successfully",
@@ -69,6 +74,7 @@ const updateDepartment = async (req, res) => {
             success: true,
         });
     } catch (error) {
+        logger.error(error);
         handleError(res, error);
     }
 };
@@ -77,12 +83,15 @@ const deleteDepartment = async (req, res) => {
     try {
         const department = await DepartmentService.deleteDepartment(req.params.id);
 
+        logger.info("Department deleted successfully");
+
         return res.status(200).json({
             message: "Department deleted successfully",
             data: department,
             success: true,
         });
     } catch (error) {
+        logger.error(error);
         handleError(res, error);
     }
 };
