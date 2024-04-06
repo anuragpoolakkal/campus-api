@@ -12,7 +12,6 @@ const createBatch = async (data, userId) => {
         });
 
         return await batch.save();
-
     } catch (error) {
         throw new Error(error.message);
     }
