@@ -6,6 +6,8 @@ import collegeRoutes from "./routes/college.routes.js";
 import programRoutes from "./routes/program.routes.js";
 import schemeRoutes from "./routes/scheme.routes.js";
 import departmentRoutes from "./routes/department.routes.js";
+import studentRoutes from "./routes/student.routes.js";
+import batchRoutes from "./routes/batch.routes.js";
 import facultyRoutes from "./routes/faculty.routes.js";
 import feedbackRoutes from "./routes/feedback.routes.js";
 import courseRoutes from "./routes/course.routes.js";
@@ -49,10 +51,10 @@ app.use("/users", userRoutes);
 app.use("/program", programRoutes);
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
-
+app.use("/batch", batchRoutes);
 // app.use("/faculty", facultyRoutes);
 // app.use("/feedback", feedbackRoutes);
-// app.use("/student", studentRoutes);
+app.use("/student", studentRoutes);
 // app.use("/program", programRoutes);
 
 const PORT = process.env.PORT || 8080;
