@@ -30,7 +30,7 @@ const register = async (userData) => {
         name: user.name,
         gender: user.gender,
         email: user.email,
-        role: user.email,
+        role: user.role,
     };
 };
 
