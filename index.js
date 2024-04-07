@@ -52,8 +52,8 @@ app.use("/program", programRoutes);
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);
 app.use("/batch", batchRoutes);
-// app.use("/faculty", facultyRoutes);
-// app.use("/feedback", feedbackRoutes);
+app.use("/faculty", facultyRoutes);
+app.use("/feedback", feedbackRoutes);
 app.use("/student", studentRoutes);
 // app.use("/program", programRoutes);
 
