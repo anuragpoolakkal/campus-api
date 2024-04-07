@@ -1,10 +1,9 @@
 import joi from "joi";
-import { handleError } from "../utils/errorHandler";
-import { isValidObjectId } from "../utils/utils";
 import batchService from "../services/batch.service.js";
+import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
+import { isValidObjectId } from "mongoose";
 
-// Get all batches
 const getBatches = async (req, res) => {
     try {
         const { programId, deptId } = req.query;

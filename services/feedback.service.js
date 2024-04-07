@@ -23,7 +23,7 @@ const fetchAllByCourseId = async (courseId) => {
     return feedback;
 };
 
-const getAllFaculty = async () => {
+const getAllFeedback = async () => {
     const feedback = await FeedbackModel.find();
     return feedback;
 };
@@ -72,7 +72,7 @@ const deleteFeedback = async (feedbackId) => {
 
 export default {
     fetchById,
-    getAllFaculty,
+    getAllFeedback,
     fetchAllByCourseId,
     create,
     update,

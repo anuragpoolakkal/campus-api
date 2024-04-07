@@ -21,7 +21,7 @@ const getFeedbackById = async (req, res) => {
 
 const getFeedback = async (req, res) => {
     try {
-        const feedback = await FeedbackService.getAllFaculty(req.user.college._id);
+        const feedback = await FeedbackService.getAllFeedback(req.user.college._id);
         logger.error(`Feedback fetched successfully`);
         return res.status(200).json({ data: feedback, success: true });
     } catch (error) {

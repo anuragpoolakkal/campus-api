@@ -353,62 +353,6 @@
 [2024-04-03T12:31:07.072] [INFO] default - Connected to the database
 [2024-04-03T12:31:13.703] [INFO] default - Server is running on port 5000
 [2024-04-03T12:31:14.530] [INFO] default - Connected to the database
-<<<<<<< HEAD
-[2024-04-03T16:07:05.627] [INFO] default - Server is running on port 5000
-[2024-04-03T16:07:15.660] [INFO] default - Connected to the database
-[2024-04-03T16:07:44.711] [ERROR] default - Department fetched successfully
-[2024-04-03T16:08:47.513] [INFO] default - Server is running on port 5000
-[2024-04-03T16:08:52.885] [INFO] default - Connected to the database
-[2024-04-03T16:09:46.607] [INFO] default - Server is running on port 5000
-[2024-04-03T16:09:48.463] [INFO] default - Connected to the database
-[2024-04-03T16:10:02.097] [INFO] default - Server is running on port 5000
-[2024-04-03T16:10:07.219] [INFO] default - Connected to the database
-[2024-04-03T16:10:21.059] [INFO] default - Server is running on port 5000
-[2024-04-03T16:10:21.829] [INFO] default - Connected to the database
-[2024-04-03T16:10:35.079] [INFO] default - Server is running on port 5000
-[2024-04-03T16:10:36.049] [INFO] default - Connected to the database
-[2024-04-03T16:11:09.355] [INFO] default - Server is running on port 5000
-[2024-04-03T16:11:16.344] [INFO] default - Connected to the database
-[2024-04-03T16:11:32.877] [INFO] default - Server is running on port 5000
-[2024-04-03T16:11:33.531] [INFO] default - Connected to the database
-[2024-04-03T16:11:53.632] [INFO] default - Server is running on port 5000
-[2024-04-03T16:11:54.374] [INFO] default - Connected to the database
-[2024-04-03T16:12:29.788] [INFO] default - Server is running on port 5000
-[2024-04-03T16:12:35.227] [INFO] default - Connected to the database
-[2024-04-03T16:14:08.373] [ERROR] default - Department fetched successfully
-[2024-04-03T16:15:32.972] [INFO] default - Server is running on port 5000
-[2024-04-03T16:15:38.361] [INFO] default - Connected to the database
-[2024-04-03T16:16:08.451] [ERROR] default - Department fetched successfully
-[2024-04-03T16:19:29.393] [INFO] default - Server is running on port 5000
-[2024-04-03T16:19:34.751] [INFO] default - Connected to the database
-[2024-04-03T18:00:59.042] [INFO] default - Server is running on port 5000
-[2024-04-03T18:01:05.566] [INFO] default - Connected to the database
-[2024-04-03T18:01:57.676] [INFO] default - Server is running on port 5000
-[2024-04-03T18:01:58.507] [INFO] default - Connected to the database
-[2024-04-03T18:02:14.665] [ERROR] default - Department fetched successfully
-[2024-04-03T18:18:23.586] [INFO] default - Server is running on port 5000
-[2024-04-03T18:18:30.047] [INFO] default - Connected to the database
-[2024-04-03T18:18:32.640] [INFO] default - Server is running on port 5000
-[2024-04-03T18:18:33.316] [INFO] default - Connected to the database
-[2024-04-03T18:25:15.175] [INFO] default - Server is running on port 5000
-[2024-04-03T18:25:20.264] [INFO] default - Connected to the database
-[2024-04-03T18:25:44.500] [INFO] default - Server is running on port 5000
-[2024-04-03T18:25:45.085] [INFO] default - Connected to the database
-[2024-04-03T18:25:50.865] [INFO] default - Server is running on port 5000
-[2024-04-03T18:25:51.565] [INFO] default - Connected to the database
-[2024-04-03T18:25:58.771] [INFO] default - Server is running on port 5000
-[2024-04-03T18:25:59.638] [INFO] default - Connected to the database
-[2024-04-03T18:26:06.807] [ERROR] default - Department fetched successfully
-[2024-04-03T18:27:17.256] [INFO] default - Server is running on port 5000
-[2024-04-03T18:27:22.664] [INFO] default - Connected to the database
-[2024-04-03T18:27:31.101] [ERROR] default - Department fetched successfully
-[2024-04-03T18:28:02.667] [INFO] default - Server is running on port 5000
-[2024-04-03T18:28:03.306] [INFO] default - Connected to the database
-[2024-04-03T18:28:42.101] [ERROR] default - Department fetched successfully
-[2024-04-03T18:29:38.127] [ERROR] default - Department fetched successfully
-[2024-04-03T18:30:00.766] [ERROR] default - Department fetched successfully
-[2024-04-03T18:30:51.387] [ERROR] default - Department fetched successfully
-=======
 [2024-04-04T01:52:09.446] [INFO] default - Server is running on port 8080
 [2024-04-04T01:52:10.410] [INFO] default - Connected to the database
 [2024-04-04T01:52:46.697] [ERROR] default - Error logging in user: [object Object]
@@ -420,7 +364,6 @@
 [2024-04-04T01:54:11.127] [INFO] default - User logged in successfully: [object Object]
 [2024-04-04T01:56:02.923] [INFO] default - User logged in successfully: [object Object]
 [2024-04-04T01:56:33.677] [INFO] default - User logged in successfully: [object Object]
->>>>>>> 2c83f56e617b26767b659e65518950eff7a39fb0
 [2024-04-05T16:04:54.540] [INFO] default - Server is running on port 5000
 [2024-04-05T16:04:55.437] [INFO] default - Connected to the database
 [2024-04-05T16:05:17.679] [INFO] default - User logged in successfully: [object Object]
@@ -524,3 +467,35 @@
 [2024-04-05T21:13:32.350] [INFO] default - Department updated successfully
 [2024-04-05T21:15:07.354] [INFO] default - Department deleted successfully
 [2024-04-05T21:15:23.831] [INFO] default - Department created successfully
+[2024-04-07T07:27:58.430] [INFO] default - Server is running on port 5000
+[2024-04-07T07:27:59.162] [INFO] default - Connected to the database
+[2024-04-07T07:28:34.461] [INFO] default - User logged in successfully: [object Object]
+[2024-04-07T07:29:00.576] [ERROR] default - Feedback fetched successfully
+[2024-04-07T07:29:55.832] [INFO] default - Feedback with id 66101b41d46bbe7947951404 fetched successfully
+[2024-04-07T07:31:08.121] [INFO] default - feedback created successfully
+[2024-04-07T07:32:11.922] [INFO] default - Feedback updated successfully
+[2024-04-07T07:32:23.484] [INFO] default - Feedback updated successfully
+[2024-04-07T07:32:42.256] [INFO] default - Feedback deleted successfully
+[2024-04-07T07:32:52.544] [ERROR] default - Feedback fetched successfully
+[2024-04-07T07:33:04.975] [INFO] default - feedback created successfully
+[2024-04-07T07:33:38.508] [ERROR] default - Feedback fetched successfully
+[2024-04-07T07:44:26.527] [INFO] default - Server is running on port 5000
+[2024-04-07T07:44:27.395] [INFO] default - Connected to the database
+[2024-04-07T07:48:26.286] [INFO] default - Server is running on port 5000
+[2024-04-07T07:48:27.481] [INFO] default - Connected to the database
+[2024-04-07T07:48:32.558] [ERROR] default - { status: 404, message: 'feedback not found' }
+[2024-04-07T07:48:42.493] [ERROR] default - Feedback fetched successfully
+[2024-04-07T07:49:00.694] [ERROR] default - { status: 404, message: 'feedback not found' }
+[2024-04-07T07:49:30.101] [ERROR] default - Feedback fetched successfully
+[2024-04-07T07:49:44.344] [INFO] default - Feedback with id 6611fed8255677f3d26c66cf fetched successfully
+[2024-04-07T07:54:02.966] [INFO] default - Server is running on port 5000
+[2024-04-07T07:54:03.685] [INFO] default - Connected to the database
+[2024-04-07T07:55:01.293] [INFO] default - Server is running on port 5000
+[2024-04-07T07:55:01.837] [INFO] default - Connected to the database
+[2024-04-07T07:55:06.583] [INFO] default - Feedback with id 6611fed8255677f3d26c66cf fetched successfully
+[2024-04-07T07:55:15.294] [INFO] default - Feedback deleted successfully
+[2024-04-07T07:55:25.168] [INFO] default - feedback created successfully
+[2024-04-07T07:55:53.736] [INFO] default - Feedback updated successfully
+[2024-04-07T07:56:01.769] [INFO] default - Feedback updated successfully
+[2024-04-07T07:56:11.397] [INFO] default - Feedback updated successfully
+[2024-04-07T07:56:23.932] [ERROR] default - Feedback fetched successfully
