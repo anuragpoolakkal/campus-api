@@ -44,35 +44,39 @@ const getStudentById = async (req, res) => {
 
 const createStudent = async (req, res) => {
     const schema = joi.object({
-        name: joi.string().required(),
         admNo: joi.string().required(),
         phone: joi.string().required(),
-        address: joi.string(),
+        address: joi.string().required(),
         rollNo: joi.string().required(),
-        collegeId: joi.string().required(),
         batchId: joi.string().required(),
+        collegeId: joi.string().required(),
     });
 
     try {
-        const { value: data, error } = schema.validate(req.body);
+        const data = await schema.validateAsync(req.body);
 
-        if (error) {
-            throw { status: 400, message: error.details[0].message };
-        }
+        const user = req.user;
 
-        const student = await studentService.createStudent(data, req.user._id);
+        const student = await studentService.createStudent(data, user._id, user.name, user.email);
 
         logger.info("Student created successfully");
-        return res.status(201).json({ data: student, success: true });
+        return res.status(201).json({
+            message: "Student registered successfully",
+            data: {
+                studentId: student._id,
+                name: student.name,
+                email: student.email,
+            },
+            success: true,
+        });
     } catch (error) {
-        logger.error(error.message);
+        logger.error(error);
         handleError(res, error);
     }
 };
 
 const updateStudent = async (req, res) => {
     const schema = joi.object({
-        name: joi.string().allow(""),
         admNo: joi.string().allow(""),
         phone: joi.string().allow(""),
         address: joi.string().allow(""),
