@@ -1,5 +1,5 @@
 import joi from "joi";
-import facultyService from "../services/faculty.services.js";
+import facultyService from "../services/faculty.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
 
