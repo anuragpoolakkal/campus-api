@@ -27,6 +27,7 @@ export const register = async (userData) => {
     await user.save();
 
     return {
+        _id: user._id,
         name: user.name,
         gender: user.gender,
         email: user.email,
