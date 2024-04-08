@@ -7,7 +7,7 @@ const welcome = async () => {
     return "<h1>Welcome to the user</h1>";
 };
 
-const register = async (userData) => {
+export const register = async (userData) => {
     const existingUser = await userModel.findOne({ email: userData.email });
 
     if (existingUser) {

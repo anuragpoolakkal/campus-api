@@ -1,4 +1,5 @@
 import joi from "joi";
+import { register } from "../services/user.service.js";
 import studentService from "../services/student.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
@@ -43,30 +44,32 @@ const getStudentById = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
-    const schema = joi.object({
-        admNo: joi.string().required(),
-        phone: joi.string().required(),
-        address: joi.string().required(),
-        rollNo: joi.string().required(),
-        batchId: joi.string().required(),
-        collegeId: joi.string().required(),
-    });
+    const userData = {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        gender: req.body.gender,
+    };
 
     try {
-        const data = await schema.validateAsync(req.body);
+        const userId = await register(userData);
 
-        const user = req.user;
+        const studentData = {
+            //userId: userId,
+            admNo: req.body.admNo,
+            phone: req.body.phone,
+            address: req.body.address,
+            rollNo: req.body.rollNo,
+            batchId: req.body.batchId,
+            collegeId: req.body.collegeId,
+        };
 
-        const student = await studentService.createStudent(data, user._id, user.name, user.email);
+        const student = await studentService.createStudent(studentData, userId);
 
         logger.info("Student created successfully");
         return res.status(201).json({
             message: "Student registered successfully",
-            data: {
-                studentId: student._id,
-                name: student.name,
-                email: student.email,
-            },
+            data: student,
             success: true,
         });
     } catch (error) {
