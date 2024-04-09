@@ -10,7 +10,7 @@ const getSchemeByCourse = async (req, res) => {
         var scheme;
 
         if (courseId && isValidObjectId(courseId)) {
-            scheme = await schemeService.fetchByCourse(courseId);
+            scheme = await schemeService.getByCourse(courseId);
         } else {
             throw { status: 400, message: "Invalid query parameters" };
         }
@@ -26,7 +26,7 @@ const getSchemeById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const scheme = await schemeService.fetchById(id);
+            const scheme = await schemeService.getById(id);
             logger.info(`Scheme with id ${id} fetched successfully`);
             return res.status(200).json({ data: scheme, success: true });
         }
@@ -108,7 +108,7 @@ const updateScheme = async (req, res) => {
 // Delete scheme
 const deleteScheme = async (req, res) => {
     try {
-        const scheme = await schemeService.deleteScheme(req.params.id);
+        const scheme = await schemeService.remove(req.params.id);
 
         logger.info("Scheme deleted successfully");
         return res.status(200).json({

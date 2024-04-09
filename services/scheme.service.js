@@ -1,8 +1,8 @@
 import courseModel from "../models/Course.js";
 import schemeModel from "../models/Scheme.js";
-import mongoose from "mongoose";
 
-const fetchById = async (schemeId) => {
+
+const getById = async (schemeId) => {
     const scheme = await schemeModel.findById(schemeId);
 
     if (!scheme) {
@@ -12,7 +12,7 @@ const fetchById = async (schemeId) => {
     return scheme;
 };
 
-const fetchByCourse = async (courseId) => {
+const getByCourse = async (courseId) => {
     const course = await courseModel.findById(courseId);
     if (!course) {
         throw {
@@ -53,7 +53,7 @@ const update = async (schemeId, data) => {
     return scheme;
 };
 
-const deleteScheme = async (schemeId) => {
+const remove= async (schemeId) => {
     const scheme = await schemeModel.findById(schemeId);
     if (!scheme) {
         throw { status: 404, message: "Scheme not found" };
@@ -64,9 +64,10 @@ const deleteScheme = async (schemeId) => {
 };
 
 export default {
-    fetchById,
-    fetchByCourse,
+    getById,
+    getByCourse,
     create,
     update,
-    deleteScheme,
+    remove,
+    
 };
