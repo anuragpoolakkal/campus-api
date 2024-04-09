@@ -55,13 +55,12 @@ const createStudent = async (req, res) => {
         address: joi.string().required(),
         rollNo: joi.string().required(),
         batchId: joi.string().required(),
-        collegeId: joi.string().required(),
     });
 
     try {
         // Validate request body against Joi schema
         const validatedData = await schema.validateAsync(req.body);
-
+        const adminCollegeId = req.user.college._id;
         // Check if the user already exists
         let user = await userModel.findOne({ email: validatedData.email });
 
@@ -81,11 +80,10 @@ const createStudent = async (req, res) => {
             address: validatedData.address,
             rollNo: validatedData.rollNo,
             batchId: validatedData.batchId,
-            collegeId: validatedData.collegeId,
         };
 
         // Create student with the obtained userId
-        const student = await studentService.createStudent(studentData, userId);
+        const student = await studentService.createStudent(studentData, userId, adminCollegeId);
 
         logger.info("Student created successfully");
         return res.status(201).json({
@@ -107,7 +105,6 @@ const updateStudent = async (req, res) => {
         phone: joi.string().allow(""),
         address: joi.string().allow(""),
         rollNo: joi.string().allow(""),
-        collegeId: joi.string().allow(""),
         batchId: joi.string().allow(""),
     });
 
