@@ -1,6 +1,7 @@
 import joi from "joi";
 import { register } from "../services/user.service.js";
 import userModel from "../models/User.js";
+import studentModel from "../models/Student.js";
 import studentService from "../services/student.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
@@ -61,6 +62,24 @@ const createStudent = async (req, res) => {
         // Validate request body against Joi schema
         const validatedData = await schema.validateAsync(req.body);
         const adminCollegeId = req.user.college._id;
+
+        const duplicateAdmNo = await studentModel.findOne({
+            admNo: validatedData.admNo,
+            collegeId: adminCollegeId,
+        });
+        if (duplicateAdmNo) {
+            throw { status: 400, message: "Duplicate admission number within the same college" };
+        }
+
+        // Check for duplicate roll number within the same batch
+        const duplicateRollNo = await studentModel.findOne({
+            rollNo: validatedData.rollNo,
+            batchId: validatedData.batchId,
+        });
+        if (duplicateRollNo) {
+            throw { status: 400, message: "Duplicate roll number within the same batch" };
+        }
+
         // Check if the user already exists
         let user = await userModel.findOne({ email: validatedData.email });
 
@@ -114,6 +133,7 @@ const updateStudent = async (req, res) => {
     try {
         const { value: data, error } = schema.validate(req.body);
         const { id } = req.params;
+        const adminCollegeId = req.user.college._id;
 
         if (!isValidObjectId(id)) {
             throw { status: 400, message: "Invalid student id" };
@@ -121,6 +141,33 @@ const updateStudent = async (req, res) => {
 
         if (error) {
             throw { status: 400, message: error.details[0].message };
+        }
+
+        // Check for duplicate admission number within the same college
+        if (data.admNo) {
+            const duplicateAdmNo = await studentModel.findOne({
+                admNo: data.admNo,
+                collegeId: adminCollegeId,
+                _id: { $ne: id }, // Exclude the current student being updated
+            });
+            if (duplicateAdmNo) {
+                throw {
+                    status: 400,
+                    message: "Duplicate admission number within the same college",
+                };
+            }
+        }
+
+        // Check for duplicate roll number within the same batch
+        if (data.rollNo) {
+            const duplicateRollNo = await studentModel.findOne({
+                rollNo: data.rollNo,
+                batchId: data.batchId,
+                _id: { $ne: id }, // Exclude the current student being updated
+            });
+            if (duplicateRollNo) {
+                throw { status: 400, message: "Duplicate roll number within the same batch" };
+            }
         }
 
         const student = await studentService.updateStudent(id, data);
