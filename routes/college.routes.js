@@ -5,6 +5,7 @@ import collegeController from "../controllers/college.controller.js";
 const router = express.Router();
 
 router.get("/:id", validateUser, collegeController.getCollege);
+router.get("/getallcount/:id", validateAdmin, collegeController.getAllCounts);
 router.post("/", validateAdmin, collegeController.createCollege);
 router.put("/:id", validateAdmin, collegeController.updateCollege);
 router.delete("/:id", validateAdmin, collegeController.deleteCollege);

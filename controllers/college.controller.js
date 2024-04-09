@@ -101,9 +101,22 @@ const deleteCollege = async (req, res) => {
     }
 };
 
+const getAllCounts = async (req, res) => {
+    try {
+        collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
+        const counts = await collegeService.getAllCounts(req.user.college._id);
+        logger.info("Counts fetched successfully");
+        return res.status(200).json({ data: counts, success: true });
+    } catch (error) {
+        logger.error(error);
+        handleError(res, error);
+    }
+};
+
 export default {
     getCollege,
     createCollege,
     updateCollege,
     deleteCollege,
+    getAllCounts,
 };
