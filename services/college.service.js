@@ -6,7 +6,7 @@ import departmentModel from "../models/Department.js";
 import batchModel from "../models/Batch.js";
 import studentModel from "../models/Student.js";
 import semesterModel from "../models/Semester.js";
-import FacultyModel from "../models/Faculty.js";
+import facultyModel from "../models/Faculty.js";
 import feedbackModel from "../models/Feedback.js";
 
 const checkCollegeBelongsToUser = async (collegeId, userCollegeId) => {
@@ -96,7 +96,7 @@ const getAllCounts = async (collegeId) => {
 
     const studentCount = await studentModel.countDocuments({ collegeId: collegeId });
     const semesterCount = await semesterModel.countDocuments({ collegeId: collegeId });
-    const facultyCount = await FacultyModel.countDocuments({ collegeId: collegeId });
+    const facultyCount = await facultyModel.countDocuments({ collegeId: collegeId });
 
     return {
         courseCount,
