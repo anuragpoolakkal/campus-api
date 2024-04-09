@@ -1,16 +1,15 @@
 import studentModel from "../models/Student.js";
 
-const createStudent = async (data, userId) => {
+const createStudent = async (data, userId, adminCollegeId) => {
     try {
         const student = new studentModel({
-            name: data.name,
+            userId: userId,
             admNo: data.admNo,
             phone: data.phone,
             address: data.address,
             rollNo: data.rollNo,
             batchId: data.batchId,
-            collegeId: data.collegeId,
-            userId: userId,
+            collegeId: adminCollegeId,
         });
 
         return await student.save();

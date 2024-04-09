@@ -1,4 +1,6 @@
 import joi from "joi";
+import { register } from "../services/user.service.js";
+import userModel from "../models/User.js";
 import studentService from "../services/student.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
@@ -10,7 +12,6 @@ const getStudents = async (req, res) => {
 
         let students;
 
-        // Get students by programId
         if (programId && isValidObjectId(programId)) {
             students = await studentService.findByProgramId(programId);
         } else if (deptId && isValidObjectId(deptId)) {
@@ -43,29 +44,58 @@ const getStudentById = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
+    // Joi schema for request body validation
     const schema = joi.object({
         name: joi.string().required(),
+        email: joi.string().email().required(),
+        password: joi.string().min(8).required(),
+        gender: joi.string().valid("M", "F").required(),
         admNo: joi.string().required(),
         phone: joi.string().required(),
-        address: joi.string(),
+        address: joi.string().required(),
         rollNo: joi.string().required(),
-        collegeId: joi.string().required(),
         batchId: joi.string().required(),
     });
 
     try {
-        const { value: data, error } = schema.validate(req.body);
+        // Validate request body against Joi schema
+        const validatedData = await schema.validateAsync(req.body);
+        const adminCollegeId = req.user.college._id;
+        // Check if the user already exists
+        let user = await userModel.findOne({ email: validatedData.email });
 
-        if (error) {
-            throw { status: 400, message: error.details[0].message };
+        let userId;
+        if (!user) {
+            // If user doesn't exist, register them
+            userId = await register({ ...validatedData, role: "student" });
+        } else {
+            // If user exists, use their existing userId
+            userId = user._id;
+            if (!user.role || user.role !== "student") {
+                await userModel.findByIdAndUpdate(user._id, { role: "student" });
+            }
         }
 
-        const student = await studentService.createStudent(data, req.user._id);
+        // Create student data
+        const studentData = {
+            admNo: validatedData.admNo,
+            phone: validatedData.phone,
+            address: validatedData.address,
+            rollNo: validatedData.rollNo,
+            batchId: validatedData.batchId,
+        };
+
+        // Create student with the obtained userId
+        const student = await studentService.createStudent(studentData, userId, adminCollegeId);
 
         logger.info("Student created successfully");
-        return res.status(201).json({ data: student, success: true });
+        return res.status(201).json({
+            message: "Student registered successfully",
+            data: student,
+            success: true,
+        });
     } catch (error) {
-        logger.error(error.message);
+        logger.error(error);
         handleError(res, error);
     }
 };
@@ -73,11 +103,11 @@ const createStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
     const schema = joi.object({
         name: joi.string().allow(""),
+        gender: joi.string().valid("M", "F"),
         admNo: joi.string().allow(""),
         phone: joi.string().allow(""),
         address: joi.string().allow(""),
         rollNo: joi.string().allow(""),
-        collegeId: joi.string().allow(""),
         batchId: joi.string().allow(""),
     });
 
