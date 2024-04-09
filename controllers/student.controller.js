@@ -55,6 +55,7 @@ const createStudent = async (req, res) => {
         address: joi.string().required(),
         rollNo: joi.string().required(),
         batchId: joi.string().required(),
+        role: joi.string().valid("student").default("student"),
     });
 
     try {
