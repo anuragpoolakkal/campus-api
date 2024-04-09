@@ -47,7 +47,7 @@ app.use(morgan("dev"));
 
 app.use("/college", collegeRoutes);
 app.use("/course", courseRoutes);
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 app.use("/program", programRoutes);
 app.use("/scheme", schemeRoutes);
 app.use("/department", departmentRoutes);

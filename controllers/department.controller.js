@@ -3,7 +3,7 @@ import DepartmentService from "../services/department.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
 
-const getDepartment = async (req, res) => {
+const getDepartments = async (req, res) => {
     try {
         const department = await DepartmentService.fetchAllByCollege(req.user.college._id);
         logger.error(`Department fetched successfully`);
@@ -97,7 +97,7 @@ const deleteDepartment = async (req, res) => {
 };
 
 export default {
-    getDepartment,
+    getDepartments,
     getDepartmentbyID,
     createDepartment,
     updateDepartment,
