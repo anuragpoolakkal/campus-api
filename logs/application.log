@@ -22663,3 +22663,115 @@
 [2024-04-09T12:38:05.662] [INFO] default - Connected to the database
 [2024-04-09T12:38:07.223] [INFO] default - Server is running on port 8080
 [2024-04-09T12:38:07.789] [INFO] default - Connected to the database
+[2024-04-09T12:38:51.663] [INFO] default - Server is running on port 8080
+[2024-04-09T12:38:52.384] [INFO] default - Connected to the database
+[2024-04-09T12:40:05.210] [INFO] default - Student created successfully
+[2024-04-09T12:40:05.437] [INFO] default - Students fetched successfully
+[2024-04-09T13:18:34.257] [INFO] default - Batches fetched successfully
+[2024-04-09T13:18:34.295] [INFO] default - Batches fetched successfully
+[2024-04-09T13:18:34.422] [INFO] default - Students fetched successfully
+[2024-04-09T13:18:34.627] [INFO] default - Students fetched successfully
+[2024-04-09T13:18:37.379] [INFO] default - Batches fetched successfully
+[2024-04-09T13:18:37.416] [INFO] default - Batches fetched successfully
+[2024-04-09T13:18:37.532] [INFO] default - Students fetched successfully
+[2024-04-09T13:18:37.734] [INFO] default - Students fetched successfully
+[2024-04-09T13:37:47.189] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:47.223] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:48.129] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:48.163] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:48.312] [INFO] default - Students fetched successfully
+[2024-04-09T13:37:48.528] [INFO] default - Students fetched successfully
+[2024-04-09T13:37:54.854] [ERROR] default - Department fetched successfully
+[2024-04-09T13:37:54.857] [ERROR] default - Department fetched successfully
+[2024-04-09T13:37:55.452] [ERROR] default - { status: 404, message: 'Faculty not found' }
+[2024-04-09T13:37:55.617] [ERROR] default - { status: 404, message: 'Faculty not found' }
+[2024-04-09T13:37:58.944] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:58.978] [INFO] default - Batches fetched successfully
+[2024-04-09T13:37:59.111] [INFO] default - Students fetched successfully
+[2024-04-09T13:37:59.321] [INFO] default - Students fetched successfully
+[2024-04-09T13:38:10.379] [ERROR] default - [Error [ValidationError]: "name" is not allowed to be empty] {
+  _original: {
+    name: '',
+    email: 'aqeelten@gmail.com',
+    password: 'password',
+    gender: '',
+    admNo: '',
+    phone: '',
+    address: '',
+    rollNo: '',
+    batchId: '6611181e22a489392f5dd80a'
+  },
+  details: [
+    {
+      message: '"name" is not allowed to be empty',
+      path: [Array],
+      type: 'string.empty',
+      context: [Object]
+    }
+  ]
+}
+[2024-04-09T13:38:13.796] [ERROR] default - [Error [ValidationError]: "name" is not allowed to be empty] {
+  _original: {
+    name: '',
+    email: 'aqeelten@gmail.com',
+    password: 'password',
+    gender: '',
+    admNo: '',
+    phone: '',
+    address: '',
+    rollNo: '',
+    batchId: '6611181e22a489392f5dd80a'
+  },
+  details: [
+    {
+      message: '"name" is not allowed to be empty',
+      path: [Array],
+      type: 'string.empty',
+      context: [Object]
+    }
+  ]
+}
+[2024-04-09T13:38:27.212] [ERROR] default - Department fetched successfully
+[2024-04-09T13:38:27.393] [ERROR] default - Department fetched successfully
+[2024-04-09T13:38:27.713] [ERROR] default - { status: 404, message: 'Faculty not found' }
+[2024-04-09T13:38:27.854] [ERROR] default - { status: 404, message: 'Faculty not found' }
+[2024-04-09T13:38:28.478] [ERROR] default - Department fetched successfully
+[2024-04-09T13:38:28.646] [ERROR] default - Department fetched successfully
+[2024-04-09T13:38:30.184] [ERROR] default - [Error [ValidationError]: "name" is not allowed to be empty] {
+  _original: { name: '', vision: '', mission: '' },
+  details: [
+    {
+      message: '"name" is not allowed to be empty',
+      path: [Array],
+      type: 'string.empty',
+      context: [Object]
+    }
+  ]
+}
+[2024-04-09T13:38:33.377] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:33.412] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:34.768] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:34.802] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:35.496] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:35.529] [INFO] default - Batches fetched successfully
+[2024-04-09T13:38:35.675] [INFO] default - Students fetched successfully
+[2024-04-09T13:38:35.901] [INFO] default - Students fetched successfully
+[2024-04-09T13:55:30.977] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:31.025] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:33.013] [ERROR] default - Department fetched successfully
+[2024-04-09T13:55:33.200] [ERROR] default - Department fetched successfully
+[2024-04-09T13:55:34.706] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:34.746] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:35.173] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:35.210] [INFO] default - Batches fetched successfully
+[2024-04-09T13:55:35.344] [INFO] default - Students fetched successfully
+[2024-04-09T13:55:35.560] [INFO] default - Students fetched successfully
+[2024-04-09T14:10:18.815] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:19.938] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:20.559] [INFO] default - Connected to the database
+[2024-04-09T14:10:23.350] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:24.069] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:24.798] [INFO] default - Connected to the database
+[2024-04-09T14:10:26.698] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:31.395] [INFO] default - Server is running on port 8080
+[2024-04-09T14:10:32.423] [INFO] default - Connected to the database
