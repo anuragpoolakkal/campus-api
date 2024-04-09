@@ -1,9 +1,9 @@
 import studentModel from "../models/Student.js";
-import userModel from "../models/User.js";
 
-const createStudent = async (data) => {
+const createStudent = async (data, userId) => {
     try {
         const student = new studentModel({
+            userId: userId,
             admNo: data.admNo,
             phone: data.phone,
             address: data.address,

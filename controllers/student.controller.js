@@ -1,5 +1,6 @@
 import joi from "joi";
 import { register } from "../services/user.service.js";
+import userModel from "../models/User.js";
 import studentService from "../services/student.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
@@ -11,7 +12,6 @@ const getStudents = async (req, res) => {
 
         let students;
 
-        // Get students by programId
         if (programId && isValidObjectId(programId)) {
             students = await studentService.findByProgramId(programId);
         } else if (deptId && isValidObjectId(deptId)) {
@@ -44,18 +44,20 @@ const getStudentById = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
-    const userData = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        gender: req.body.gender,
-    };
+    const { name, email, password, gender } = req.body;
 
     try {
-        const userId = await register(userData);
+        let user = await userModel.findOne({ email: email });
+
+        let userId;
+        if (!user) {
+            const userData = { name, email, password, gender };
+            userId = await register(userData);
+        } else {
+            userId = user._id;
+        }
 
         const studentData = {
-            //userId: userId,
             admNo: req.body.admNo,
             phone: req.body.phone,
             address: req.body.address,
