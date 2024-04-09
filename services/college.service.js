@@ -6,7 +6,7 @@ import departmentModel from "../models/Department.js";
 import batchModel from "../models/Batch.js";
 import studentModel from "../models/Student.js";
 import semesterModel from "../models/Semester.js";
-import FacultyModel from "../models/Faculty.js";
+import facultyModel from "../models/Faculty.js";
 import feedbackModel from "../models/Feedback.js";
 
 const checkCollegeBelongsToUser = async (collegeId, userCollegeId) => {
@@ -73,30 +73,35 @@ const deleteCollege = async (collegeId) => {
 };
 
 const getAllCounts = async (collegeId) => {
+    // Fetch college information
     const college = await fetchById(collegeId);
-
     if (!college) {
         throw { status: 404, message: "College not found" };
     }
 
-    const courseCount = await courseModel.countDocuments({ collegeId: collegeId });
-    let allCourses = await courseModel.find({ collegeId });
-    let feedbackCount = 0;
-    for (let i = 0; i < allCourses.length; i++) {
-        feedbackCount += await feedbackModel.find({ courseId: allCourses[i]._id }).countDocuments();
-    }
+    const [courseCount, departmentCount, programCount, studentCount, semesterCount, facultyCount] =
+        await Promise.all([
+            courseModel.countDocuments({ collegeId }),
+            departmentModel.countDocuments({ collegeId }),
+            programModel.countDocuments({ collegeId }),
+            studentModel.countDocuments({ collegeId }),
+            semesterModel.countDocuments({ collegeId }),
+            facultyModel.countDocuments({ collegeId }),
+        ]);
 
-    const departmentCount = await departmentModel.countDocuments({ collegeId: collegeId });
-    const programCount = await programModel.countDocuments({ collegeId: collegeId });
-    const allprograms = await programModel.find({ collegeId });
-    let batchCount = 0;
-    for (let i = 0; i < allprograms.length; i++) {
-        batchCount += await batchModel.find({ programId: allprograms[i]._id }).countDocuments();
-    }
+    const courseIds = (await courseModel.find({ collegeId }, "_id")).map((course) => course._id);
+    const feedbackCounts = await Promise.all(
+        courseIds.map((courseId) => feedbackModel.countDocuments({ courseId })),
+    );
+    const feedbackCount = feedbackCounts.reduce((total, count) => total + count, 0);
 
-    const studentCount = await studentModel.countDocuments({ collegeId: collegeId });
-    const semesterCount = await semesterModel.countDocuments({ collegeId: collegeId });
-    // const facultyCount = await FacultyModel.countDocuments({ collegeId: collegeId });
+    const programIds = (await programModel.find({ collegeId }, "_id")).map(
+        (program) => program._id,
+    );
+    const batchCounts = await Promise.all(
+        programIds.map((programId) => batchModel.countDocuments({ programId })),
+    );
+    const batchCount = batchCounts.reduce((total, count) => total + count, 0);
 
     return {
         courseCount,
@@ -106,7 +111,7 @@ const getAllCounts = async (collegeId) => {
         studentCount,
         semesterCount,
         feedbackCount,
-        // facultyCount,
+        facultyCount,
     };
 };
 

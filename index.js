@@ -13,7 +13,6 @@ import feedbackRoutes from "./routes/feedback.routes.js";
 import courseRoutes from "./routes/course.routes.js";
 import cors from "cors";
 import morgan from "morgan";
-import { validateAdmin, validateUser } from "./middlewares/userValidation.js";
 import rfs from "rotating-file-stream";
 import logger from "./utils/logger.js";
 
@@ -55,7 +54,6 @@ app.use("/batch", batchRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/feedback", feedbackRoutes);
 app.use("/student", studentRoutes);
-// app.use("/program", programRoutes);
 
 const PORT = process.env.PORT || 8080;
 
