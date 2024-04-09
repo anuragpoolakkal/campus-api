@@ -44,28 +44,47 @@ const getStudentById = async (req, res) => {
 };
 
 const createStudent = async (req, res) => {
-    const { name, email, password, gender } = req.body;
+    // Joi schema for request body validation
+    const schema = joi.object({
+        name: joi.string().required(),
+        email: joi.string().email().required(),
+        password: joi.string().min(8).required(),
+        gender: joi.string().valid("M", "F").required(),
+        admNo: joi.string().required(),
+        phone: joi.string().required(),
+        address: joi.string().required(),
+        rollNo: joi.string().required(),
+        batchId: joi.string().required(),
+        collegeId: joi.string().required(),
+    });
 
     try {
-        let user = await userModel.findOne({ email: email });
+        // Validate request body against Joi schema
+        const validatedData = await schema.validateAsync(req.body);
+
+        // Check if the user already exists
+        let user = await userModel.findOne({ email: validatedData.email });
 
         let userId;
         if (!user) {
-            const userData = { name, email, password, gender };
-            userId = await register(userData);
+            // If user doesn't exist, register them
+            userId = await register(validatedData);
         } else {
+            // If user exists, use their existing userId
             userId = user._id;
         }
 
+        // Create student data
         const studentData = {
-            admNo: req.body.admNo,
-            phone: req.body.phone,
-            address: req.body.address,
-            rollNo: req.body.rollNo,
-            batchId: req.body.batchId,
-            collegeId: req.body.collegeId,
+            admNo: validatedData.admNo,
+            phone: validatedData.phone,
+            address: validatedData.address,
+            rollNo: validatedData.rollNo,
+            batchId: validatedData.batchId,
+            collegeId: validatedData.collegeId,
         };
 
+        // Create student with the obtained userId
         const student = await studentService.createStudent(studentData, userId);
 
         logger.info("Student created successfully");
@@ -82,6 +101,8 @@ const createStudent = async (req, res) => {
 
 const updateStudent = async (req, res) => {
     const schema = joi.object({
+        name: joi.string().allow(""),
+        gender: joi.string().allow(""),
         admNo: joi.string().allow(""),
         phone: joi.string().allow(""),
         address: joi.string().allow(""),
@@ -96,6 +117,10 @@ const updateStudent = async (req, res) => {
 
         if (!isValidObjectId(id)) {
             throw { status: 400, message: "Invalid student id" };
+        }
+
+        if (req.body.email || req.body.password) {
+            throw { status: 400, message: "Cannot update email and password" };
         }
 
         if (error) {
