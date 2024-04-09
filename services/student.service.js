@@ -10,7 +10,6 @@ const createStudent = async (data, userId, adminCollegeId) => {
             rollNo: data.rollNo,
             batchId: data.batchId,
             collegeId: adminCollegeId,
-            rollNo: data.rollNo,
         });
 
         return await student.save();

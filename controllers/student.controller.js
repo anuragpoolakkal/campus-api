@@ -55,7 +55,6 @@ const createStudent = async (req, res) => {
         address: joi.string().required(),
         rollNo: joi.string().required(),
         batchId: joi.string().required(),
-        role: joi.string().valid("student").default("student"),
     });
 
     try {
@@ -68,10 +67,13 @@ const createStudent = async (req, res) => {
         let userId;
         if (!user) {
             // If user doesn't exist, register them
-            userId = await register(validatedData);
+            userId = await register({ ...validatedData, role: "student" });
         } else {
             // If user exists, use their existing userId
             userId = user._id;
+            if (!user.role || user.role !== "student") {
+                await userModel.findByIdAndUpdate(user._id, { role: "student" });
+            }
         }
 
         // Create student data
@@ -101,7 +103,7 @@ const createStudent = async (req, res) => {
 const updateStudent = async (req, res) => {
     const schema = joi.object({
         name: joi.string().allow(""),
-        gender: joi.string().allow(""),
+        gender: joi.string().valid("M", "F"),
         admNo: joi.string().allow(""),
         phone: joi.string().allow(""),
         address: joi.string().allow(""),
@@ -115,10 +117,6 @@ const updateStudent = async (req, res) => {
 
         if (!isValidObjectId(id)) {
             throw { status: 400, message: "Invalid student id" };
-        }
-
-        if (req.body.email || req.body.password) {
-            throw { status: 400, message: "Cannot update email and password" };
         }
 
         if (error) {
