@@ -51,6 +51,9 @@ const deleteStudent = async (id) => {
     if (!student) {
         throw { status: 404, message: "Student not found" };
     }
+
+    await userModel.findByIdAndDelete(student.userId);
+
     return student;
 };
 
