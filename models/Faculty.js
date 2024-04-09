@@ -8,12 +8,18 @@ const FacultySchema = new mongoose.Schema(
         },
         role: {
             type: String,
+            enum: ["hod", "tutor", "teacher"],
             required: true,
-            enum: ["hod", "tutor", "teacher"]
+        },
+        collegeId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "College",
+            required: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: true,
         },
     },
     {
