@@ -17,7 +17,7 @@ const getStudents = async (req, res) => {
         } else if (deptId && isValidObjectId(deptId)) {
             students = await studentService.findByDepartmentId(deptId);
         } else {
-            students = await studentService.findAll();
+            students = await studentService.findAll(req.user.college._id);
         }
 
         logger.info("Students fetched successfully");

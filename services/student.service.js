@@ -1,4 +1,5 @@
 import studentModel from "../models/Student.js";
+import userModel from "../models/User.js";
 
 const createStudent = async (data, userId, adminCollegeId) => {
     try {
@@ -34,8 +35,15 @@ const findById = async (id) => {
     return student;
 };
 
-const findAll = async () => {
-    return await studentModel.find();
+const findAll = async (adminCollegeId) => {
+    const students = await studentModel.find({ collegeId: adminCollegeId }).lean();
+    for (const student of students) {
+        const user = await userModel.findById(student.userId).lean();
+        student.name = user.name;
+        student.email = user.email;
+    }
+
+    return students;
 };
 
 const deleteStudent = async (id) => {
