@@ -96,7 +96,7 @@ const getAllCounts = async (collegeId) => {
 
     const studentCount = await studentModel.countDocuments({ collegeId: collegeId });
     const semesterCount = await semesterModel.countDocuments({ collegeId: collegeId });
-    // const facultyCount = await FacultyModel.countDocuments({ collegeId: collegeId });
+    const facultyCount = await FacultyModel.countDocuments({ collegeId: collegeId });
 
     return {
         courseCount,
@@ -106,7 +106,7 @@ const getAllCounts = async (collegeId) => {
         studentCount,
         semesterCount,
         feedbackCount,
-        // facultyCount,
+        facultyCount,
     };
 };
 
