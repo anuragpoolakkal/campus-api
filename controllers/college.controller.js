@@ -104,7 +104,7 @@ const deleteCollege = async (req, res) => {
 const getAllCounts = async (req, res) => {
     try {
         const counts = await collegeService.getAllCounts(req.user.college._id);
-        logger.info("Counts fetched successfully");
+        logger.info("Counts fetched successfully"); 
         return res.status(200).json({ data: counts, success: true });
     } catch (error) {
         logger.error(error);
