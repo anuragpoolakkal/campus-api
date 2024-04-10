@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", validateAdmin, studentController.createStudent);
 router.put("/:id", validateAdmin, studentController.updateStudent);
 router.get("/:id", validateUser, studentController.getStudentById);
-// router.get("/", validateAdmin, studentController.getStudents);
+router.get("/", validateAdmin, studentController.getStudents);
 router.delete("/:id", validateAdmin, studentController.deleteStudent);
 
 export default router;
