@@ -1,7 +1,7 @@
 import studentModel from "../models/Student.js";
 import userModel from "../models/User.js";
 
-const createStudent = async (data, userId, adminCollegeId) => {
+const create = async (data, userId, adminCollegeId) => {
     try {
         const student = new studentModel({
             userId: userId,
@@ -19,7 +19,7 @@ const createStudent = async (data, userId, adminCollegeId) => {
     }
 };
 
-const updateStudent = async (id, data) => {
+const update = async (id, data) => {
     const student = await studentModel.findByIdAndUpdate(id, data, { new: true });
     if (!student) {
         throw { status: 404, message: "Student not found" };
@@ -27,7 +27,7 @@ const updateStudent = async (id, data) => {
     return student;
 };
 
-const findById = async (id) => {
+const getById = async (id) => {
     const student = await studentModel.findById(id);
     if (!student) {
         throw { status: 404, message: "Student not found" };
@@ -35,7 +35,7 @@ const findById = async (id) => {
     return student;
 };
 
-const findAll = async (adminCollegeId) => {
+const getAll = async (adminCollegeId) => {
     const students = await studentModel.find({ collegeId: adminCollegeId }).lean();
     for (const student of students) {
         const user = await userModel.findById(student.userId).lean();
@@ -46,7 +46,7 @@ const findAll = async (adminCollegeId) => {
     return students;
 };
 
-const deleteStudent = async (id) => {
+const remove = async (id) => {
     const student = await studentModel.findByIdAndDelete(id);
     if (!student) {
         throw { status: 404, message: "Student not found" };
@@ -58,9 +58,9 @@ const deleteStudent = async (id) => {
 };
 
 export default {
-    createStudent,
-    updateStudent,
-    findById,
-    findAll,
-    deleteStudent,
+    create,
+    update,
+    getById,
+    getAll,
+    remove,
 };
