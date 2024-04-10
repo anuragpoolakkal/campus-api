@@ -198,7 +198,6 @@ const deleteStudent = async (req, res) => {
 export default {
     createStudent,
     updateStudent,
-    getStudents,
     getStudentById,
     deleteStudent,
 };
