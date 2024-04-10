@@ -1,6 +1,6 @@
 import batchModel from "../models/Batch.js";
 
-const createBatch = async (data, userId) => {
+const create = async (data, userId) => {
     try {
         const batch = new batchModel({
             name: data.name,
@@ -17,7 +17,7 @@ const createBatch = async (data, userId) => {
     }
 };
 
-const fetchById = async (batchId) => {
+const getById = async (batchId) => {
     try {
         return await batchModel.findById(batchId);
     } catch (error) {
@@ -25,7 +25,7 @@ const fetchById = async (batchId) => {
     }
 };
 
-const updateBatch = async (batchId, data) => {
+const update = async (batchId, data) => {
     try {
         return await batchModel.findByIdAndUpdate(batchId, { $set: data }, { runValidators: true });
     } catch (error) {
@@ -33,7 +33,7 @@ const updateBatch = async (batchId, data) => {
     }
 };
 
-const deleteBatch = async (batchId) => {
+const remove = async (batchId) => {
     try {
         return await batchModel.findByIdAndDelete(batchId);
     } catch (error) {
@@ -41,7 +41,7 @@ const deleteBatch = async (batchId) => {
     }
 };
 
-const fetchAll = async () => {
+const getAll = async () => {
     try {
         return await batchModel.find();
     } catch (error) {
@@ -49,7 +49,7 @@ const fetchAll = async () => {
     }
 };
 
-const fetchAllByProgramId = async (programId) => {
+const getAllByProgramId = async (programId) => {
     try {
         return await batchModel.find({ programId });
     } catch (error) {
@@ -57,7 +57,7 @@ const fetchAllByProgramId = async (programId) => {
     }
 };
 
-const fetchAllByDepartmentId = async (deptId) => {
+const getAllByDepartmentId = async (deptId) => {
     try {
         return await batchModel.find({ deptId });
     } catch (error) {
@@ -66,11 +66,11 @@ const fetchAllByDepartmentId = async (deptId) => {
 };
 
 export default {
-    createBatch,
-    fetchById,
-    updateBatch,
-    deleteBatch,
-    fetchAll,
-    fetchAllByProgramId,
-    fetchAllByDepartmentId,
+    getById,
+    getAll,
+    getAllByProgramId,
+    getAllByDepartmentId,
+    create,
+    update,
+    remove,
 };

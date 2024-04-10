@@ -5,7 +5,7 @@ import logger from "../utils/logger.js";
 
 const getDepartments = async (req, res) => {
     try {
-        const department = await DepartmentService.fetchAllByCollege(req.user.college._id);
+        const department = await DepartmentService.getAllByCollege(req.user.college._id);
         logger.error(`Department fetched successfully`);
         return res.status(200).json({ data: department, success: true });
     } catch (error) {
@@ -15,7 +15,7 @@ const getDepartments = async (req, res) => {
 };
 
 // Get department by departmentId
-const getDepartmentbyID = async (req, res) => {
+const getDepartmentbyId = async (req, res) => {
     try {
         const department = await DepartmentService.fetchById(req.params.id);
         logger.error(`Department fetched successfully`);
@@ -98,7 +98,7 @@ const deleteDepartment = async (req, res) => {
 
 export default {
     getDepartments,
-    getDepartmentbyID,
+    getDepartmentbyId,
     createDepartment,
     updateDepartment,
     deleteDepartment,

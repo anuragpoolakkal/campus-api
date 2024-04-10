@@ -5,7 +5,7 @@ import { handleError } from "../utils/utils.js";
 
 const getAllPrograms = async (req, res) => {
     try {
-        const programs = await programService.getAllPrograms();
+        const programs = await programService.getAll();
         logger.info(`Programs fetched successfully: ${programs}`);
         res.json({ data: programs, message: "programs fetched successfully", success: true });
     } catch (error) {
@@ -17,7 +17,7 @@ const getAllPrograms = async (req, res) => {
 const getProgramById = async (req, res) => {
     try {
         const { id } = req.params;
-        const program = await programService.getProgramById(id);
+        const program = await programService.getById(id);
         if (!program) {
             return res.status(404).json({ message: "Program not found", success: false });
         }
@@ -41,7 +41,7 @@ const createProgram = async (req, res) => {
         if (error) {
             throw { status: 400, message: error.details[0].message };
         }
-        const program = await programService.createProgram(data);
+        const program = await programService.create(data);
 
         logger.info(`Program created successfully: ${program}`);
         res.status(200).json({
@@ -68,7 +68,7 @@ const updateProgram = async (req, res) => {
         if (error) {
             throw { status: 400, message: error.details[0].message };
         }
-        const program = await programService.updateProgram(id, data);
+        const program = await programService.update(id, data);
         if (!program) {
             throw { status: 404, message: "Program not found" };
         }
@@ -83,7 +83,7 @@ const updateProgram = async (req, res) => {
 const deleteProgram = async (req, res) => {
     try {
         const { id } = req.params;
-        const program = await programService.deleteProgram(id);
+        const program = await programService.remove(id);
         if (!program) {
             throw { status: 404, message: "Program not found" };
         }

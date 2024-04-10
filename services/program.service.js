@@ -4,7 +4,7 @@ import departmentModel from "../models/Department.js";
 import mongoose from "mongoose";
 import { isValidObjectId } from "mongoose";
 
-const getAllPrograms = async () => {
+const getAll = async () => {
     try {
         return await programModel.find();
     } catch (error) {
@@ -12,7 +12,7 @@ const getAllPrograms = async () => {
     }
 };
 
-const getProgramById = async (id) => {
+const getById = async (id) => {
     try {
         return await programModel.findById(id);
     } catch (error) {
@@ -20,7 +20,7 @@ const getProgramById = async (id) => {
     }
 };
 
-const createProgram = async (data) => {
+const create = async (data) => {
     try {
         const { name, deptId, collegeId } = data;
 
@@ -51,7 +51,7 @@ const createProgram = async (data) => {
     }
 };
 
-const updateProgram = async (id, data) => {
+const update = async (id, data) => {
     try {
         const { name, deptId, collegeId } = data;
 
@@ -68,7 +68,7 @@ const updateProgram = async (id, data) => {
     }
 };
 
-const deleteProgram = async (id) => {
+const remove = async (id) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) {
             throw new Error("Invalid program ID");
@@ -81,9 +81,9 @@ const deleteProgram = async (id) => {
 };
 
 export default {
-    getAllPrograms,
-    getProgramById,
-    createProgram,
-    updateProgram,
-    deleteProgram,
+    getAll,
+    getById,
+    create,
+    update,
+    remove,
 };

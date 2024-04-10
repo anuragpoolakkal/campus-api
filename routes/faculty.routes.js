@@ -9,6 +9,5 @@ router.get("/:id", validateUser, facultyController.getFacultyById);
 router.post("/", validateAdmin, facultyController.createFaculty);
 router.put("/:id", validateAdmin, facultyController.updateFaculty);
 
-
 export default router;
  

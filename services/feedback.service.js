@@ -3,7 +3,7 @@ import CourseModel from "../models/Course.js";
 import FeedbackModel from "../models/Feedback.js";
 import collegeModel from "../models/College.js";
 
-const fetchById = async (feedbackId) => {
+const getById = async (feedbackId) => {
     const feedback = await FeedbackModel.findById(feedbackId);
     if (!feedback) {
         throw { status: 404, message: "feedback not found" };
@@ -12,7 +12,7 @@ const fetchById = async (feedbackId) => {
     return feedback;
 };
 
-const fetchAllByCourseId = async (courseId) => {
+const getAllByCourseId = async (courseId) => {
     const course = await CourseModel.findById(courseId);
     if (!course) {
         throw { status: 404, message: "course not found" };
@@ -23,7 +23,7 @@ const fetchAllByCourseId = async (courseId) => {
     return feedback;
 };
 
-const getAllFeedback = async () => {
+const getAll = async () => {
     const feedback = await FeedbackModel.find();
     return feedback;
 };
@@ -60,7 +60,7 @@ const update = async (feedbackId, data) => {
     return feedback;
 };
 
-const deleteFeedback = async (feedbackId) => {
+const remove = async (feedbackId) => {
     const feedback = await FeedbackModel.findById(feedbackId);
     if (!feedback) {
         throw { status: 404, message: "feedback not found" };
@@ -71,10 +71,10 @@ const deleteFeedback = async (feedbackId) => {
 };
 
 export default {
-    fetchById,
-    getAllFeedback,
-    fetchAllByCourseId,
+    getById,
+    getAll,
+    getAllByCourseId,
     create,
     update,
-    deleteFeedback
+    remove
 };

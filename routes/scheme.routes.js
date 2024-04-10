@@ -1,5 +1,4 @@
 import express from "express";
-
 import schemeController from "../controllers/scheme.controller.js";
 
 const router = express.Router();

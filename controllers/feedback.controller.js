@@ -1,6 +1,5 @@
 import joi from "joi";
-import FeedbackService from "../services/feedback.service.js";
-import { isValidObjectId } from "mongoose";
+import feedbackService from "../services/feedback.service.js";
 import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
 
@@ -9,7 +8,7 @@ const getFeedbackById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const feedback = await FeedbackService.fetchById(id);
+            const feedback = await feedbackService.getById(id);
             logger.info(`Feedback with id ${id} fetched successfully`);
             return res.status(200).json({ data: feedback, success: true });
         }
@@ -21,7 +20,7 @@ const getFeedbackById = async (req, res) => {
 
 const getFeedback = async (req, res) => {
     try {
-        const feedback = await FeedbackService.getAllFeedback(req.user.college._id);
+        const feedback = await feedbackService.getAll(req.user.college._id);
         logger.error(`Feedback fetched successfully`);
         return res.status(200).json({ data: feedback, success: true });
     } catch (error) {
@@ -54,7 +53,7 @@ const createFeedback = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const feedback = await FeedbackService.create(data, req.user._id);
+        const feedback = await feedbackService.create(data, req.user._id);
 
         logger.info("feedback created successfully");
         return res.status(201).json({
@@ -94,7 +93,7 @@ const updateFeedback = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const feedback = await FeedbackService.update(req.params.id, data);
+        const feedback = await feedbackService.update(req.params.id, data);
 
         logger.info("Feedback updated successfully");
         return res.status(200).json({
@@ -110,7 +109,7 @@ const updateFeedback = async (req, res) => {
 
 const deleteFeedback = async (req, res) => {
     try {
-        const feedback = await FeedbackService.deleteFeedback(req.params.id);
+        const feedback = await feedbackService.remove(req.params.id);
 
         logger.info("Feedback deleted successfully");
         return res.status(200).json({

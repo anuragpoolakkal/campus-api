@@ -7,27 +7,27 @@ import { handleError } from "../utils/utils.js";
 import logger from "../utils/logger.js";
 import { isValidObjectId } from "mongoose";
 
-const getStudents = async (req, res) => {
-    try {
-        const { programId, deptId } = req.query;
+// const getStudents = async (req, res) => {
+//     try {
+//         const { programId, deptId } = req.query;
 
-        let students;
+//         let students;
 
-        if (programId && isValidObjectId(programId)) {
-            students = await studentService.findByProgramId(programId);
-        } else if (deptId && isValidObjectId(deptId)) {
-            students = await studentService.findByDepartmentId(deptId);
-        } else {
-            students = await studentService.getAll(req.user.college._id);
-        }
+//         if (programId && isValidObjectId(programId)) {
+//             students = await studentService.findByProgramId(programId);
+//         } else if (deptId && isValidObjectId(deptId)) {
+//             students = await studentService.findByDepartmentId(deptId);
+//         } else {
+//             students = await studentService.getAll(req.user.college._id);
+//         }
 
-        logger.info("Students fetched successfully");
-        return res.status(200).json({ data: students, success: true });
-    } catch (error) {
-        logger.error(error.message);
-        handleError(res, error);
-    }
-};
+//         logger.info("Students fetched successfully");
+//         return res.status(200).json({ data: students, success: true });
+//     } catch (error) {
+//         logger.error(error.message);
+//         handleError(res, error);
+//     }
+// };
 
 const getStudentById = async (req, res) => {
     try {

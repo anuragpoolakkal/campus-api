@@ -15,7 +15,7 @@ const checkCollegeBelongsToUser = async (collegeId, userCollegeId) => {
     }
 };
 
-const fetchById = async (collegeId) => {
+const getById = async (collegeId) => {
     const college = await collegeModel.findById(collegeId);
     if (!college) {
         throw { status: 404, message: "College not found" };
@@ -62,7 +62,7 @@ const update = async (collegeId, data) => {
     return college;
 };
 
-const deleteCollege = async (collegeId) => {
+const remove = async (collegeId) => {
     const college = await fetchById(collegeId);
 
     await collegeModel.findByIdAndDelete(collegeId);
@@ -116,10 +116,10 @@ const getAllCounts = async (collegeId) => {
 };
 
 export default {
-    fetchById,
+    getById,
+    getAllCounts,
     create,
     update,
-    deleteCollege,
+    remove,
     checkCollegeBelongsToUser,
-    getAllCounts,
 };

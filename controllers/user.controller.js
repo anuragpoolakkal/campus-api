@@ -97,7 +97,7 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-const getUserById = async (req, res) => {
+const getById = async (req, res) => {
     try {
         const user = await userService.getUserById(req.params.id);
 
@@ -130,6 +130,6 @@ export default {
     login,
     updatePassword,
     getAllUsers,
-    getUserById,
+    getById,
     verifyUser,
 };

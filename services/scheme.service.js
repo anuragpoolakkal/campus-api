@@ -69,5 +69,4 @@ export default {
     create,
     update,
     remove,
-    
 };

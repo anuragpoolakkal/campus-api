@@ -12,11 +12,11 @@ const getBatches = async (req, res) => {
 
         // Get batches by programId
         if (programId && isValidObjectId(programId)) {
-            batches = await batchService.fetchAllByProgramId(programId);
+            batches = await batchService.getAllByProgramId(programId);
         } else if (deptId && isValidObjectId(deptId)) {
-            batches = await batchService.fetchAllByDepartmentId(deptId);
+            batches = await batchService.getAllByDepartmentId(deptId);
         } else {
-            batches = await batchService.fetchAll();
+            batches = await batchService.getAll();
         }
 
         logger.info("Batches fetched successfully");
@@ -32,7 +32,7 @@ const getBatchById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const batch = await batchService.fetchById(id);
+            const batch = await batchService.getById(id);
             logger.info("Batch fetched successfully");
             return res.status(200).json({ data: batch, success: true });
         }
@@ -59,7 +59,7 @@ const createBatch = async (req, res) => {
             throw { status: 400, message: error.details[0].message };
         }
 
-        const batch = await batchService.createBatch(data, req.user._id);
+        const batch = await batchService.create(data, req.user._id);
 
         logger.info("Batch created successfully");
         return res.status(201).json({ data: batch, success: true });
@@ -90,7 +90,7 @@ const updateBatch = async (req, res) => {
             throw { status: 400, message: error.details[0].message };
         }
 
-        const batch = await batchService.updateBatch(id, data);
+        const batch = await batchService.update(id, data);
 
         logger.info("Batch updated successfully");
         return res.status(200).json({ data: batch, success: true });
@@ -105,7 +105,7 @@ const deleteBatch = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const batch = await batchService.deleteBatch(id);
+            const batch = await batchService.remove(id);
             logger.info("Batch deleted successfully");
             return res.status(200).json({ data: batch, success: true });
         }

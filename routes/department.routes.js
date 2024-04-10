@@ -1,6 +1,7 @@
 import express from "express";
 import { validateAdmin, validateUser } from "../middlewares/userValidation.js";
 import departmentController from "../controllers/department.controller.js";
+
 const router = express.Router();
 
 router.get("/", validateUser, departmentController.getDepartments);

@@ -8,7 +8,7 @@ const checkDepartmentUserCollege = async (departmentId, userCollegeId) => {
     }
 };
 
-const fetchById = async (departmentId) => {
+const getById = async (departmentId) => {
     const department = await DepartmentModel.findById(departmentId);
     if (!department) {
         throw { status: 404, message: "Department not found" };
@@ -17,7 +17,7 @@ const fetchById = async (departmentId) => {
     return department;
 };
 
-const fetchAllByCollege = async (collegeId) => {
+const getAllByCollege = async (collegeId) => {
     const college = await collegeModel.findById(collegeId);
     if (!college) {
         throw { status: 404, message: "College not found" };
@@ -60,19 +60,19 @@ const update = async (departmentId, data, collegeId) => {
     return department;
 };
 
-const deleteDepartment = async (departmentId) => {
+const remove = async (departmentId) => {
     const department = await fetchById(departmentId);
 
     await DepartmentModel.findByIdAndDelete(departmentId);
-    
+
     return department;
 };
 
 export default {
-    fetchById,
-    fetchAllByCollege,
+    getById,
+    getAllByCollege,
     create,
     update,
-    deleteDepartment,
+    remove,
     checkDepartmentUserCollege,
 };

@@ -6,7 +6,7 @@ import logger from "../utils/logger.js";
 // Get college by collegeId
 const getCollege = async (req, res) => {
     try {
-        const college = await collegeService.fetchById(req.params.id);
+        const college = await collegeService.getById(req.params.id);
         collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
         logger.info(`College with id ${req.params.id} fetched successfully`);
         return res.status(200).json({ data: college, success: true });
@@ -84,14 +84,14 @@ const updateCollege = async (req, res) => {
 // Delete college
 const deleteCollege = async (req, res) => {
     try {
-        const college = await collegeService.fetchById(req.params.id);
+        const college = await collegeService.getById(req.params.id);
         if (!college) {
             throw { status: 404, message: "College not found" };
         }
 
         collegeService.checkCollegeBelongsToUser(req.params.id, req.user.college._id);
 
-        await collegeService.deleteCollege(req.params.id);
+        await collegeService.remove(req.params.id);
 
         logger.info("College deleted successfully");
         return res.status(200).json({ message: "College deleted successfully", success: true });
@@ -114,8 +114,8 @@ const getAllCounts = async (req, res) => {
 
 export default {
     getCollege,
+    getAllCounts,
     createCollege,
     updateCollege,
     deleteCollege,
-    getAllCounts,
 };

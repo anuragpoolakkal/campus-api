@@ -9,7 +9,7 @@ const checkCourseUserCollege = async (courseCollegeId, userCollegeId) => {
     }
 };
 
-const fetchById = async (courseId) => {
+const getById = async (courseId) => {
     const course = await courseModel.findById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
@@ -18,7 +18,7 @@ const fetchById = async (courseId) => {
     return course;
 };
 
-const fetchByCourseCode = async (courseCode) => {
+const getByCourseCode = async (courseCode) => {
     const course = await courseModel.findOne({ courseCode: courseCode });
     if (!course) {
         throw { status: 404, message: "Course not found" };
@@ -27,7 +27,7 @@ const fetchByCourseCode = async (courseCode) => {
     return course;
 };
 
-const fetchAllByCollege = async (collegeId) => {
+const getAllByCollege = async (collegeId) => {
     const college = await collegeModel.findById(collegeId);
     if (!college) {
         throw { status: 404, message: "College not found" };
@@ -38,7 +38,7 @@ const fetchAllByCollege = async (collegeId) => {
     return courses;
 };
 
-const fetchAllBySemester = async (semesterId, collegeId) => {
+const getAllBySemester = async (semesterId, collegeId) => {
     const semester = await semesterModel.findOne({ semesterId: semesterId, collegeId: collegeId });
     if (!semester) {
         throw { status: 404, message: "Semester not found" };
@@ -49,7 +49,7 @@ const fetchAllBySemester = async (semesterId, collegeId) => {
     return courses;
 };
 
-const fetchAllBySemesterAndCollege = async (semesterId, collegeId) => {
+const getAllBySemesterAndCollege = async (semesterId, collegeId) => {
     const semester = await semesterModel.findOne({ semesterId: semesterId, collegeId: collegeId });
 
     if (!semester) {
@@ -104,7 +104,7 @@ const update = async (courseId, data, collegeId) => {
     return course;
 };
 
-const deleteCourse = async (courseId, collegeId) => {
+const remove = async (courseId, collegeId) => {
     const course = fetchById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
@@ -119,13 +119,13 @@ const deleteCourse = async (courseId, collegeId) => {
 };
 
 export default {
-    checkCourseUserCollege,
-    fetchById,
-    fetchByCourseCode,
-    fetchAllByCollege,
-    fetchAllBySemester,
-    fetchAllBySemesterAndCollege,
+    getById,
+    getByCourseCode,
+    getAllByCollege,
+    getAllBySemester,
+    getAllBySemesterAndCollege,
     create,
     update,
-    deleteCourse,
+    remove,
+    checkCourseUserCollege,
 };

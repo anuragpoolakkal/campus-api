@@ -12,15 +12,15 @@ const getCourse = async (req, res) => {
 
         // Get course by semesterId
         if (semesterId && isValidObjectId(semesterId)) {
-            data = await courseService.fetchAllBySemester(semesterId, req.user.college._id);
+            data = await courseService.getAllBySemester(semesterId, req.user.college._id);
         }
         // Get course by collegeId
         else if (collegeId && isValidObjectId(collegeId)) {
-            data = await courseService.fetchAllByCollege(collegeId);
+            data = await courseService.getAllByCollege(collegeId);
         }
         // Get course by courseCode
         else if (courseCode) {
-            data = await courseService.fetchByCourseCode(courseCode);
+            data = await courseService.getByCourseCode(courseCode);
         }
         // Get course by semesterId and collegeId
         else if (
@@ -29,7 +29,7 @@ const getCourse = async (req, res) => {
             isValidObjectId(collegeId) &&
             isValidObjectId(semesterId)
         ) {
-            data = await courseService.fetchAllBySemesterAndCollege(semesterId, collegeId);
+            data = await courseService.getAllBySemesterAndCollege(semesterId, collegeId);
         } else {
             throw { status: 400, message: "Invalid query parameters" };
         }
@@ -45,7 +45,7 @@ const getCourseById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const course = await courseService.fetchById(id);
+            const course = await courseService.getById(id);
             return res.status(200).json({ data: course, success: true });
         }
     } catch (error) {
@@ -104,7 +104,7 @@ const updateCourse = async (req, res) => {
 // Delete course
 const deleteCourse = async (req, res) => {
     try {
-        const course = await courseService.deleteCourse(req.params.id, req.user.college._id);
+        const course = await courseService.remove(req.params.id, req.user.college._id);
 
         return res.status(200).json({
             message: "Course deleted successfully",
