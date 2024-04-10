@@ -10,6 +10,11 @@ const FeedbackSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        color: {
+            type: String,
+            enum: ["black", "red", "green", "blue", "yellow", "pink"],
+            required: true,
+        },
         questions: [
             {
                 question: {
