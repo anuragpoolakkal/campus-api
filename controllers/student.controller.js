@@ -18,7 +18,7 @@ const getStudents = async (req, res) => {
         } else if (deptId && isValidObjectId(deptId)) {
             students = await studentService.findByDepartmentId(deptId);
         } else {
-            students = await studentService.findAll(req.user.college._id);
+            students = await studentService.getAll(req.user.college._id);
         }
 
         logger.info("Students fetched successfully");
@@ -34,7 +34,7 @@ const getStudentById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const student = await studentService.findById(id);
+            const student = await studentService.getById(id);
             logger.info("Student fetched successfully");
             return res.status(200).json({ data: student, success: true });
         }
@@ -105,7 +105,7 @@ const createStudent = async (req, res) => {
         };
 
         // Create student with the obtained userId
-        const student = await studentService.createStudent(studentData, userId, adminCollegeId);
+        const student = await studentService.create(studentData, userId, adminCollegeId);
 
         logger.info("Student created successfully");
         return res.status(201).json({
@@ -170,7 +170,7 @@ const updateStudent = async (req, res) => {
             }
         }
 
-        const student = await studentService.updateStudent(id, data);
+        const student = await studentService.update(id, data);
 
         logger.info("Student updated successfully");
         return res.status(200).json({ data: student, success: true });
@@ -185,7 +185,7 @@ const deleteStudent = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            await studentService.deleteStudent(id);
+            await studentService.remove(id);
             logger.info("Student deleted successfully");
             return res.status(200).json({ message: "Student deleted successfully", success: true });
         }
