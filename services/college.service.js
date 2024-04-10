@@ -63,7 +63,7 @@ const update = async (collegeId, data) => {
 };
 
 const remove = async (collegeId) => {
-    const college = await fetchById(collegeId);
+    const college = await getById(collegeId);
 
     await collegeModel.findByIdAndDelete(collegeId);
     //Unassign college from admin
@@ -73,8 +73,9 @@ const remove = async (collegeId) => {
 };
 
 const getAllCounts = async (collegeId) => {
-    // Fetch college information
-    const college = await fetchById(collegeId);
+    // Fetch college information    
+    console.log("CollegeID: ", collegeId);
+    const college = await getById(collegeId);
     if (!college) {
         throw { status: 404, message: "College not found" };
     }

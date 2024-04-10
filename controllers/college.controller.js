@@ -107,6 +107,7 @@ const getAllCounts = async (req, res) => {
         logger.info("Counts fetched successfully"); 
         return res.status(200).json({ data: counts, success: true });
     } catch (error) {
+        console.log(req.user)
         logger.error(error);
         handleError(res, error);
     }

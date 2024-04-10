@@ -6,9 +6,9 @@ const ProgramSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        deptId: {
+        hodId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Department",
+            ref: "Hod",
         },
         collegeId: {
             type: mongoose.Schema.Types.ObjectId,

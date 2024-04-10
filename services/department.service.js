@@ -1,5 +1,6 @@
 import collegeModel from "../models/College.js";
-import DepartmentModel from "../models/Department.js";
+import departmentModel from "../models/Department.js";
+import hodModel from "../models/Hod.js";
 
 //Check if the department and user belongs to the same college
 const checkDepartmentUserCollege = async (departmentId, userCollegeId) => {
@@ -9,7 +10,7 @@ const checkDepartmentUserCollege = async (departmentId, userCollegeId) => {
 };
 
 const getById = async (departmentId) => {
-    const department = await DepartmentModel.findById(departmentId);
+    const department = await departmentModel.findById(departmentId);
     if (!department) {
         throw { status: 404, message: "Department not found" };
     }
@@ -23,13 +24,18 @@ const getAllByCollege = async (collegeId) => {
         throw { status: 404, message: "College not found" };
     }
 
-    const department = await DepartmentModel.find({ collegeId: collegeId });
+    const departments = await departmentModel.find({ collegeId: collegeId }).lean();
 
-    return department;
+    for (const department of departments) {
+        const hod = await hodModel.findOne({ departmentId: department._id }).lean();
+        department.hod = hod;
+    }
+
+    return departments;
 };
 
 const create = async (data, userId, collegeId) => {
-    const department = new DepartmentModel({
+    const department = new departmentModel({
         name: data.name,
         collegeId: collegeId,
         vision: data.vision,
@@ -43,7 +49,7 @@ const create = async (data, userId, collegeId) => {
 };
 
 const update = async (departmentId, data, collegeId) => {
-    const department = await DepartmentModel.findById(departmentId);
+    const department = await departmentModel.findById(departmentId);
     if (!department) {
         throw { status: 404, message: "department not found" };
     }
@@ -51,7 +57,7 @@ const update = async (departmentId, data, collegeId) => {
     //Check if the course and user belongs to the same college
     //checkDepartmentUserCollege(department.collegeId, collegeId);
 
-    await DepartmentModel.findByIdAndUpdate(departmentId, {
+    await departmentModel.findByIdAndUpdate(departmentId, {
         name: data.name,
         vision: data.vision,
         mission: data.mission,
@@ -63,7 +69,7 @@ const update = async (departmentId, data, collegeId) => {
 const remove = async (departmentId) => {
     const department = await fetchById(departmentId);
 
-    await DepartmentModel.findByIdAndDelete(departmentId);
+    await departmentModel.findByIdAndDelete(departmentId);
 
     return department;
 };

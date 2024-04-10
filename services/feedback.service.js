@@ -1,10 +1,10 @@
 //services
-import CourseModel from "../models/Course.js";
-import FeedbackModel from "../models/Feedback.js";
-import collegeModel from "../models/College.js";
+import courseModel from "../models/Course.js";
+import feedbackModel from "../models/Feedback.js";
+import userModel from "../models/User.js";
 
 const getById = async (feedbackId) => {
-    const feedback = await FeedbackModel.findById(feedbackId);
+    const feedback = await feedbackModel.findById(feedbackId);
     if (!feedback) {
         throw { status: 404, message: "feedback not found" };
     }
@@ -13,27 +13,35 @@ const getById = async (feedbackId) => {
 };
 
 const getAllByCourseId = async (courseId) => {
-    const course = await CourseModel.findById(courseId);
+    const course = await courseModel.findById(courseId);
     if (!course) {
         throw { status: 404, message: "course not found" };
     }
 
-    const feedback = await FeedbackModel.find({ courseId: courseId });
+    const feedback = await feedbackModel.find({ courseId: courseId });
 
     return feedback;
 };
 
-const getAll = async () => {
-    const feedback = await FeedbackModel.find();
-    return feedback;
+const getAllByCollege = async () => {
+    const feedbacks = await feedbackModel.find().lean();
+
+    for (const feedback of feedbacks) {
+        const course = await courseModel.findById(feedback.courseId).lean();
+        const user = await userModel.findById(feedback.createdBy).lean();
+        feedback.course = course;
+        feedback.createdBy = user;
+    }
+
+    return feedbacks;
 };
 
 const create = async (data, userId) => {
-    const course = await CourseModel.findById(data.courseId);
+    const course = await courseModel.findById(data.courseId);
     if (!course) {
         throw { status: 404, message: "course not found" };
     }
-    const feedback = new FeedbackModel({
+    const feedback = new feedbackModel({
         title: data.title,
         description: data.description,
         questions: data.questions,
@@ -46,11 +54,11 @@ const create = async (data, userId) => {
 };
 
 const update = async (feedbackId, data) => {
-    const feedback = await FeedbackModel.findById(feedbackId);
+    const feedback = await feedbackModel.findById(feedbackId);
     if (!feedback) {
         throw { status: 404, message: "Feedback not found" };
     }
-    await FeedbackModel.findByIdAndUpdate(feedbackId, {
+    await feedbackModel.findByIdAndUpdate(feedbackId, {
         title: data.title,
         description: data.description,
         questions: data.questions,
@@ -61,18 +69,18 @@ const update = async (feedbackId, data) => {
 };
 
 const remove = async (feedbackId) => {
-    const feedback = await FeedbackModel.findById(feedbackId);
+    const feedback = await feedbackModel.findById(feedbackId);
     if (!feedback) {
         throw { status: 404, message: "feedback not found" };
     }
-    await FeedbackModel.findByIdAndDelete(feedbackId);
+    await feedbackModel.findByIdAndDelete(feedbackId);
 
     return feedback;
 };
 
 export default {
     getById,
-    getAll,
+    getAllByCollege,
     getAllByCourseId,
     create,
     update,

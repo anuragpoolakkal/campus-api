@@ -19,10 +19,6 @@ const SemesterSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Program",
         },
-        departmentId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Department",
-        }
     },
     {
         timestamps: true,
