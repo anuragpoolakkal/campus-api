@@ -1,12 +1,18 @@
 import programModel from "../models/Program.js";
 import collegeModel from "../models/College.js";
 import departmentModel from "../models/Department.js";
+import hodModel from "../models/Hod.js";
 import mongoose from "mongoose";
 import { isValidObjectId } from "mongoose";
 
-const getAll = async () => {
+const getAll = async (collegeId) => {
     try {
-        return await programModel.find();
+        const programs = await programModel.find({ collegeId: collegeId }).lean();
+        for (const program of programs) {
+            const hod = await hodModel.findOne({ programs: program._id }).lean();
+            program.hod = hod;
+        }
+        return programs;
     } catch (error) {
         throw new Error("Error fetching programs from database");
     }

@@ -5,7 +5,7 @@ import { handleError } from "../utils/utils.js";
 
 const getAllPrograms = async (req, res) => {
     try {
-        const programs = await programService.getAll();
+        const programs = await programService.getAll(req.user.college._id);
         logger.info(`Programs fetched successfully: ${programs}`);
         res.json({ data: programs, message: "programs fetched successfully", success: true });
     } catch (error) {
