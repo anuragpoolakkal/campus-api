@@ -65,11 +65,7 @@ const updatePassword = async (req, res) => {
             newPassword: joi.string().min(8).required(),
         });
 
-        const { value: data, error } = passwordUpdateschema.validate({
-            email,
-            oldPassword,
-            newPassword,
-        });
+        const { value: data, error } = passwordUpdateschema.validate(req.body);
 
         if (error) {
             throw { status: 400, message: error.details[0].message };
