@@ -1,4 +1,3 @@
-//services
 import courseModel from "../models/Course.js";
 import feedbackModel from "../models/Feedback.js";
 import userModel from "../models/User.js";
@@ -44,6 +43,7 @@ const create = async (data, userId) => {
     const feedback = new feedbackModel({
         title: data.title,
         description: data.description,
+        color: data.color,
         questions: data.questions,
         courseId: data.courseId,
         createdBy: userId
@@ -61,6 +61,7 @@ const update = async (feedbackId, data) => {
     await feedbackModel.findByIdAndUpdate(feedbackId, {
         title: data.title,
         description: data.description,
+        color: data.color,
         questions: data.questions,
         courseId: data.courseId
     });

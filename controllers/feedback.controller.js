@@ -33,16 +33,18 @@ const createFeedback = async (req, res) => {
     const schema = joi.object({
         title: joi.string().required(),
         description: joi.string().required(),
+        color: joi.string().valid("black", "red", "green", "blue", "yellow", "pink").required(),
         questions: joi
             .array()
             .items(
                 joi.object({
                     question: joi.string().required(),
                     settings: joi.object({
-                        type: joi.string().required(),
+                        type: joi.string().valid("text", "longtext", "multiplechoice", "rating").required(),
                         options: joi.array(),
                         min: joi.number(),
                         max: joi.number(),
+                        required: joi.boolean().required()
                     })
                 }),
             )
@@ -72,6 +74,7 @@ const updateFeedback = async (req, res) => {
     const schema = joi.object({
         title: joi.string().required(),
         description: joi.string().required(),
+        color: joi.string().valid("black", "red", "green", "blue", "yellow", "pink").required(),
         questions: joi
             .array()
             .items(
@@ -82,6 +85,7 @@ const updateFeedback = async (req, res) => {
                         options: joi.array(),
                         min: joi.number(),
                         max: joi.number(),
+                        required: joi.boolean().required()
                     })
                 }),
             )
