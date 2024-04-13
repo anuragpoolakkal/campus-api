@@ -1,10 +1,10 @@
 import facultyModel from "../models/Faculty.js";
 
-const checkCollegeBelongsToUser = async (facultyId, userFacultyId) => {
+/*const checkCollegeBelongsToUser = async (facultyId, userFacultyId) => {
     if (facultyId != userFacultyId) {
         throw { status: 401, message: "Unauthorized" };
     }
-};
+};*/
 
 const fetchById = async (facultyId) => {
     const faculty = await facultyModel.findById(facultyId);
@@ -26,13 +26,14 @@ const fetchById = async (facultyId) => {
     throw new Error(error.message);
 }
 };*/
-const create = async (data, userId, adminCollegeId) => {
+const create = async (data, userId,adminCollegeId) => {
     try {
-        const student = new studentModel({
+        const faculty = new facultyModel({
             userId: userId,
             title: data.title,
             role: data.role,
             collegeId: adminCollegeId,
+            
         });
 
         return await faculty.save();
@@ -57,5 +58,5 @@ export default {
     fetchById,
     create,
     update,
-    checkCollegeBelongsToUser,
+  //  checkCollegeBelongsToUser,
 };

@@ -3,10 +3,7 @@ import facultyService from "../services/faculty.service.js";
 import userModel from "../models/User.js";
 import { handleError } from "../utils/utils.js";
 import { register } from "../services/user.service.js";
-import { isValidObjectId } from "mongoose";
-import facultyModel from "../models/Faculty.js";
 import logger from "../utils/logger.js";
-import studentModel from "../models/Student.js";
 
 const getFaculty = async (req, res) => {
     try {
@@ -26,39 +23,14 @@ const getFacultyById = async (req, res) => {
 
         if (id) {
             const faculty = await facultyService.fetchById(id);
+            logger.info("Faculty fetched successfully");
             return res.status(200).json({ data: faculty, success: true });
         }
     } catch (error) {
+        logger.error(error.message);
         handleError(res, error);
     }
 };
-/*const createFaculty = async (req, res) => {
-    const schema = joi.object({
-        name: joi.string().name(),
-        email: joi.string().email(),
-        title: joi.string().required(),
-        role: joi.string().valid("student", "faculty", "admin", "parent").required(),
-    });
-
-    try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-        const faculty = await facultyService.create(data, req.user._id);
-
-        logger.info("Faculty registered successfully");
-
-        return res.status(201).json({
-            message: "Faculty registered successfully",
-            data: faculty,
-            success: true,
-        });
-    } catch (error) {
-        logger.error(error);
-        handleError(res, error);
-    }
-};*/
-
-
 
 const createFaculty = async (req, res) => {
     // Joi schema for request body validation
@@ -74,23 +46,12 @@ const createFaculty = async (req, res) => {
     try {
         // Validate request body against Joi schema
         const validatedData = await schema.validateAsync(req.body);
-      //  const adminCollegeId = req.user.college._id;
-
-        //const duplicateAdmNo = await facultyModel.findOne({
-          //  admNo: validatedData.admNo,
-            //collegeId: adminCollegeId,
-        //});
-       // if (duplicateAdmNo) {
-         //   throw { status: 400, message: "Duplicate admission number within the same college" };
-        //}
-
-        // Check for duplicate roll number within the same batch
-       // const duplicateRollNo = await facultyModel.findOne({
-         //   batchId: validatedData.batchId,
-        //});
-       /* if (duplicateRollNo) {
-            throw { status: 400, message: "Duplicate roll number within the same batch" };
-        }*/
+        console.log(req.user);  // See what the user object contains at the time of error
+        if (!req.user || !req.user.college) {
+            logger.error("User or college data missing", { userId: req.user?._id });
+            return res.status(401).json({ message: "Unauthorized or incomplete user data" });
+        }
+        const adminCollegeId = req.user.college._id;
 
         // Check if the user already exists
         let user = await userModel.findOne({ email: validatedData.email });
@@ -107,15 +68,13 @@ const createFaculty = async (req, res) => {
             }
         }
 
-        // Create student data
+        // Create faculty data
         const facultyData = {
             title: validatedData.title,
             role: validatedData.role,
-          /*  rollNo: validatedData.rollNo,
-            batchId: validatedData.batchId,*/
         };
 
-        // Create student with the obtained userId
+        // Create faculty with the obtained userId
         const faculty = await facultyService.create(facultyData, userId, adminCollegeId);
 
         logger.info(" created successfully");
@@ -130,14 +89,15 @@ const createFaculty = async (req, res) => {
     }
 };
 
-
 const updateFaculty = async (req, res) => {
     const schema = joi.object({
-        name: joi.string().required(),
-        email: joi.string().email(),
+        //name: joi.string().required(),
+        //email: joi.string().email(),
+        name: joi.string().allow(""),
+        gender: joi.string().valid("M", "F"),
         title: joi.string().required(),
         role: joi.string().valid("hod", "tutor", "teacher").required(),
-        userId: joi.string().userId(),
+        //userId: joi.string().userId(),
     });
 
     try {
@@ -146,18 +106,17 @@ const updateFaculty = async (req, res) => {
 
         //facultyService.checkFacultyBelongsToUser(req.params.id, req.user.faculty._id);
 
-        await collegeService.update(req.params.id, data);
+        //await collegeService.update(req.params.id, data);
+        const faculty = await facultyService.update(id, data);
 
         logger.info("Faculty updated successfully");
-        return res.status(201).json({
-            message: "Faculty updated successfully",
-            success: true,
-        });
+        return res.status(200).json({ data: faculty, success: true });
     } catch (error) {
-        logger.error(error);
+        logger.error(error.message);
         handleError(res, error);
     }
 };
+
 export default {
     getFaculty,
     getFacultyById,

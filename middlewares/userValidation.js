@@ -54,14 +54,19 @@ const validateUser = async (req, res, next) => {
 //College details will be added to req.user.college
 const validateAdmin = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
+    console.log(token)
 
     if (token == null) return res.status(401).send("Unauthorized");
 
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, user) => {
+        console.log(err);
+
         if (err) return res.status(401).send("Unauthorized");
         const userData = await userModel.findById(user.id).lean();
 
         if (!userData || userData.role !== "admin") {
+           // console.log(err);
+            //console.log(userData);
             return res.status(401).send("Unauthorized");
         }
 
