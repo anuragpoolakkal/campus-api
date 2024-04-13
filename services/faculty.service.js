@@ -14,18 +14,31 @@ const fetchById = async (facultyId) => {
 
     return faculty;
 };
-const create = async (data, userId) => {
+/*const create = async (data, userId) => {
     const faculty = new facultyModel({
-        name: data.name,
-        email: data.email,
         title: data.title,
         role: data.role,
         userId: userId,
     });
 
-    await faculty.save();
+    return await faculty.save();
+} catch (error) {
+    throw new Error(error.message);
+}
+};*/
+const create = async (data, userId, adminCollegeId) => {
+    try {
+        const student = new studentModel({
+            userId: userId,
+            title: data.title,
+            role: data.role,
+            collegeId: adminCollegeId,
+        });
 
-    return faculty;
+        return await faculty.save();
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 const update = async (facultyId, data) => {
     const faculty = await facultyModel.findByIdAndUpdate(
