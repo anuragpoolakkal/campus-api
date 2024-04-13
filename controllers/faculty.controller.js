@@ -26,9 +26,11 @@ const getFacultyById = async (req, res) => {
 
         if (id) {
             const faculty = await facultyService.fetchById(id);
+            logger.info("Faculty fetched successfully");
             return res.status(200).json({ data: faculty, success: true });
         }
     } catch (error) {
+        logger.error(error.message);
         handleError(res, error);
     }
 };
@@ -74,6 +76,23 @@ const createFaculty = async (req, res) => {
     try {
         // Validate request body against Joi schema
         const validatedData = await schema.validateAsync(req.body);
+        console.log(req.user);  // See what the user object contains at the time of error
+        if (!req.user || !req.user.college) {
+            logger.error("User or college data missing", { userId: req.user?._id });
+            return res.status(401).json({ message: "Unauthorized or incomplete user data" });
+        }
+        const adminCollegeId = req.user.college._id;
+
+       //const existingFaculty = await facultyModel.findOne({ email: validatedData.email, collegeId: adminCollegeId });
+       // if (existingFaculty) {
+         //   throw { status: 400, message: "A faculty with the same email already exists in this college." };
+        //}*/
+        /*const duplicateAdmNo = await facultyModel.findOne({
+            collegeId: adminCollegeId,
+        });
+        if (duplicateAdmNo) {
+            throw { status: 400, message: "Duplicate admission number within the same college" };
+        }*/
       //  const adminCollegeId = req.user.college._id;
 
         //const duplicateAdmNo = await facultyModel.findOne({
@@ -102,9 +121,9 @@ const createFaculty = async (req, res) => {
         } else {
             // If user exists, use their existing userId
             userId = user._id;
-            if (!user.role || user.role !== "faculty") {
-                await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
-            }
+           // if (!user.role || user.role !== "faculty") {
+             //   await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
+           // }
         }
 
         // Create student data
@@ -133,11 +152,13 @@ const createFaculty = async (req, res) => {
 
 const updateFaculty = async (req, res) => {
     const schema = joi.object({
-        name: joi.string().required(),
-        email: joi.string().email(),
+        //name: joi.string().required(),
+        //email: joi.string().email(),
+        name: joi.string().allow(""),
+        gender: joi.string().valid("M", "F"),
         title: joi.string().required(),
         role: joi.string().valid("hod", "tutor", "teacher").required(),
-        userId: joi.string().userId(),
+        //userId: joi.string().userId(),
     });
 
     try {
@@ -146,9 +167,18 @@ const updateFaculty = async (req, res) => {
 
         //facultyService.checkFacultyBelongsToUser(req.params.id, req.user.faculty._id);
 
-        await collegeService.update(req.params.id, data);
+        //await collegeService.update(req.params.id, data);
+        const faculty = await facultyService.update(id, data);
 
         logger.info("Faculty updated successfully");
+        return res.status(200).json({ data: faculty, success: true });
+    } catch (error) {
+        logger.error(error.message);
+        handleError(res, error);
+    }
+};
+
+        /*logger.info("Faculty updated successfully");
         return res.status(201).json({
             message: "Faculty updated successfully",
             success: true,
@@ -157,7 +187,7 @@ const updateFaculty = async (req, res) => {
         logger.error(error);
         handleError(res, error);
     }
-};
+};*/
 export default {
     getFaculty,
     getFacultyById,

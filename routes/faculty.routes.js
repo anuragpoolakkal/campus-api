@@ -4,10 +4,10 @@ import facultyController from "../controllers/faculty.controller.js";
 
 const router = express.Router();
 
-router.get("/", validateUser, facultyController.getFaculty);
-router.get("/:id", validateUser, facultyController.getFacultyById);
-router.post("/", validateAdmin, facultyController.createFaculty);
-router.put("/:id", validateAdmin, facultyController.updateFaculty);
+router.get("/",  facultyController.getFaculty);
+router.get("/:id",  facultyController.getFacultyById);
+router.post("/",  facultyController.createFaculty);
+router.put("/:id",  facultyController.updateFaculty);
 
 export default router;
  
