@@ -1,6 +1,6 @@
-## Campus App Setup Documentation
+## Campus API Setup Documentation
 
-This setup documentation provides step-by-step instructions for setting up the Campus App on your local development environment.
+This setup documentation provides step-by-step instructions for setting up the Campus API on your local development environment.
 
 ### Prerequisites
 
@@ -13,7 +13,7 @@ Before you begin, ensure you have the following software installed on your syste
 
 1. Open your terminal or command prompt.
 2. Change the current working directory to the location where you want to clone the repository.
-3. Run the following command to clone the Campus App repository:
+3. Run the following command to clone the Campus API repository:
 
     ```
     git clone <repository_url>
@@ -72,17 +72,17 @@ If your application requires initial data, you can seed the database with sample
 
     This command will start the Express server, and you should see a message indicating that the server is running on the specified port.
 
-### Step 6: Access the Campus App
+### Step 6: Access the Campus API
 
 1. Open your web browser.
-2. Visit `http://localhost:3000` to access the Campus App.
-3. You should now be able to use the Campus App on your local machine.
+2. Visit `http://localhost:3000` to access the Campus API.
+3. You should now be able to use the Campus API on your local machine.
 
 ### Additional Notes
 
--   Make sure to replace `<repository_url>` in Step 1 with the actual URL of the Campus App repository.
+-   Make sure to replace `<repository_url>` in Step 1 with the actual URL of the Campus API repository.
 -   Ensure that MongoDB is running before starting the server to establish a connection with the database.
 -   Customize the `.env` file according to your specific configuration requirements.
 -   For production deployment, consider configuring additional settings such as security measures, logging, and environment variables specific to your deployment environment.
 
-By following these steps, you should be able to set up the Campus App on your local machine and start developing or testing it.
+By following these steps, you should be able to set up the Campus API on your local machine and start developing or testing it.
