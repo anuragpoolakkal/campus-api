@@ -3,10 +3,7 @@ import facultyService from "../services/faculty.service.js";
 import userModel from "../models/User.js";
 import { handleError } from "../utils/utils.js";
 import { register } from "../services/user.service.js";
-import { isValidObjectId } from "mongoose";
-import facultyModel from "../models/Faculty.js";
 import logger from "../utils/logger.js";
-import studentModel from "../models/Student.js";
 
 const getFaculty = async (req, res) => {
     try {
@@ -34,33 +31,6 @@ const getFacultyById = async (req, res) => {
         handleError(res, error);
     }
 };
-/*const createFaculty = async (req, res) => {
-    const schema = joi.object({
-        name: joi.string().name(),
-        email: joi.string().email(),
-        title: joi.string().required(),
-        role: joi.string().valid("student", "faculty", "admin", "parent").required(),
-    });
-
-    try {
-        //Validate request body
-        const data = await schema.validateAsync(req.body);
-        const faculty = await facultyService.create(data, req.user._id);
-
-        logger.info("Faculty registered successfully");
-
-        return res.status(201).json({
-            message: "Faculty registered successfully",
-            data: faculty,
-            success: true,
-        });
-    } catch (error) {
-        logger.error(error);
-        handleError(res, error);
-    }
-};*/
-
-
 
 const createFaculty = async (req, res) => {
     // Joi schema for request body validation
@@ -83,34 +53,6 @@ const createFaculty = async (req, res) => {
         }
         const adminCollegeId = req.user.college._id;
 
-       //const existingFaculty = await facultyModel.findOne({ email: validatedData.email, collegeId: adminCollegeId });
-       // if (existingFaculty) {
-         //   throw { status: 400, message: "A faculty with the same email already exists in this college." };
-        //}*/
-        /*const duplicateAdmNo = await facultyModel.findOne({
-            collegeId: adminCollegeId,
-        });
-        if (duplicateAdmNo) {
-            throw { status: 400, message: "Duplicate admission number within the same college" };
-        }*/
-      //  const adminCollegeId = req.user.college._id;
-
-        //const duplicateAdmNo = await facultyModel.findOne({
-          //  admNo: validatedData.admNo,
-            //collegeId: adminCollegeId,
-        //});
-       // if (duplicateAdmNo) {
-         //   throw { status: 400, message: "Duplicate admission number within the same college" };
-        //}
-
-        // Check for duplicate roll number within the same batch
-       // const duplicateRollNo = await facultyModel.findOne({
-         //   batchId: validatedData.batchId,
-        //});
-       /* if (duplicateRollNo) {
-            throw { status: 400, message: "Duplicate roll number within the same batch" };
-        }*/
-
         // Check if the user already exists
         let user = await userModel.findOne({ email: validatedData.email });
 
@@ -121,20 +63,18 @@ const createFaculty = async (req, res) => {
         } else {
             // If user exists, use their existing userId
             userId = user._id;
-           // if (!user.role || user.role !== "faculty") {
-             //   await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
-           // }
+            if (!user.role || user.role !== "faculty") {
+                await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
+            }
         }
 
-        // Create student data
+        // Create faculty data
         const facultyData = {
             title: validatedData.title,
             role: validatedData.role,
-          /*  rollNo: validatedData.rollNo,
-            batchId: validatedData.batchId,*/
         };
 
-        // Create student with the obtained userId
+        // Create faculty with the obtained userId
         const faculty = await facultyService.create(facultyData, userId, adminCollegeId);
 
         logger.info(" created successfully");
@@ -148,7 +88,6 @@ const createFaculty = async (req, res) => {
         handleError(res, error);
     }
 };
-
 
 const updateFaculty = async (req, res) => {
     const schema = joi.object({
@@ -178,16 +117,6 @@ const updateFaculty = async (req, res) => {
     }
 };
 
-        /*logger.info("Faculty updated successfully");
-        return res.status(201).json({
-            message: "Faculty updated successfully",
-            success: true,
-        });
-    } catch (error) {
-        logger.error(error);
-        handleError(res, error);
-    }
-};*/
 export default {
     getFaculty,
     getFacultyById,

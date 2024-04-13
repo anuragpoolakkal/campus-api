@@ -54,6 +54,7 @@ const validateUser = async (req, res, next) => {
 //College details will be added to req.user.college
 const validateAdmin = async (req, res, next) => {
     const token = req.headers.authorization?.split(" ")[1];
+    console.log(token)
 
     if (token == null) return res.status(401).send("Unauthorized");
 
