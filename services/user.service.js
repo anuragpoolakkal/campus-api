@@ -76,7 +76,7 @@ const updatePassword = async (email, oldPassword, newPassword) => {
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
 
     if (!isPasswordValid) {
-        throw { status: 400, message: "Invalid email or password" };
+        throw { status: 400, message: "Old password is incorrect" };
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
