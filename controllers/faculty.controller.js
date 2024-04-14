@@ -40,7 +40,7 @@ const createFaculty = async (req, res) => {
         password: joi.string().min(8).required(),
         title: joi.string().required(),
         role: joi.string().valid("hod", "tutor", "teacher").required(),
-
+        gender: joi.string().valid("M", "F").required(),
     });
 
     try {
@@ -60,13 +60,13 @@ const createFaculty = async (req, res) => {
         if (!user) {
             // If user doesn't exist, register them
             userId = await register({ ...validatedData, role: "faculty" });
-        } //else {
+        } else {
             // If user exists, use their existing userId
-            //userId = user._id;
-            //if (!user.role || user.role !== "faculty") {
-              //  await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
-            //}
-        //}
+            userId = user._id;
+            if (!user.role || user.role !== "faculty") {
+                await userModel.findByIdAndUpdate(user._id, { role: "faculty" });
+            }
+        }
 
         // Create faculty data
         const facultyData = {
