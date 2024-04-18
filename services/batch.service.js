@@ -1,41 +1,16 @@
 import batchModel from "../models/Batch.js";
-
-const create = async (data, userId) => {
-    try {
-        const batch = new batchModel({
-            name: data.name,
-            programId: data.programId,
-            deptId: data.deptId,
-            startYear: data.startYear,
-            endYear: data.endYear,
-            createdBy: userId,
-        });
-
-        return await batch.save();
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
+import programModel from "../models/Program.js";
 
 const getById = async (batchId) => {
     try {
-        return await batchModel.findById(batchId);
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
+        const batch = await batchModel.findById(batchId).lean();
+        if (!batch) {
+            throw { status: 404, message: "Batch not found" };
+        }
 
-const update = async (batchId, data) => {
-    try {
-        return await batchModel.findByIdAndUpdate(batchId, { $set: data }, { runValidators: true });
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
+        batch.program = await programModel.findById(batch.programId).select("name").lean();
 
-const remove = async (batchId) => {
-    try {
-        return await batchModel.findByIdAndDelete(batchId);
+        return batch;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -43,7 +18,13 @@ const remove = async (batchId) => {
 
 const getAll = async (collegeId) => {
     try {
-        return await batchModel.find({ collegeId: collegeId });
+        const batches = await batchModel.find({ collegeId: collegeId }).lean();
+
+        for (const batch of batches) {
+            batch.program = await programModel.findById(batch.programId).select("name").lean();
+        }
+
+        return batches;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -60,6 +41,44 @@ const getAllByProgramId = async (programId) => {
 const getAllByDepartmentId = async (deptId) => {
     try {
         return await batchModel.find({ deptId });
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+const create = async (data, userId, collegeId) => {
+    try {
+        const batch = new batchModel({
+            name: data.name,
+            startYear: data.startYear,
+            endYear: data.endYear,
+            programId: data.programId,
+            collegeId: collegeId,
+            createdBy: userId,
+        });
+
+        return await batch.save();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+const update = async (batchId, data, collegeId) => {
+    try {
+        const batch = await batchModel.findByIdAndUpdate({ _id: batchId, collegeId: collegeId }, data);
+        if (!batch) {
+            throw { status: 404, message: "Batch not found with id" };
+        }
+
+        return getById(batchId);
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+const remove = async (batchId) => {
+    try {
+        return await batchModel.findByIdAndDelete(batchId);
     } catch (error) {
         throw new Error(error.message);
     }

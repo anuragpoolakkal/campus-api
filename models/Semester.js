@@ -18,6 +18,7 @@ const SemesterSchema = new mongoose.Schema(
         programId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Program",
+            required: true,
         },
     },
     {

@@ -47,7 +47,6 @@ const createBatch = async (req, res) => {
     const schema = joi.object({
         name: joi.string().required(),
         programId: joi.string().required(),
-        deptId: joi.string().required(),
         startYear: joi.number(),
         endYear: joi.number(),
     });
@@ -59,7 +58,7 @@ const createBatch = async (req, res) => {
             throw { status: 400, message: error.details[0].message };
         }
 
-        const batch = await batchService.create(data, req.user._id);
+        const batch = await batchService.create(data, req.user._id, req.user.college._id);
 
         logger.info("Batch created successfully");
         return res.status(201).json({ data: batch, success: true });
@@ -73,7 +72,6 @@ const updateBatch = async (req, res) => {
     const schema = joi.object({
         name: joi.string().allow(""),
         programId: joi.string().allow(""),
-        deptId: joi.string().allow(""),
         startYear: joi.number().allow(""),
         endYear: joi.number().allow(""),
     });
@@ -105,9 +103,9 @@ const deleteBatch = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const batch = await batchService.remove(id);
+            await batchService.remove(id);
             logger.info("Batch deleted successfully");
-            return res.status(200).json({ data: batch, success: true });
+            return res.status(200).json({ message: "Batch deleted successfully", success: true });
         }
     } catch (error) {
         logger.error(error.message);
