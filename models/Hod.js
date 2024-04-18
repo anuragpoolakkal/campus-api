@@ -17,12 +17,6 @@ const HodSchema = new mongoose.Schema(
             ref: "College",
             required: true,
         },
-        programs: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Program",
-            },
-        ],
     },
     {
         timestamps: true,

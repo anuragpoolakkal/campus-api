@@ -67,7 +67,7 @@ const update = async (id, data) => {
         throw { status: 404, message: "User not found with Faculty.userId" };
     }
 
-    return fetchById(id);
+    return getById(id);
 };
 
 const remove = async (id) => {
