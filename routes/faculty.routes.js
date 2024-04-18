@@ -8,5 +8,6 @@ router.get("/", validateAdmin, facultyController.getFaculty);
 router.get("/:id", validateAdmin, facultyController.getFacultyById);
 router.post("/", validateAdmin, facultyController.createFaculty);
 router.put("/:id", validateAdmin, facultyController.updateFaculty);
+router.delete("/:id", validateAdmin, facultyController.deleteFaculty);
 
 export default router;

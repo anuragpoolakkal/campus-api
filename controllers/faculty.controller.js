@@ -91,20 +91,18 @@ const createFaculty = async (req, res) => {
 
 const updateFaculty = async (req, res) => {
     const schema = joi.object({
-        //name: joi.string().required(),
-        //email: joi.string().email(),
         name: joi.string().allow(""),
         gender: joi.string().valid("M", "F"),
         title: joi.string().required(),
         role: joi.string().valid("hod", "tutor", "teacher").required(),
-        //userId: joi.string().userId(),
     });
 
     try {
         //Validate request body
         const data = await schema.validateAsync(req.body);
+        const { id } = req.params;
 
-        //facultyService.checkFacultyBelongsToUser(req.params.id, req.user.faculty._id);
+        // facultyService.checkFacultyBelongsToUser(req.params.id, req.user.faculty._id);
 
         //await collegeService.update(req.params.id, data);
         const faculty = await facultyService.update(id, data);
@@ -117,9 +115,25 @@ const updateFaculty = async (req, res) => {
     }
 };
 
+const deleteFaculty = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (id) {
+            await facultyService.remove(id);
+            logger.info("Faculty deleted successfully");
+            return res.status(200).json({ message: "Faculty deleted successfully", success: true });
+        }
+    } catch (error) {
+        logger.error(error.message);
+        handleError(res, error);
+    }
+};
+
 export default {
     getFaculty,
     getFacultyById,
     createFaculty,
     updateFaculty,
+    deleteFaculty,
 };
