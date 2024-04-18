@@ -16,7 +16,7 @@ const getBatches = async (req, res) => {
         } else if (deptId && isValidObjectId(deptId)) {
             batches = await batchService.getAllByDepartmentId(deptId);
         } else {
-            batches = await batchService.getAll();
+            batches = await batchService.getAll(req.user.college._id);
         }
 
         logger.info("Batches fetched successfully");

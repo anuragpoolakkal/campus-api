@@ -41,9 +41,9 @@ const remove = async (batchId) => {
     }
 };
 
-const getAll = async () => {
+const getAll = async (collegeId) => {
     try {
-        return await batchModel.find();
+        return await batchModel.find({ collegeId: collegeId });
     } catch (error) {
         throw new Error(error.message);
     }

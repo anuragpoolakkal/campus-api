@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const BatchSchema = new mongoose.Schema({
+    collegeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "College",
+    },
     programId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Program",
