@@ -5,9 +5,9 @@ import { handleError } from "../utils/utils.js";
 import { register } from "../services/user.service.js";
 import logger from "../utils/logger.js";
 
-const getFaculty = async (req, res) => {
+const getFaculties = async (req, res) => {
     try {
-        const faculty = await facultyService.fetchById(req.params.id);
+        const faculty = await facultyService.getById(req.params.id);
         //facultyService.checkFacultyBelongsToUser(req.params.id, req.user.college._id);
         logger.info(`Faculty with id ${req.params.id} fetched successfully`);
         return res.status(200).json({ data: faculty, success: true });
@@ -22,7 +22,7 @@ const getFacultyById = async (req, res) => {
         const { id } = req.params;
 
         if (id) {
-            const faculty = await facultyService.fetchById(id);
+            const faculty = await facultyService.getById(id);
             logger.info("Faculty fetched successfully");
             return res.status(200).json({ data: faculty, success: true });
         }
@@ -131,7 +131,7 @@ const deleteFaculty = async (req, res) => {
 };
 
 export default {
-    getFaculty,
+    getFaculties,
     getFacultyById,
     createFaculty,
     updateFaculty,

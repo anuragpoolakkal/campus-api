@@ -7,7 +7,21 @@ import userModel from "../models/User.js";
 //     }
 // };
 
-const fetchById = async (facultyId) => {
+const getAll = async (facultyId) => {
+    const faculty = await facultyModel.findById(facultyId).lean();
+    if (!faculty) {
+        throw { status: 404, message: "Faculty not found" };
+    }
+
+    const user = await userModel.findById(faculty.userId).lean();
+    faculty.name = user.name;
+    faculty.email = user.email;
+    faculty.gender = user.gender;
+
+    return faculty;
+};
+
+const getById = async (facultyId) => {
     const faculty = await facultyModel.findById(facultyId).lean();
     if (!faculty) {
         throw { status: 404, message: "Faculty not found" };
@@ -69,7 +83,8 @@ const remove = async (id) => {
 };
 
 export default {
-    fetchById,
+    getAll,
+    getById,
     create,
     update,
     remove,
