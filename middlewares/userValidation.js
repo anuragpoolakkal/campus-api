@@ -97,7 +97,7 @@ const validatePrincipal = async (req, res, next) => {
         req.user = userData;
         req.user.principal = await principalModel.findOne({ userId: userData._id }).lean();
         if (req.user.principal) {
-            req.user.college = await collegeModel.findById(req.principal.collegeId).lean();
+            req.user.college = await collegeModel.findById(req.user.principal.collegeId).lean();
         }
         next();
     });

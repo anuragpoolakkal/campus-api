@@ -13,7 +13,7 @@ const getSemesters = async (req, res) => {
             semesters = await semesterService.getByProgramId(programId);
         } else {
             // Otherwise, get all semesters
-            semesters = await semesterService.getAll();
+            semesters = await semesterService.getAll(req.user.college._id);
         }
 
         logger.info("Semesters fetched successfully");

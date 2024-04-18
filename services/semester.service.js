@@ -1,5 +1,35 @@
 import semesterModel from "../models/Semester.js";
 
+const getAll = async (adminCollegeId) => {
+    const semester = await semesterModel.find({ collegeId: adminCollegeId   });
+
+    if (!semester) {
+        throw { status: 404, message: "Semester not found" };
+    }
+
+    return semester;
+};
+
+const getById = async (semesterId) => {
+    const semester = await semesterModel.findById(semesterId);
+
+    if (!semester) {
+        throw { status: 404, message: "Semester not found" };
+    }
+
+    return semester;
+};
+
+const getByProgramId = async (programId) => {
+    const semesters = await semesterModel.find({ programId });
+
+    if (!semesters) {
+        throw { status: 404, message: "No semesters found for the provided programId" };
+    }
+
+    return semesters;
+};
+
 const create = async (data, adminCollegeId) => {
     try {
         const semester = new semesterModel({
@@ -33,36 +63,6 @@ const remove = async (semesterId) => {
     }
 
     await semesterModel.findByIdAndDelete(semesterId);
-    return semester;
-};
-
-const getById = async (semesterId) => {
-    const semester = await semesterModel.findById(semesterId);
-
-    if (!semester) {
-        throw { status: 404, message: "Semester not found" };
-    }
-
-    return semester;
-};
-
-const getByProgramId = async (programId) => {
-    const semesters = await semesterModel.find({ programId });
-
-    if (!semesters) {
-        throw { status: 404, message: "No semesters found for the provided programId" };
-    }
-
-    return semesters;
-};
-
-const getAll = async () => {
-    const semester = await semesterModel.find();
-
-    if (!semester) {
-        throw { status: 404, message: "Semester not found" };
-    }
-
     return semester;
 };
 
