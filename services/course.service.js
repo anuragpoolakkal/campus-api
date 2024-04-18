@@ -44,15 +44,19 @@ const getByCourseCode = async (courseCode) => {
     return course;
 };
 
-const getAllByCollege = async (collegeId) => {
+const getAll = async (collegeId) => {
     const college = await collegeModel.findById(collegeId);
     if (!college) {
         throw { status: 404, message: "College not found" };
     }
 
     const courses = await courseModel.find({ collegeId: collegeId });
+    var coursesData = [];
+    for (const course of courses) {
+        coursesData.push(await getById(course._id));
+    }
 
-    return courses;
+    return coursesData;
 };
 
 const getAllBySemester = async (semesterId, collegeId) => {
@@ -127,23 +131,20 @@ const update = async (courseId, data, collegeId) => {
 };
 
 const remove = async (courseId, collegeId) => {
-    const course = getById(courseId);
+    const course = await getById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }
 
-    //Check if the course and user belongs to the same college
-    checkCourseUserCollege(course.collegeId, collegeId);
-
-    await courseModel.findByIdAndDelete(courseId);
+    await courseModel.findOneAndDelete({ _id: courseId, collegeId: collegeId });
 
     return course;
 };
 
 export default {
     getById,
+    getAll,
     getByCourseCode,
-    getAllByCollege,
     getAllBySemester,
     getAllBySemesterAndCollege,
     create,

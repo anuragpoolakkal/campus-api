@@ -25,7 +25,7 @@ const getCourses = async (req, res) => {
         ) {
             data = await courseService.getAllBySemesterAndCollege(semesterId, req.user.college._id);
         } else {
-            data = await courseService.getAllByCollege(req.user.college._id);
+            data = await courseService.getAll(req.user.college._id);
         }
 
         return res.status(200).json({ data: data, success: true });
