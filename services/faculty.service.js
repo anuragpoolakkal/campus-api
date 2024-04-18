@@ -7,18 +7,17 @@ import userModel from "../models/User.js";
 //     }
 // };
 
-const getAll = async (facultyId) => {
-    const faculty = await facultyModel.findById(facultyId).lean();
-    if (!faculty) {
-        throw { status: 404, message: "Faculty not found" };
+const getAll = async (collegeId) => {
+    const faculties = await facultyModel.find({ collegeId: collegeId }).lean();
+
+    for (const faculty of faculties) {
+        const user = await userModel.findById(faculty.userId).lean();
+        faculty.name = user.name;
+        faculty.email = user.email;
+        faculty.gender = user.gender;
     }
 
-    const user = await userModel.findById(faculty.userId).lean();
-    faculty.name = user.name;
-    faculty.email = user.email;
-    faculty.gender = user.gender;
-
-    return faculty;
+    return faculties;
 };
 
 const getById = async (facultyId) => {

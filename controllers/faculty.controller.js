@@ -7,12 +7,12 @@ import logger from "../utils/logger.js";
 
 const getFaculties = async (req, res) => {
     try {
-        const faculty = await facultyService.getById(req.params.id);
-        //facultyService.checkFacultyBelongsToUser(req.params.id, req.user.college._id);
-        logger.info(`Faculty with id ${req.params.id} fetched successfully`);
-        return res.status(200).json({ data: faculty, success: true });
+        const faculties = await facultyService.getAll(req.user.college._id);
+
+        logger.info("Faculties fetched successfully");
+        return res.status(200).json({ data: faculties, success: true });
     } catch (error) {
-        logger.error(error);
+        logger.error(error.message);
         handleError(res, error);
     }
 };
