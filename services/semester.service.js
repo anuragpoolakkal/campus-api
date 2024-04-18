@@ -2,13 +2,14 @@ import semesterModel from "../models/Semester.js";
 import programModel from "../models/Program.js";
 
 const getAll = async (collegeId) => {
-    const semester = await semesterModel.find({ collegeId: collegeId });
+    const semesters = await semesterModel.find({ collegeId: collegeId }).lean();
 
-    if (!semester) {
-        throw { status: 404, message: "Semester not found" };
+    for (const semester of semesters) {
+        const program = await programModel.findById(semester?.programId).select("name");
+        semester.program = program;
     }
 
-    return semester;
+    return semesters;
 };
 
 const getById = async (semesterId) => {

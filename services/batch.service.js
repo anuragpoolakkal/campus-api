@@ -8,7 +8,7 @@ const getById = async (batchId) => {
             throw { status: 404, message: "Batch not found" };
         }
 
-        batch.program = await programModel.findById(batch.programId).select("name").lean();
+        batch.program = await programModel.findById(batch?.programId).select("name").lean();
 
         return batch;
     } catch (error) {
@@ -21,7 +21,7 @@ const getAll = async (collegeId) => {
         const batches = await batchModel.find({ collegeId: collegeId }).lean();
 
         for (const batch of batches) {
-            batch.program = await programModel.findById(batch.programId).select("name").lean();
+            batch.program = await programModel.findById(batch?.programId).select("name").lean();
         }
 
         return batches;

@@ -7,17 +7,18 @@ const getAll = async (collegeId) => {
     try {
         const programs = await programModel.find({ collegeId: collegeId }).lean();
         for (const program of programs) {
-            const hod = await hodModel.findById(program.hodId).lean();
-            const faculty = await facultyModel.findById(hod.facultyId).lean();
-            const user = await userModel.findById(faculty.userId).lean();
+            const hod = await hodModel.findById(program?.hodId).lean();
+            const faculty = await facultyModel.findById(hod?.facultyId).lean();
+            const user = await userModel.findById(faculty?.userId).lean();
             program.hod = {
-                name: user.name,
-                email: user.email,
+                name: user?.name,
+                email: user?.email,
             };
         }
 
         return programs;
     } catch (error) {
+        console.log(error)
         throw new Error("Error fetching programs from database");
     }
 };
@@ -25,12 +26,12 @@ const getAll = async (collegeId) => {
 const getById = async (id) => {
     try {
         const program = await programModel.findById(id).lean();
-        const hod = await hodModel.findById(program.hodId).lean();
-        const faculty = await facultyModel.findById(hod.facultyId).lean();
-        const user = await userModel.findById(faculty.userId).lean();
+        const hod = await hodModel.findById(program?.hodId).lean();
+        const faculty = await facultyModel.findById(hod?.facultyId).lean();
+        const user = await userModel.findById(faculty?.userId).lean();
         program.hod = {
-            name: user.name,
-            email: user.email,
+            name: user?.name,
+            email: user?.email,
         };
 
         return program;

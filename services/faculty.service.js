@@ -11,10 +11,10 @@ const getAll = async (collegeId) => {
     const faculties = await facultyModel.find({ collegeId: collegeId }).lean();
 
     for (const faculty of faculties) {
-        const user = await userModel.findById(faculty.userId).lean();
-        faculty.name = user.name;
-        faculty.email = user.email;
-        faculty.gender = user.gender;
+        const user = await userModel.findById(faculty?.userId).lean();
+        faculty.name = user?.name;
+        faculty.email = user?.email;
+        faculty.gender = user?.gender;
     }
 
     return faculties;
@@ -26,10 +26,10 @@ const getById = async (facultyId) => {
         throw { status: 404, message: "Faculty not found" };
     }
 
-    const user = await userModel.findById(faculty.userId).lean();
-    faculty.name = user.name;
-    faculty.email = user.email;
-    faculty.gender = user.gender;
+    const user = await userModel.findById(faculty?.userId).lean();
+    faculty.name = user?.name;
+    faculty.email = user?.email;
+    faculty.gender = user?.gender;
 
     return faculty;
 };
