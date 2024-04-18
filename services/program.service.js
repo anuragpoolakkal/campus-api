@@ -1,17 +1,21 @@
 import programModel from "../models/Program.js";
-import collegeModel from "../models/College.js";
-import departmentModel from "../models/Department.js";
+import facultyModel from "../models/Faculty.js";
+import userModel from "../models/User.js";
 import hodModel from "../models/Hod.js";
-import mongoose from "mongoose";
-import { isValidObjectId } from "mongoose";
 
 const getAll = async (collegeId) => {
     try {
         const programs = await programModel.find({ collegeId: collegeId }).lean();
         for (const program of programs) {
-            const hod = await hodModel.findOne({ programs: program._id }).lean();
-            program.hod = hod;
+            const hod = await hodModel.findById(program.hodId).lean();
+            const faculty = await facultyModel.findById(hod.facultyId).lean();
+            const user = await userModel.findById(faculty.userId).lean();
+            program.hod = {
+                name: user.name,
+                email: user.email,
+            };
         }
+
         return programs;
     } catch (error) {
         throw new Error("Error fetching programs from database");
@@ -20,35 +24,32 @@ const getAll = async (collegeId) => {
 
 const getById = async (id) => {
     try {
-        return await programModel.findById(id);
+        const program = await programModel.findById(id).lean();
+        const hod = await hodModel.findById(program.hodId).lean();
+        const faculty = await facultyModel.findById(hod.facultyId).lean();
+        const user = await userModel.findById(faculty.userId).lean();
+        program.hod = {
+            name: user.name,
+            email: user.email,
+        };
+
+        return program;
     } catch (error) {
         throw new Error("Error fetching program by ID from database");
     }
 };
 
-const create = async (data) => {
+const create = async (data, adminCollegeId) => {
     try {
-        const { name, deptId, collegeId } = data;
-
-        if (isValidObjectId(collegeId) === false || isValidObjectId(deptId) == false) {
-            throw new Error("Invalid college or department ID");
-        }
-
-        const college = await collegeModel.findById(collegeId);
-
-        if (!college) {
-            throw new Error("College not found");
-        }
-
-        const department = await departmentModel.findById(deptId);
-        if (!department) {
-            throw new Error("Department not found in college");
+        const hod = await hodModel.findById(data.hodId);
+        if (!hod) {
+            throw new Error("HOD not found");
         }
 
         const program = new programModel({
-            name,
-            deptId,
-            collegeId,
+            name: data.name,
+            hodId: data.hodId,
+            collegeId: adminCollegeId,
         });
 
         return await program.save();
@@ -57,33 +58,25 @@ const create = async (data) => {
     }
 };
 
-const update = async (id, data) => {
-    try {
-        const { name, deptId, collegeId } = data;
-
-        if (
-            !mongoose.Types.ObjectId.isValid(collegeId) ||
-            !mongoose.Types.ObjectId.isValid(deptId)
-        ) {
-            throw new Error("Invalid college or department ID");
-        }
-
-        return await programModel.findByIdAndUpdate(id, { name, deptId, collegeId }, { new: true });
-    } catch (error) {
-        throw new Error(error.message);
+const update = async (id, data, adminCollegeId) => {
+    const program = await programModel.findOneAndUpdate({ _id: id, collegeId: adminCollegeId }, {
+        name: data.name,
+        hodId: data.hodId,
+    });
+    if (!program) {
+        throw { status: 404, message: "Program not found with id" };
     }
+
+    return getById(id);
 };
 
 const remove = async (id) => {
-    try {
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            throw new Error("Invalid program ID");
-        }
-
-        return await programModel.findByIdAndDelete(id);
-    } catch (error) {
-        throw new Error(error.message);
+    const program = await programModel.findByIdAndDelete(id);
+    if (!program) {
+        throw { status: 404, message: "Program not found" };
     }
+
+    return program;
 };
 
 export default {

@@ -50,13 +50,13 @@ const create = async (data, userId, adminCollegeId) => {
     }
 };
 
-const update = async (id, data) => {
-    const faculty = await facultyModel.findByIdAndUpdate(id, {
+const update = async (id, data, adminCollegeId) => {
+    const faculty = await facultyModel.findOneAndUpdate({ _id: id, collegeId: adminCollegeId }, {
         title: data.title,
         role: data.role,
     });
     if (!faculty) {
-        throw { status: 404, message: "Faculty not found with facultyId" };
+        throw { status: 404, message: "Faculty not found with id" };
     }
 
     const user = await userModel.findByIdAndUpdate(faculty.userId, {

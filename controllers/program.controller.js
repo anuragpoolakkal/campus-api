@@ -3,7 +3,7 @@ import joi from "joi";
 import logger from "../utils/logger.js";
 import { handleError } from "../utils/utils.js";
 
-const getAllPrograms = async (req, res) => {
+const getPrograms = async (req, res) => {
     try {
         const programs = await programService.getAll(req.user.college._id);
         logger.info(`Programs fetched successfully: ${programs}`);
@@ -30,18 +30,15 @@ const getProgramById = async (req, res) => {
 };
 
 const createProgram = async (req, res) => {
-    const programSchema = joi.object({
+    const schema = joi.object({
         name: joi.string().required(),
-        deptId: joi.string().required(),
-        collegeId: joi.string().required(),
+        hodId: joi.string().required(),
     });
 
     try {
-        const { value: data, error } = programSchema.validate(req.body);
-        if (error) {
-            throw { status: 400, message: error.details[0].message };
-        }
-        const program = await programService.create(data);
+        const validatedData = await schema.validateAsync(req.body);
+
+        const program = await programService.create(validatedData, req.user.college._id);
 
         logger.info(`Program created successfully: ${program}`);
         res.status(200).json({
@@ -57,9 +54,8 @@ const createProgram = async (req, res) => {
 
 const updateProgram = async (req, res) => {
     const programSchema = joi.object({
-        name: joi.string(),
-        deptId: joi.string(),
-        collegeId: joi.string(),
+        name: joi.string().required(),
+        hodId: joi.string().required(),
     });
 
     try {
@@ -68,7 +64,7 @@ const updateProgram = async (req, res) => {
         if (error) {
             throw { status: 400, message: error.details[0].message };
         }
-        const program = await programService.update(id, data);
+        const program = await programService.update(id, data, req.user.college._id);
         if (!program) {
             throw { status: 404, message: "Program not found" };
         }
@@ -96,7 +92,7 @@ const deleteProgram = async (req, res) => {
 };
 
 export default {
-    getAllPrograms,
+    getPrograms,
     getProgramById,
     createProgram,
     updateProgram,

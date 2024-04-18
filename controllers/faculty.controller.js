@@ -105,7 +105,7 @@ const updateFaculty = async (req, res) => {
         // facultyService.checkFacultyBelongsToUser(req.params.id, req.user.faculty._id);
 
         //await collegeService.update(req.params.id, data);
-        const faculty = await facultyService.update(id, data);
+        const faculty = await facultyService.update(id, data, req.user.college._id);
 
         logger.info("Faculty updated successfully");
         return res.status(200).json({ data: faculty, success: true });
