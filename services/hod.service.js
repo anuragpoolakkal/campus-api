@@ -44,6 +44,11 @@ const getById = async (hodId) => {
 
 const create = async (data, adminCollegeId) => {
     try {
+        const hodExists = await hodModel.findOne({ $or: [{ facultyId: data.facultyId }, { departmentId: data.departmentId }] });
+        if (hodExists) {
+            throw { status: 400, message: "Hod already exists" };
+        }
+
         const hod = new hodModel({
             facultyId: data.facultyId,
             departmentId: data.departmentId,
