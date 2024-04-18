@@ -34,14 +34,13 @@ const getById = async (facultyId) => {
     return faculty;
 };
 
-const create = async (data, userId, adminCollegeId) => {
+const create = async (data, userId, collegeId) => {
     try {
         const faculty = new facultyModel({
             userId: userId,
             title: data.title,
             role: data.role,
-            collegeId: adminCollegeId,
-
+            collegeId: collegeId,
         });
 
         return await faculty.save();
@@ -50,8 +49,8 @@ const create = async (data, userId, adminCollegeId) => {
     }
 };
 
-const update = async (id, data, adminCollegeId) => {
-    const faculty = await facultyModel.findOneAndUpdate({ _id: id, collegeId: adminCollegeId }, {
+const update = async (id, data, collegeId) => {
+    const faculty = await facultyModel.findOneAndUpdate({ _id: id, collegeId: collegeId }, {
         title: data.title,
         role: data.role,
     });

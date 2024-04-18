@@ -42,7 +42,7 @@ const getById = async (hodId) => {
     return hod;
 };
 
-const create = async (data, adminCollegeId) => {
+const create = async (data, collegeId) => {
     try {
         const hodExists = await hodModel.findOne({ $or: [{ facultyId: data.facultyId }, { departmentId: data.departmentId }] });
         if (hodExists) {
@@ -52,7 +52,7 @@ const create = async (data, adminCollegeId) => {
         const hod = new hodModel({
             facultyId: data.facultyId,
             departmentId: data.departmentId,
-            collegeId: adminCollegeId,
+            collegeId: collegeId,
         });
 
         const faculty = await facultyModel.findByIdAndUpdate(data.facultyId, { role: "hod" }); //change role to hod
@@ -67,6 +67,11 @@ const create = async (data, adminCollegeId) => {
 };
 
 const update = async (id, data) => {
+    const hodExists = await hodModel.findOne({ $or: [{ facultyId: data.facultyId }, { departmentId: data.departmentId }] });
+    if (hodExists) {
+        throw { status: 400, message: "Hod already exists" };
+    }
+
     const hod = await hodModel.findByIdAndUpdate(id, {
         facultyId: data.facultyId,
         departmentId: data.departmentId,

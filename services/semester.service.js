@@ -1,8 +1,8 @@
 import semesterModel from "../models/Semester.js";
 import programModel from "../models/Program.js";
 
-const getAll = async (adminCollegeId) => {
-    const semester = await semesterModel.find({ collegeId: adminCollegeId });
+const getAll = async (collegeId) => {
+    const semester = await semesterModel.find({ collegeId: collegeId });
 
     if (!semester) {
         throw { status: 404, message: "Semester not found" };
@@ -31,12 +31,12 @@ const getAllByProgramId = async (programId) => {
     return semesters;
 };
 
-const create = async (data, adminCollegeId) => {
+const create = async (data, collegeId) => {
     try {
         const semester = new semesterModel({
             name: data.name,
             number: data.number,
-            collegeId: adminCollegeId,
+            collegeId: collegeId,
             programId: data.programId,
         });
 

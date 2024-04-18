@@ -39,7 +39,7 @@ const getById = async (id) => {
     }
 };
 
-const create = async (data, adminCollegeId) => {
+const create = async (data, collegeId) => {
     try {
         const hod = await hodModel.findById(data.hodId);
         if (!hod) {
@@ -49,7 +49,7 @@ const create = async (data, adminCollegeId) => {
         const program = new programModel({
             name: data.name,
             hodId: data.hodId,
-            collegeId: adminCollegeId,
+            collegeId: collegeId,
         });
 
         return await program.save();
@@ -58,8 +58,8 @@ const create = async (data, adminCollegeId) => {
     }
 };
 
-const update = async (id, data, adminCollegeId) => {
-    const program = await programModel.findOneAndUpdate({ _id: id, collegeId: adminCollegeId }, {
+const update = async (id, data, collegeId) => {
+    const program = await programModel.findOneAndUpdate({ _id: id, collegeId: collegeId }, {
         name: data.name,
         hodId: data.hodId,
     });

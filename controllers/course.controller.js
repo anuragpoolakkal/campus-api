@@ -4,9 +4,9 @@ import { isValidObjectId } from "mongoose";
 import { handleError } from "../utils/utils.js";
 
 // Get course by courseId / semesterId / collegeId / courseCode
-const getCourse = async (req, res) => {
+const getCourses = async (req, res) => {
     try {
-        const { semesterId, collegeId, courseCode } = req.query;
+        const { semesterId, courseCode } = req.query;
 
         var data;
 
@@ -14,24 +14,18 @@ const getCourse = async (req, res) => {
         if (semesterId && isValidObjectId(semesterId)) {
             data = await courseService.getAllBySemester(semesterId, req.user.college._id);
         }
-        // Get course by collegeId
-        else if (collegeId && isValidObjectId(collegeId)) {
-            data = await courseService.getAllByCollege(collegeId);
-        }
         // Get course by courseCode
         else if (courseCode) {
             data = await courseService.getByCourseCode(courseCode);
         }
-        // Get course by semesterId and collegeId
+        // Get course by semesterId
         else if (
-            collegeId &&
             semesterId &&
-            isValidObjectId(collegeId) &&
             isValidObjectId(semesterId)
         ) {
-            data = await courseService.getAllBySemesterAndCollege(semesterId, collegeId);
+            data = await courseService.getAllBySemesterAndCollege(semesterId, req.user.college._id);
         } else {
-            throw { status: 400, message: "Invalid query parameters" };
+            data = await courseService.getAllByCollege(req.user.college._id);
         }
 
         return res.status(200).json({ data: data, success: true });
@@ -57,8 +51,10 @@ const getCourseById = async (req, res) => {
 const createCourse = async (req, res) => {
     const schema = joi.object({
         name: joi.string().required(),
-        semesterId: joi.string().required(),
         courseCode: joi.string().allow(""),
+        programId: joi.string().required(),
+        semesterId: joi.string().required(),
+        faculties: joi.array().required(),
     });
 
     try {
@@ -81,8 +77,10 @@ const createCourse = async (req, res) => {
 const updateCourse = async (req, res) => {
     const schema = joi.object({
         name: joi.string().required(),
-        semesterId: joi.string().required(),
         courseCode: joi.string().allow(""),
+        programId: joi.string().required(),
+        semesterId: joi.string().required(),
+        faculties: joi.array().required(),
     });
 
     try {
@@ -117,7 +115,7 @@ const deleteCourse = async (req, res) => {
 };
 
 export default {
-    getCourse,
+    getCourses,
     getCourseById,
     createCourse,
     updateCourse,

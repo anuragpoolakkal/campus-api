@@ -1,6 +1,9 @@
 import collegeModel from "../models/College.js";
 import courseModel from "../models/Course.js";
 import semesterModel from "../models/Semester.js";
+import programModel from "../models/Program.js";
+import facultyModel from "../models/Faculty.js";
+import userModel from "../models/User.js";
 
 //Check if the course and user belongs to the same college
 const checkCourseUserCollege = async (courseCollegeId, userCollegeId) => {
@@ -10,10 +13,24 @@ const checkCourseUserCollege = async (courseCollegeId, userCollegeId) => {
 };
 
 const getById = async (courseId) => {
-    const course = await courseModel.findById(courseId);
+    const course = await courseModel.findById(courseId).lean();
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }
+
+    course.program = await programModel.findById(course.programId).select("name").lean();
+    course.semester = await semesterModel.findById(course.semesterId).select("name number").lean();
+    var faculties = [];
+    for (const facultyId of course.faculties) {
+        const faculty = await facultyModel.findById(facultyId).lean();
+        const user = await userModel.findById(faculty.userId).lean();
+        faculties.push({
+            name: user.name,
+            email: user.email,
+            role: faculty.role,
+        });
+    }
+    course.faculties = faculties;
 
     return course;
 };
@@ -69,9 +86,11 @@ const create = async (data, userId, collegeId) => {
 
     const course = new courseModel({
         name: data.name,
-        semesterId: data.semesterId,
         courseCode: data.courseCode,
+        programId: data.programId,
+        semesterId: data.semesterId,
         collegeId: collegeId,
+        faculties: data.faculties,
         createdBy: userId,
     });
 
@@ -81,8 +100,7 @@ const create = async (data, userId, collegeId) => {
 };
 
 const update = async (courseId, data, collegeId) => {
-    const course = fetchById(courseId);
-
+    const course = getById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }
@@ -92,20 +110,24 @@ const update = async (courseId, data, collegeId) => {
         throw { status: 404, message: "Semester not found" };
     }
 
-    //Check if the course and user belongs to the same college
-    checkCourseUserCollege(course.collegeId, collegeId);
+    const program = await programModel.findById(data.programId);
+    if (!program) {
+        throw { status: 404, message: "Program not found" };
+    }
 
-    await courseModel.findByIdAndUpdate(courseId, {
+    await courseModel.findOneAndUpdate({ _id: courseId, collegeId: collegeId }, {
         name: data.name,
-        semesterId: data.semesterId,
         courseCode: data.courseCode,
+        programId: data.programId,
+        semesterId: data.semesterId,
+        faculties: data.faculties,
     });
 
-    return course;
+    return getById(courseId);
 };
 
 const remove = async (courseId, collegeId) => {
-    const course = fetchById(courseId);
+    const course = getById(courseId);
     if (!course) {
         throw { status: 404, message: "Course not found" };
     }

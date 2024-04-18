@@ -1,7 +1,7 @@
 import studentModel from "../models/Student.js";
 import userModel from "../models/User.js";
 
-const create = async (data, userId, adminCollegeId) => {
+const create = async (data, userId, collegeId) => {
     try {
         const student = new studentModel({
             userId: userId,
@@ -10,7 +10,7 @@ const create = async (data, userId, adminCollegeId) => {
             address: data.address,
             rollNo: data.rollNo,
             batchId: data.batchId,
-            collegeId: adminCollegeId,
+            collegeId: collegeId,
         });
 
         return await student.save();
@@ -35,8 +35,8 @@ const getById = async (id) => {
     return student;
 };
 
-const getAll = async (adminCollegeId) => {
-    const students = await studentModel.find({ collegeId: adminCollegeId }).lean();
+const getAll = async (collegeId) => {
+    const students = await studentModel.find({ collegeId: collegeId }).lean();
     for (const student of students) {
         const user = await userModel.findById(student.userId).lean();
         student.name = user.name;
