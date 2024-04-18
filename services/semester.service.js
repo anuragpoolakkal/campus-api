@@ -1,7 +1,8 @@
 import semesterModel from "../models/Semester.js";
+import programModel from "../models/Program.js";
 
 const getAll = async (adminCollegeId) => {
-    const semester = await semesterModel.find({ collegeId: adminCollegeId   });
+    const semester = await semesterModel.find({ collegeId: adminCollegeId });
 
     if (!semester) {
         throw { status: 404, message: "Semester not found" };
@@ -20,7 +21,7 @@ const getById = async (semesterId) => {
     return semester;
 };
 
-const getByProgramId = async (programId) => {
+const getAllByProgramId = async (programId) => {
     const semesters = await semesterModel.find({ programId });
 
     if (!semesters) {
@@ -46,13 +47,17 @@ const create = async (data, adminCollegeId) => {
 };
 
 const update = async (semesterId, data) => {
-    const semester = await semesterModel.findByIdAndUpdate(semesterId, data, { new: true });
+    const program = await programModel.findById(data.programId);
+    if (!program) {
+        throw { status: 404, message: "Program not found" };
+    }
 
+    const semester = await semesterModel.findByIdAndUpdate(semesterId, data, { new: true });
     if (!semester) {
         throw { status: 404, message: "Semester not found" };
     }
 
-    return semester;
+    return getById(semesterId);
 };
 
 const remove = async (semesterId) => {
@@ -68,8 +73,8 @@ const remove = async (semesterId) => {
 
 export default {
     getById,
-    getByProgramId,
     getAll,
+    getAllByProgramId,
     create,
     update,
     remove,

@@ -38,6 +38,22 @@ const getSemesterById = async (req, res) => {
         handleError(res, error);
     }
 };
+
+const getSemestersByProgramId = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (id) {
+            const semester = await semesterService.getAllByProgramId(id);
+            logger.info("Semester fetched successfully");
+            return res.status(200).json({ data: semester, success: true });
+        }
+    } catch (error) {
+        logger.error(error.message);
+        handleError(res, error);
+    }
+};
+
 // Create a new semester
 const createSemester = async (req, res) => {
     const schema = joi.object({
@@ -105,6 +121,7 @@ const deleteSemester = async (req, res) => {
 export default {
     getSemesters,
     getSemesterById,
+    getSemestersByProgramId,
     createSemester,
     updateSemester,
     deleteSemester,
