@@ -13,12 +13,12 @@ const getAll = async (collegeId) => {
     const hods = await hodModel.find({ collegeId: collegeId }).lean();
 
     for (const hod of hods) {
-        const faculty = await facultyModel.findById(hod?.facultyId).lean();
+        const faculty = await facultyModel.findById(hod?.facultyId).select("userId role title").lean();
         const user = await userModel.findById(faculty?.userId).lean();
         hod.name = user?.name;
         hod.email = user?.email;
         hod.gender = user?.gender;
-        hod.role = faculty?.role;
+        hod.faculty = faculty;
         hod.department = await departmentModel.findById(hod?.departmentId).select("name").lean();
     }
 
@@ -31,12 +31,12 @@ const getById = async (hodId) => {
         throw { status: 404, message: "hod not found" };
     }
 
-    const faculty = await facultyModel.findById(hod?.facultyId).lean();
+    const faculty = await facultyModel.findById(hod?.facultyId).select("role title").lean();
     const user = await userModel.findById(faculty?.userId).lean();
     hod.name = user?.name;
     hod.email = user?.email;
     hod.gender = user?.gender;
-    hod.role = faculty?.role;
+    hod.faculty = faculty;
     hod.department = await departmentModel.findById(hod?.departmentId).select("name").lean();
 
     return hod;

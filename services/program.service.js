@@ -2,6 +2,7 @@ import programModel from "../models/Program.js";
 import facultyModel from "../models/Faculty.js";
 import userModel from "../models/User.js";
 import hodModel from "../models/Hod.js";
+import departmentModel from "../models/Department.js";
 
 const getAll = async (collegeId) => {
     try {
@@ -10,9 +11,13 @@ const getAll = async (collegeId) => {
             const hod = await hodModel.findById(program?.hodId).lean();
             const faculty = await facultyModel.findById(hod?.facultyId).lean();
             const user = await userModel.findById(faculty?.userId).lean();
+            const department = await departmentModel.findById(hod?.departmentId).select("name").lean();
+            program.department = department;
             program.hod = {
                 name: user?.name,
                 email: user?.email,
+                role: faculty?.role,
+                title: faculty?.title,
             };
         }
 
@@ -29,9 +34,13 @@ const getById = async (id) => {
         const hod = await hodModel.findById(program?.hodId).lean();
         const faculty = await facultyModel.findById(hod?.facultyId).lean();
         const user = await userModel.findById(faculty?.userId).lean();
+        const department = await departmentModel.findById(hod?.departmentId).select("name").lean();
+        program.department = department;
         program.hod = {
             name: user?.name,
             email: user?.email,
+            role: faculty?.role,
+            title: faculty?.title,
         };
 
         return program;
