@@ -23,6 +23,9 @@ const getById = async (courseId) => {
     var faculties = [];
     for (const facultyId of course.faculties) {
         const faculty = await facultyModel.findById(facultyId).lean();
+        if (faculty == null) {
+            continue;
+        }
         const user = await userModel.findById(faculty.userId).lean();
         faculties.push({
             name: user.name,

@@ -1,5 +1,7 @@
 import facultyModel from "../models/Faculty.js";
 import userModel from "../models/User.js";
+import hodModel from "../models/Hod.js";
+import courseModel from "../models/Course.js";
 
 // const checkCollegeBelongsToUser = async (facultyId, userFacultyId) => {
 //     if (facultyId != userFacultyId) {
@@ -70,6 +72,22 @@ const update = async (id, data, collegeId) => {
 };
 
 const remove = async (id) => {
+    const hod = await hodModel.find({
+        facultyId: id,
+    });
+
+    if (hod.length > 0) {
+        throw { status: 400, message: "Faculty is assigned as HOD" };
+    }
+
+    const courses = await courseModel.find({
+        faculties: id,
+    });
+
+    if (courses.length > 0) {
+        throw { status: 400, message: "Faculty is assigned to courses" };
+    }
+
     const faculty = await facultyModel.findByIdAndDelete(id);
     if (!faculty) {
         throw { status: 404, message: "Faculty not found" };
