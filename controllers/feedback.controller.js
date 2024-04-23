@@ -39,6 +39,7 @@ const createFeedback = async (req, res) => {
             .items(
                 joi.object({
                     question: joi.string().required(),
+                    description: joi.string(),
                     settings: joi.object({
                         type: joi.string().valid("text", "longtext", "multiplechoice", "rating").required(),
                         options: joi.array(),
