@@ -116,14 +116,16 @@ const verifyUser = async (token) => {
 };
 
 const getPermissions = async (collegeId) => {
-    const permissions = await Permissions.findOne({
+    const permissionsData = await Permissions.findOne({
         collegeId
-    });
-    if (!permissions) {
+    }).lean();
+    if (!permissionsData) {
         throw { status: 404, message: "Permissions not found" };
     }
 
-    return permissions;
+    permissionsData.allPermissions = permissions;
+
+    return permissionsData;
 };
 
 const resetPermissions = async (collegeId) => {
