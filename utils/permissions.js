@@ -7,7 +7,7 @@ const permissions = {
     "DELETE /batch/:id": "Delete batch",
     //College
     "GET /college/:id": "Get a college",
-    "GET /college/get-all-count": "Get all counts",
+    "POST /college/get-all-count": "Get all counts",
     "POST /college/": "Create a new college and assign it to the admin",
     "PUT /college/:id": "Update college details",
     "DELETE /college/:id": "Delete college",
