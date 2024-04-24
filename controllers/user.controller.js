@@ -120,6 +120,53 @@ const verifyUser = async (req, res) => {
     }
 };
 
+const getPermissions = async (req, res) => {
+    try {
+        const permissions = await userService.getPermissions(req.user.college._id);
+        logger.info(`Retrieved permissions: ${permissions}`);
+        res.status(200).json({ data: permissions, success: true });
+    } catch (error) {
+        logger.error(`Error resetting permissions: ${error}`);
+        handleError(res, error);
+    }
+}
+
+const resetPermissions = async (req, res) => {
+    try {
+        await userService.resetPermissions(req.user.college._id);
+        logger.info(`Permissions reset`);
+        res.status(200).json({ message: "Permissions reset successfully" });
+    } catch (error) {
+        logger.error(`Error resetting permissions: ${error}`);
+        handleError(res, error);
+    }
+}
+
+const updatePermissions = async (req, res) => {
+    try {
+        const schema = joi.object({
+            admin: joi.array().items(joi.string()).required(),
+            principal: joi.array().items(joi.string()).required(),
+            faculty: joi.array().items(joi.string()).required(),
+            student: joi.array().items(joi.string()).required(),
+        });
+
+        const {
+            admin,
+            principal,
+            faculty,
+            student,
+        } = await schema.validateAsync(req.body);
+
+        await userService.updatePermissions(req.user.college._id, admin, principal, faculty, student);
+        logger.info(`Permissions updated`);
+        res.status(200).json({ message: "Permissions updated successfully" });
+    } catch (error) {
+        logger.error(`Error updating permissions: ${error}`);
+        handleError(res, error);
+    }
+}
+
 export default {
     welcome,
     register,
@@ -128,4 +175,7 @@ export default {
     getAllUsers,
     getById,
     verifyUser,
+    getPermissions,
+    resetPermissions,
+    updatePermissions,
 };

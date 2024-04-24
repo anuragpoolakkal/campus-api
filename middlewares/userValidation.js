@@ -7,6 +7,7 @@ import studentModel from "../models/Student.js";
 import parentModel from "../models/Parent.js";
 import collegeModel from "../models/College.js";
 import principalModel from "../models/Principal.js";
+import { validatePermission } from "./permissionValidation.js";
 
 //Any user (admin, principal, faculty, student, parent) can access this route
 //College details will be added to req.user.college
@@ -40,7 +41,7 @@ const validateUser = async (req, res, next) => {
             const parent = await parentModel.findOne({ userId: userData._id }).lean();
             req.user.college = await collegeModel.findOne({ _id: parent.collegeId }).lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 
@@ -64,7 +65,7 @@ const validateAdmin = async (req, res, next) => {
         if (req.user.admin) {
             req.user.college = await collegeModel.findById(req.user.admin.collegeId).lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 
@@ -88,7 +89,7 @@ const validatePrincipal = async (req, res, next) => {
         if (req.user.principal) {
             req.user.college = await collegeModel.findById(req.user.principal.collegeId).lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 
@@ -113,7 +114,7 @@ const validateFaculty = async (req, res, next) => {
         if (req.user.faculty) {
             req.user.college = await collegeModel.findOne({ _id: req.faculty.collegeId }).lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 
@@ -137,7 +138,7 @@ const validateStudent = async (req, res, next) => {
         if (req.user.student) {
             req.user.college = await collegeModel.findById(req.student.collegeId).lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 
@@ -169,7 +170,7 @@ const validateParent = async (req, res, next) => {
                 .findOne({ _id: req.parent.student.collegeId })
                 .lean();
         }
-        next();
+        validatePermission(req, res, next);
     });
 };
 

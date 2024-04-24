@@ -19,7 +19,7 @@ import rfs from "rotating-file-stream";
 import logger from "./utils/logger.js";
 
 const app = express();
-dotenv.config();
+dotenv.config({ multiline: 'line-breaks' });
 app.use(cors());
 
 mongoose.set("strictQuery", true);

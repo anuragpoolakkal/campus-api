@@ -2,6 +2,8 @@
 import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Permissions from "../models/Permissions.js";
+import { permissions } from "../utils/permissions.js";
 
 const welcome = async () => {
     return "<h1>Welcome to the user</h1>";
@@ -113,6 +115,57 @@ const verifyUser = async (token) => {
     }
 };
 
+const getPermissions = async (collegeId) => {
+    const permissions = await Permissions.findOne({
+        collegeId
+    });
+    if (!permissions) {
+        throw { status: 404, message: "Permissions not found" };
+    }
+
+    return permissions;
+};
+
+const resetPermissions = async (collegeId) => {
+    try {
+        await Permissions.deleteOne({ collegeId });
+        const defaultPermissions = [];
+        for (const permission of Object.keys(permissions)) {
+            defaultPermissions.push(permission);
+        }
+        const newPermissions = new Permissions({
+            collegeId,
+            admin: defaultPermissions,
+            principal: defaultPermissions,
+            faculty: defaultPermissions,
+            student: defaultPermissions,
+        });
+
+        await newPermissions.save();
+
+        return { message: "Permissions reset successfully" };
+    }
+    catch (error) {
+        throw { status: 400, message: error.message };
+    }
+}
+
+const updatePermissions = async (collegeId, adminPermissions, principalPermissions, facultyPermissions, studentPermissions) => {
+    try {
+        await Permissions.findOneAndUpdate({ collegeId }, {
+            admin: adminPermissions,
+            principal: principalPermissions,
+            faculty: facultyPermissions,
+            student: studentPermissions,
+        });
+
+        return { message: "Permissions updated successfully" };
+    }
+    catch (error) {
+        throw { status: 400, message: error.message };
+    }
+}
+
 export default {
     welcome,
     register,
@@ -121,4 +174,7 @@ export default {
     getAllUsers,
     getUserById,
     verifyUser,
+    getPermissions,
+    resetPermissions,
+    updatePermissions,
 };
