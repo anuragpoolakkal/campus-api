@@ -1,6 +1,7 @@
 import courseModel from "../models/Course.js";
 import feedbackModel from "../models/Feedback.js";
 import userModel from "../models/User.js";
+import { feedbackQuestionsGenerationPrompt, openai } from "../utils/utils.js";
 
 const getById = async (feedbackId) => {
     const feedback = await feedbackModel.findById(feedbackId);
@@ -79,11 +80,34 @@ const remove = async (feedbackId) => {
     return feedback;
 };
 
+const generateQuestionsUsingAI = async (data) => {
+    const feedback = await feedbackModel.findById(data.feedbackId);
+    if (!feedback) {
+        throw { status: 404, message: "Feedback not found" };
+    }
+
+    const course = await courseModel.findById(feedback.courseId);
+    if (!course) {
+        throw { status: 404, message: "Course not found" };
+    }
+
+    const completion = await openai.chat.completions.create({
+        model: "gpt-4",
+        messages: [
+            { "role": "system", "content": feedbackQuestionsGenerationPrompt },
+            { "role": "user", "content": `Faculty provided these information: {\"courseName\": \"${course.name}\", \"prompt\": \"${data.prompt}\", \"maxQuestions\": \"${data.maxQuestions}\"}` }
+        ],
+    });
+
+    return JSON.parse(completion.choices[0].message.content);
+};
+
 export default {
     getById,
     getAllByCollege,
     getAllByCourseId,
     create,
     update,
-    remove
+    remove,
+    generateQuestionsUsingAI
 };

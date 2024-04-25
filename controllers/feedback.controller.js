@@ -128,6 +128,29 @@ const deleteFeedback = async (req, res) => {
     }
 };
 
+const generateQuestionsUsingAI = async (req, res) => {
+    const schema = joi.object({
+        feedbackId: joi.string().required(),
+        prompt: joi.string().required(),
+        maxQuestions: joi.number().required(),
+    });
+
+    try {
+        const data = await schema.validateAsync(req.body);
+        const questions = await feedbackService.generateQuestionsUsingAI(data);
+
+        logger.info("Questions generated successfully");
+        return res.status(200).json({
+            message: "Questions generated successfully",
+            data: questions,
+            success: true,
+        });
+    } catch (error) {
+        logger.error(error);
+        handleError(res, error);
+    }
+};
+
 export default {
     getFeedback,
     getFeedbackById,
@@ -135,4 +158,5 @@ export default {
     createFeedback,
     updateFeedback,
     deleteFeedback,
+    generateQuestionsUsingAI
 };
