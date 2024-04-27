@@ -64,8 +64,12 @@ const updateDepartment = async (req, res) => {
         //Validate request body
         const data = await schema.validateAsync(req.body);
 
-        const department = await departmentService.update(req.params.id, data, req.user.college._id);
-        
+        const department = await departmentService.update(
+            req.params.id,
+            data,
+            req.user.college._id,
+        );
+
         logger.info("Department updated successfully");
 
         return res.status(200).json({
@@ -81,7 +85,7 @@ const updateDepartment = async (req, res) => {
 
 const deleteDepartment = async (req, res) => {
     try {
-        const department = await departmentService.deleteDepartment(req.params.id);
+        const department = await departmentService.remove(req.params.id);
 
         logger.info("Department deleted successfully");
 

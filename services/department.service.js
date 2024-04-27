@@ -40,7 +40,7 @@ const create = async (data, userId, collegeId) => {
         collegeId: collegeId,
         vision: data.vision,
         mission: data.mission,
-        createdBy: userId
+        createdBy: userId,
     });
 
     await department.save();
@@ -67,9 +67,11 @@ const update = async (departmentId, data, collegeId) => {
 };
 
 const remove = async (departmentId) => {
-    const department = await fetchById(departmentId);
+    const department = await departmentModel.findByIdAndDelete(departmentId);
 
-    await departmentModel.findByIdAndDelete(departmentId);
+    if (!department) {
+        throw { status: 404, message: "Department not found" };
+    }
 
     return department;
 };
