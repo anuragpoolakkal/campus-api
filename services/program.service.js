@@ -89,9 +89,25 @@ const remove = async (id) => {
     return program;
 };
 
+const getAllByDepartmentId = async (departmentId) => {
+    const hods = await hodModel.find({ departmentId });
+    var programs = [];
+    for (const hod of hods) {
+        const programsData = await programModel.find({ hodId: hod._id });
+        programs = programs.concat(programsData);
+    }
+
+    if (!programs) {
+        throw { status: 404, message: "No programs found for the provided departmentId" };
+    }
+
+    return programs;
+};
+
 export default {
-    getAll,
     getById,
+    getAll,
+    getAllByDepartmentId,
     create,
     update,
     remove,

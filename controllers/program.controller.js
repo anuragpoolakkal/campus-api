@@ -91,10 +91,26 @@ const deleteProgram = async (req, res) => {
     }
 };
 
+const getProgramsByDepartmentId = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (id) {
+            const semester = await programService.getAllByDepartmentId(id);
+            logger.info("Programs fetched successfully");
+            return res.status(200).json({ data: semester, success: true });
+        }
+    } catch (error) {
+        logger.error(error.message);
+        handleError(res, error);
+    }
+};
+
 export default {
     getPrograms,
     getProgramById,
     createProgram,
     updateProgram,
     deleteProgram,
+    getProgramsByDepartmentId
 };

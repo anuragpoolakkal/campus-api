@@ -45,7 +45,7 @@ const getSemestersByProgramId = async (req, res) => {
 
         if (id) {
             const semester = await semesterService.getAllByProgramId(id);
-            logger.info("Semester fetched successfully");
+            logger.info("Semesters fetched successfully");
             return res.status(200).json({ data: semester, success: true });
         }
     } catch (error) {
