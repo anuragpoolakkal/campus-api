@@ -30,17 +30,19 @@ const getAllByCollege = async (collegeId) => {
     const courses = await courseModel.find({ collegeId: collegeId });
     var feedbacks = [];
     for (const course of courses) {
-        const feedback = await feedbackModel.findOne({ courseId: course._id }).lean();
-        if (!feedback) {
-            continue;
+        const feedbacksData = await feedbackModel.find({ courseId: course._id }).lean();
+        for (const feedback of feedbacksData) {
+            if (!feedback) {
+                continue;
+            }
+            const courseData = await courseModel.findById(feedback.courseId).lean();
+            const user = await userModel.findById(feedback.createdBy).lean();
+            const responsesCount = await feedbackResponseModel.find({ feedbackId: feedback._id });
+            feedback.course = courseData;
+            feedback.createdBy = user;
+            feedback.responsesCount = responsesCount.length;
+            feedbacks.push(feedback);
         }
-        const courseData = await courseModel.findById(feedback.courseId).lean();
-        const user = await userModel.findById(feedback.createdBy).lean();
-        const responsesCount = await feedbackResponseModel.find({ feedbackId: feedback._id });
-        feedback.course = courseData;
-        feedback.createdBy = user;
-        feedback.responsesCount = responsesCount.length;
-        feedbacks.push(feedback);
     }
 
     return feedbacks;
