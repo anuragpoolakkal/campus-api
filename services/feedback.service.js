@@ -1,6 +1,6 @@
 import courseModel from "../models/Course.js";
 import feedbackModel from "../models/Feedback.js";
-import FeedbackResponse from "../models/FeedbackResponse.js";
+import feedbackResponseModel from "../models/FeedbackResponse.js";
 import userModel from "../models/User.js";
 import { feedbackQuestionsGenerationPrompt, openai } from "../utils/utils.js";
 
@@ -24,14 +24,18 @@ const getAllByCourseId = async (courseId) => {
     return feedback;
 };
 
-const getAllByCollege = async () => {
-    const feedbacks = await feedbackModel.find().lean();
-
-    for (const feedback of feedbacks) {
-        const course = await courseModel.findById(feedback.courseId).lean();
+const getAllByCollege = async (collegeId) => {
+    const courses = await courseModel.find({collegeId: collegeId});
+    var feedbacks = [];
+    for(const course of courses){
+        const feedback = await feedbackModel.findOne({courseId: course._id}).lean();
+        const courseData = await courseModel.findById(feedback.courseId).lean();
         const user = await userModel.findById(feedback.createdBy).lean();
-        feedback.course = course;
+        const responsesCount = await feedbackResponseModel.find({feedbackId: feedback._id});
+        feedback.course = courseData;
         feedback.createdBy = user;
+        feedback.responsesCount = responsesCount.length;
+        feedbacks.push(feedback);
     }
 
     return feedbacks;
