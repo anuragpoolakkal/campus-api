@@ -11,7 +11,7 @@ const FeedbackResponseSchema = new mongoose.Schema(
             ref: "Student",
         },
         responses: {
-            // { "questionId": { "type": "text", "response": "response"}}
+            // { "questionId": "response"}
             type: Object,
             required: true,
         },
