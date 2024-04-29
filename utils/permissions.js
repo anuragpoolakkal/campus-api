@@ -36,7 +36,7 @@ const permissions = {
     "PUT /feedback/:id": "Update feedback details",
     "DELETE /feedback/:id": "Delete feedback",
     "POST /feedback/generate-questions-using-ai": "Generate feedback form questions using AI",
-    "POST /submit": "Submit Feedback",
+    "POST /feedback/submit": "Submit Feedback",
     //Hod
     "GET /hod/": "Get all hod",
     "GET /hod/:id": "Get a hod",

@@ -166,7 +166,7 @@ const validateStudent = async (req, res, next) => {
         req.user = userData;
         req.user.student = await studentModel.findOne({ userId: userData._id }).lean();
         if (req.user.student) {
-            req.user.college = await collegeModel.findById(req.student.collegeId).lean();
+            req.user.college = await collegeModel.findById(req.user.student.collegeId).lean();
         }
         validatePermission(req, res, next);
     });
@@ -192,12 +192,12 @@ const validateParent = async (req, res, next) => {
         req.user.parent = await parentModel.findOne({ userId: userData._id }).lean();
         if (req.user.parent) {
             req.user.parent.student = await studentModel
-                .findOne({ _id: req.parent.studentId })
+                .findOne({ _id: req.user.parent.studentId })
                 .lean();
         }
         if (req.user.parent.student) {
             req.user.college = await collegeModel
-                .findOne({ _id: req.parent.student.collegeId })
+                .findOne({ _id: req.user.parent.student.collegeId })
                 .lean();
         }
         validatePermission(req, res, next);
