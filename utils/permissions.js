@@ -46,6 +46,7 @@ const permissions = {
     //Program
     "GET /program/": "Get all programs",
     "GET /program/:id": "Get a program",
+    "POST /program/get-all-by-department/:id": "Get all programs by departmentId",
     "POST /program/": "Create a new program",
     "PUT /program/:id": "Update program details",
     "DELETE /program/:id": "Delete program",

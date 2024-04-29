@@ -1,5 +1,7 @@
 import batchModel from "../models/Batch.js";
 import programModel from "../models/Program.js";
+import hodModel from "../models/Hod.js";
+import departmentModel from "../models/Department.js";
 
 const getById = async (batchId) => {
     try {
@@ -21,7 +23,11 @@ const getAll = async (collegeId) => {
         const batches = await batchModel.find({ collegeId: collegeId }).lean();
 
         for (const batch of batches) {
-            batch.program = await programModel.findById(batch?.programId).select("name").lean();
+            const program = await programModel.findById(batch?.programId).lean();
+            batch.program = program;
+            const hod = await hodModel.findById(program?.hodId).lean();
+            const department = await departmentModel.findById(hod?.departmentId);
+            batch.department = department;
         }
 
         return batches;

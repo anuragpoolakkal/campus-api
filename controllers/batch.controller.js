@@ -61,7 +61,7 @@ const createBatch = async (req, res) => {
         const batch = await batchService.create(data, req.user._id, req.user.college._id);
 
         logger.info("Batch created successfully");
-        return res.status(201).json({ data: batch, success: true });
+        return res.status(201).json({ message: "Batch created successfully", data: batch, success: true });
     } catch (error) {
         logger.error(error.message);
         handleError(res, error);
