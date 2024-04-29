@@ -2,6 +2,8 @@ import courseModel from "../models/Course.js";
 import feedbackModel from "../models/Feedback.js";
 import feedbackResponseModel from "../models/FeedbackResponse.js";
 import userModel from "../models/User.js";
+import batchModel from "../models/Batch.js";
+import studentModel from "../models/Student.js";
 import { feedbackQuestionsGenerationPrompt, openai } from "../utils/utils.js";
 
 const getById = async (feedbackId) => {
@@ -39,6 +41,32 @@ const getAllByCollege = async (collegeId) => {
         feedback.createdBy = user;
         feedback.responsesCount = responsesCount.length;
         feedbacks.push(feedback);
+    }
+
+    return feedbacks;
+};
+
+const getAllForStudent = async (userId) => {
+    const student = await studentModel.findOne({ userId: userId });
+    const batch = await batchModel.findById(student.batchId);
+    const courses = await courseModel.find({ programId: batch.programId });
+
+    var feedbacks = [];
+
+    for (const course of courses) {
+        const feedbacksData = await feedbackModel.find({ courseId: course._id }).select("-questions").lean();
+        if (!feedbacks) {
+            continue;
+        }
+        for (const feedback of feedbacksData) {
+            const courseData = await courseModel.findById(feedback.courseId).lean();
+            const user = await userModel.findById(feedback.createdBy).lean();
+            const responsesCount = await feedbackResponseModel.find({ feedbackId: feedback._id });
+            feedback.course = courseData;
+            feedback.createdBy = user;
+            feedback.responsesCount = responsesCount.length;
+            feedbacks.push(feedback);
+        }
     }
 
     return feedbacks;
@@ -140,5 +168,6 @@ export default {
     update,
     remove,
     generateQuestionsUsingAI,
-    submitFeedback
+    submitFeedback,
+    getAllForStudent
 };
