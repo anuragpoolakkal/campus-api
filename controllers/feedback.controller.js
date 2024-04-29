@@ -32,8 +32,8 @@ const getFeedback = async (req, res) => {
 const createFeedback = async (req, res) => {
     const schema = joi.object({
         title: joi.string().required(),
-        description: joi.string().required(),
-        color: joi.string().valid("black", "red", "green", "blue", "yellow", "pink").required(),
+        description: joi.string(),
+        color: joi.string().valid("black", "red", "green", "blue", "yellow", "pink"),
         questions: joi
             .array()
             .items(
@@ -48,8 +48,7 @@ const createFeedback = async (req, res) => {
                         required: joi.boolean().required()
                     })
                 }),
-            )
-            .required(),
+            ),
         courseId: joi.string().required(),
     });
     try {
