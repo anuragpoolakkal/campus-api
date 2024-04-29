@@ -29,6 +29,17 @@ const getFeedback = async (req, res) => {
     }
 };
 
+const getPendingFeedbacks = async (req, res) => {
+    try {
+        const feedback = await feedbackService.getPendingFeedbacks(req.user._id);
+        logger.error(`Feedback fetched successfully`);
+        return res.status(200).json({ data: feedback, success: true });
+    } catch (error) {
+        logger.error(error);
+        handleError(res, error);
+    }
+};
+
 const createFeedback = async (req, res) => {
     const schema = joi.object({
         title: joi.string().required(),
@@ -175,6 +186,7 @@ const submitFeedback = async (req, res) => {
 export default {
     getFeedback,
     getFeedbackById,
+    getPendingFeedbacks,
     //getFeedbackAllCollege,
     createFeedback,
     updateFeedback,

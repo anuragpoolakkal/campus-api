@@ -4,6 +4,7 @@ import feedbackController from "../controllers/feedback.controller.js";
 const router = express.Router();
 
 router.get("/", validateUser, feedbackController.getFeedback);
+router.get("/pending", validateStudent, feedbackController.getPendingFeedbacks);
 router.get("/:id", validateUser, feedbackController.getFeedbackById);
 router.post("/", validateUser, feedbackController.createFeedback);
 router.put("/:id", validateUser, feedbackController.updateFeedback);

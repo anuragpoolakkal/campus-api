@@ -72,6 +72,36 @@ const getAllForStudent = async (userId) => {
     return feedbacks;
 };
 
+const getPendingFeedbacks = async (userId) => {
+    const student = await studentModel.findOne({ userId: userId });
+    const batch = await batchModel.findById(student.batchId);
+    const courses = await courseModel.find({ programId: batch.programId });
+
+    var feedbacks = [];
+
+    for (const course of courses) {
+        const feedbacksData = await feedbackModel.find({ courseId: course._id }).select("-questions").lean();
+        if (!feedbacks) {
+            continue;
+        }
+        for (const feedback of feedbacksData) {
+            const feedbackResponse = await feedbackResponseModel.findOne({ feedbackId: feedback._id, studentId: userId });
+            if (feedbackResponse) {
+                continue;
+            }
+            const courseData = await courseModel.findById(feedback.courseId).lean();
+            const user = await userModel.findById(feedback.createdBy).lean();
+            const responsesCount = await feedbackResponseModel.find({ feedbackId: feedback._id });
+            feedback.course = courseData;
+            feedback.createdBy = user;
+            feedback.responsesCount = responsesCount.length;
+            feedbacks.push(feedback);
+        }
+    }
+
+    return feedbacks;
+};
+
 const create = async (data, userId) => {
     const course = await courseModel.findById(data.courseId);
     if (!course) {
@@ -169,5 +199,6 @@ export default {
     remove,
     generateQuestionsUsingAI,
     submitFeedback,
-    getAllForStudent
+    getAllForStudent,
+    getPendingFeedbacks,
 };
