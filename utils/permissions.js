@@ -31,6 +31,7 @@ const permissions = {
     "DELETE /faculty/:id": "Delete faculty",
     //Feedback
     "GET /feedback/": "Get all feedbacks",
+    "GET /feedback/pending": "Get all pending feedbacks",
     "GET /feedback/:id": "Get a feedback",
     "POST /feedback/": "Create a new feedback",
     "PUT /feedback/:id": "Update feedback details",
