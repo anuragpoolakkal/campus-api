@@ -79,13 +79,13 @@ const updateFeedback = async (req, res) => {
             .array()
             .items(
                 joi.object({
-                    question: joi.string().required(),
+                    question: joi.string(),
                     settings: joi.object({
                         type: joi.string().valid("text", "longtext", "multiplechoice", "rating").required(),
                         options: joi.array(),
                         min: joi.number(),
                         max: joi.number(),
-                        required: joi.boolean().required()
+                        required: joi.boolean(),
                     })
                 }),
             )
@@ -150,6 +150,28 @@ const generateQuestionsUsingAI = async (req, res) => {
     }
 };
 
+const submitFeedback = async (req, res) => {
+    const schema = joi.object({
+        feedbackId: joi.string().required(),
+        responses: joi.object().required()
+    });
+
+    try {
+        const data = await schema.validateAsync(req.body);
+        const feedbackResponse = await feedbackService.submitFeedback(data, req.user._id);
+
+        logger.info("Feedback submitted successfully");
+        return res.status(200).json({
+            message: "Feedback submitted successfully",
+            data: feedbackResponse,
+            success: true,
+        });
+    } catch (error) {
+        logger.error(error);
+        handleError(res, error);
+    }
+};
+
 export default {
     getFeedback,
     getFeedbackById,
@@ -157,5 +179,6 @@ export default {
     createFeedback,
     updateFeedback,
     deleteFeedback,
-    generateQuestionsUsingAI
+    generateQuestionsUsingAI,
+    submitFeedback
 };

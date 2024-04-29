@@ -1,5 +1,6 @@
 import courseModel from "../models/Course.js";
 import feedbackModel from "../models/Feedback.js";
+import FeedbackResponse from "../models/FeedbackResponse.js";
 import userModel from "../models/User.js";
 import { feedbackQuestionsGenerationPrompt, openai } from "../utils/utils.js";
 
@@ -102,6 +103,28 @@ const generateQuestionsUsingAI = async (data) => {
     return JSON.parse(completion.choices[0].message.content);
 };
 
+const submitFeedback = async (data, studentId) => {
+    const feedback = await feedbackModel.findById(data.feedbackId);
+    if (!feedback) {
+        throw { status: 404, message: "Feedback not found" };
+    }
+
+    const course = await courseModel.findById(feedback.courseId);
+    if (!course) {
+        throw { status: 404, message: "Course not found" };
+    }
+
+    const feedbackResponse = new FeedbackResponse({
+        feedbackId: data.feedbackId,
+        studentId: studentId,
+        responses: data.responses
+    });
+
+    await feedbackResponse.save();
+
+    return feedbackResponse;
+};
+
 export default {
     getById,
     getAllByCollege,
@@ -109,5 +132,6 @@ export default {
     create,
     update,
     remove,
-    generateQuestionsUsingAI
+    generateQuestionsUsingAI,
+    submitFeedback
 };

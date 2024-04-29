@@ -79,7 +79,7 @@ const createFaculty = async (req, res) => {
 
         logger.info(" created successfully");
         return res.status(201).json({
-            message: " registered successfully",
+            message: "Faculty registered successfully",
             data: faculty,
             success: true,
         });
