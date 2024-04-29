@@ -3,7 +3,7 @@ import userService from "../services/user.service.js";
 const validatePermission = async (req, res, next) => {
     const permissionPath = req.method + " " + req.baseUrl + req.route.path;
     // console.log("REQUESTED USER: ", req.user)
-    if (req.baseUrl === "/user") {
+    if (req.baseUrl === "/user" || req.baseUrl === "/college") {
         return next();
     }
 
