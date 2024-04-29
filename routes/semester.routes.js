@@ -7,8 +7,8 @@ const router = express.Router();
 router.get("/", validateUser, semesterController.getSemesters);
 router.get("/:id", validateUser, semesterController.getSemesterById);
 router.post("/get-all-by-program/:id", validateUser, semesterController.getSemestersByProgramId);
-router.post("/", validateAdmin, semesterController.createSemester);
-router.put("/:id", validateAdmin, semesterController.updateSemester);
-router.delete("/:id", validateAdmin, semesterController.deleteSemester);
+router.post("/", validateUser, semesterController.createSemester);
+router.put("/:id", validateUser, semesterController.updateSemester);
+router.delete("/:id", validateUser, semesterController.deleteSemester);
 
 export default router;

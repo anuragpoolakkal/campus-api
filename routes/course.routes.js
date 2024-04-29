@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.get("/", validateUser, courseController.getCourses);
 router.get("/:id", validateUser, courseController.getCourseById);
-router.post("/", validateAdmin, courseController.createCourse);
-router.put("/:id", validateAdmin, courseController.updateCourse);
-router.delete("/:id", validateAdmin, courseController.deleteCourse);
+router.post("/", validateUser, courseController.createCourse);
+router.put("/:id", validateUser, courseController.updateCourse);
+router.delete("/:id", validateUser, courseController.deleteCourse);
 
 export default router;
 
