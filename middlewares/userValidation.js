@@ -27,18 +27,48 @@ const validateUser = async (req, res, next) => {
 
         if (userData.role === "admin") {
             const admin = await adminModel.findOne({ userId: userData._id }).lean();
+            if(!admin?.collegeId){
+                return res.status(404).send({
+                    message: "College not found",
+                    success: false
+                })
+            }
             req.user.college = await collegeModel.findOne({ _id: admin.collegeId }).lean();
         } else if (userData.role === "principal") {
             const principal = await principalModel.findOne({ userId: userData._id }).lean();
+            if(!principal?.collegeId){
+                return res.status(404).send({
+                    message: "College not found",
+                    success: false
+                })
+            }
             req.user.college = await collegeModel.findOne({ _id: principal.collegeId }).lean();
         } else if (userData.role === "faculty") {
             const faculty = await facultyModel.findOne({ userId: userData._id }).lean();
+            if(!faculty?.collegeId){
+                return res.status(404).send({
+                    message: "College not found",
+                    success: false
+                })
+            }
             req.user.college = await collegeModel.findOne({ _id: faculty.collegeId }).lean();
         } else if (userData.role === "student") {
             const student = await studentModel.findOne({ userId: userData._id }).lean();
+            if(!student?.collegeId){
+                return res.status(404).send({
+                    message: "College not found",
+                    success: false
+                })
+            }
             req.user.college = await collegeModel.findOne({ _id: student.collegeId }).lean();
         } else if (userData.role === "parent") {
             const parent = await parentModel.findOne({ userId: userData._id }).lean();
+            if(!parent?.collegeId){
+                return res.status(404).send({
+                    message: "College not found",
+                    success: false
+                })
+            }
             req.user.college = await collegeModel.findOne({ _id: parent.collegeId }).lean();
         }
         validatePermission(req, res, next);
