@@ -179,7 +179,12 @@ const submitFeedback = async (data, studentId) => {
         throw { status: 404, message: "Course not found" };
     }
 
-    const feedbackResponse = new FeedbackResponse({
+    const feedbackResponseExists = await feedbackResponseModel.findOne({ feedbackId: data.feedbackId, studentId: studentId });
+    if (feedbackResponseExists) {
+        throw { status: 400, message: "Feedback already submitted" };
+    }
+
+    const feedbackResponse = new feedbackResponseModel({
         feedbackId: data.feedbackId,
         studentId: studentId,
         responses: data.responses
