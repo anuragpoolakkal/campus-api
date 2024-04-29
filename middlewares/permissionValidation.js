@@ -7,6 +7,13 @@ const validatePermission = async (req, res, next) => {
         return next();
     }
 
+    if(!req.user.college){
+        return res.status(404).send({
+            message: "College not found",
+            success: false
+        })
+    }
+
     const permissions = await userService.getPermissions(req.user.college._id);
     if (req.user.role === "admin") {
         // console.log("HEHEHEHE")

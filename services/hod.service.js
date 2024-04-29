@@ -32,6 +32,9 @@ const getById = async (hodId) => {
     }
 
     const faculty = await facultyModel.findById(hod?.facultyId).select("role title").lean();
+    if(!faculty){
+        await hodModel.findByIdAndDelete(hodId);
+    }
     const user = await userModel.findById(faculty?.userId).lean();
     hod.name = user?.name;
     hod.email = user?.email;
