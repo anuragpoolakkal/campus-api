@@ -26,6 +26,15 @@ const getAllByCourseId = async (courseId) => {
     return feedback;
 };
 
+const getFeedbackResponses = async (feedbackId) => {
+    const feedbackResponse = await feedbackResponseModel.findOne({ feedbackId: feedbackId });
+    if (!feedbackResponse) {
+        throw { status: 404, message: "Feedback not found" };
+    }
+
+    return feedbackResponse;
+};
+
 const getAllByCollege = async (collegeId) => {
     const courses = await courseModel.find({ collegeId: collegeId });
     var feedbacks = [];
@@ -56,7 +65,10 @@ const getAllForStudent = async (userId) => {
     var feedbacks = [];
 
     for (const course of courses) {
-        const feedbacksData = await feedbackModel.find({ courseId: course._id }).select("-questions").lean();
+        const feedbacksData = await feedbackModel
+            .find({ courseId: course._id })
+            .select("-questions")
+            .lean();
         if (!feedbacks) {
             continue;
         }
@@ -82,12 +94,18 @@ const getPendingFeedbacks = async (userId) => {
     var feedbacks = [];
 
     for (const course of courses) {
-        const feedbacksData = await feedbackModel.find({ courseId: course._id }).select("-questions").lean();
+        const feedbacksData = await feedbackModel
+            .find({ courseId: course._id })
+            .select("-questions")
+            .lean();
         if (!feedbacks) {
             continue;
         }
         for (const feedback of feedbacksData) {
-            const feedbackResponse = await feedbackResponseModel.findOne({ feedbackId: feedback._id, studentId: userId });
+            const feedbackResponse = await feedbackResponseModel.findOne({
+                feedbackId: feedback._id,
+                studentId: userId,
+            });
             if (feedbackResponse) {
                 continue;
             }
@@ -115,7 +133,7 @@ const create = async (data, userId) => {
         color: data.color,
         questions: data.questions,
         courseId: data.courseId,
-        createdBy: userId
+        createdBy: userId,
     });
 
     await feedback.save();
@@ -132,7 +150,7 @@ const update = async (feedbackId, data) => {
         description: data.description,
         color: data.color,
         questions: data.questions,
-        courseId: data.courseId
+        courseId: data.courseId,
     });
 
     return feedback;
@@ -162,8 +180,11 @@ const generateQuestionsUsingAI = async (data) => {
     const completion = await openai.chat.completions.create({
         model: "gpt-4",
         messages: [
-            { "role": "system", "content": feedbackQuestionsGenerationPrompt },
-            { "role": "user", "content": `Faculty provided these information: {\"courseName\": \"${course.name}\", \"prompt\": \"${data.prompt}\", \"maxQuestions\": \"${data.maxQuestions}\"}` }
+            { role: "system", content: feedbackQuestionsGenerationPrompt },
+            {
+                role: "user",
+                content: `Faculty provided these information: {\"courseName\": \"${course.name}\", \"prompt\": \"${data.prompt}\", \"maxQuestions\": \"${data.maxQuestions}\"}`,
+            },
         ],
     });
 
@@ -181,7 +202,10 @@ const submitFeedback = async (data, studentId) => {
         throw { status: 404, message: "Course not found" };
     }
 
-    const feedbackResponseExists = await feedbackResponseModel.findOne({ feedbackId: data.feedbackId, studentId: studentId });
+    const feedbackResponseExists = await feedbackResponseModel.findOne({
+        feedbackId: data.feedbackId,
+        studentId: studentId,
+    });
     if (feedbackResponseExists) {
         throw { status: 400, message: "Feedback already submitted" };
     }
@@ -189,7 +213,7 @@ const submitFeedback = async (data, studentId) => {
     const feedbackResponse = new feedbackResponseModel({
         feedbackId: data.feedbackId,
         studentId: studentId,
-        responses: data.responses
+        responses: data.responses,
     });
 
     await feedbackResponse.save();
@@ -208,4 +232,5 @@ export default {
     submitFeedback,
     getAllForStudent,
     getPendingFeedbacks,
+    getFeedbackResponses,
 };

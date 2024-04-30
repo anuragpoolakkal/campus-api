@@ -20,7 +20,10 @@ const getFeedbackById = async (req, res) => {
 
 const getFeedback = async (req, res) => {
     try {
-        const feedback = req.user.role === "student" ? await feedbackService.getAllForStudent(req.user._id) : await feedbackService.getAllByCollege(req.user.college._id);
+        const feedback =
+            req.user.role === "student"
+                ? await feedbackService.getAllForStudent(req.user._id)
+                : await feedbackService.getAllByCollege(req.user.college._id);
         logger.error(`Feedback fetched successfully`);
         return res.status(200).json({ data: feedback, success: true });
     } catch (error) {
@@ -45,21 +48,22 @@ const createFeedback = async (req, res) => {
         title: joi.string().required(),
         description: joi.string(),
         color: joi.string().valid("black", "red", "green", "blue", "yellow", "pink"),
-        questions: joi
-            .array()
-            .items(
-                joi.object({
-                    question: joi.string().required(),
-                    description: joi.string(),
-                    settings: joi.object({
-                        type: joi.string().valid("text", "longtext", "multiplechoice", "rating").required(),
-                        options: joi.array(),
-                        min: joi.number(),
-                        max: joi.number(),
-                        required: joi.boolean().required()
-                    })
+        questions: joi.array().items(
+            joi.object({
+                question: joi.string().required(),
+                description: joi.string(),
+                settings: joi.object({
+                    type: joi
+                        .string()
+                        .valid("text", "longtext", "multiplechoice", "rating")
+                        .required(),
+                    options: joi.array(),
+                    min: joi.number(),
+                    max: joi.number(),
+                    required: joi.boolean().required(),
                 }),
-            ),
+            }),
+        ),
         courseId: joi.string().required(),
     });
     try {
@@ -78,8 +82,7 @@ const createFeedback = async (req, res) => {
         logger.error(error);
         handleError(res, error);
     }
-
-}
+};
 
 const updateFeedback = async (req, res) => {
     const schema = joi.object({
@@ -93,12 +96,15 @@ const updateFeedback = async (req, res) => {
                     question: joi.string(),
                     description: joi.string(),
                     settings: joi.object({
-                        type: joi.string().valid("text", "longtext", "multiplechoice", "rating").required(),
+                        type: joi
+                            .string()
+                            .valid("text", "longtext", "multiplechoice", "rating")
+                            .required(),
                         options: joi.array(),
                         min: joi.number(),
                         max: joi.number(),
                         required: joi.boolean(),
-                    })
+                    }),
                 }),
             )
             .required(),
@@ -162,10 +168,26 @@ const generateQuestionsUsingAI = async (req, res) => {
     }
 };
 
+const getFeedbackResponses = async (req, res) => {
+    try {
+        const feedback = await feedbackService.getFeedbackResponses(req.params.id);
+
+        logger.info("Feedback responses fetched successfully");
+        return res.status(200).json({
+            message: "Feedback responses fetched successfully",
+            data: feedback,
+            success: true,
+        });
+    } catch (error) {
+        logger.error(error);
+        handleError(res, error);
+    }
+};
+
 const submitFeedback = async (req, res) => {
     const schema = joi.object({
         feedbackId: joi.string().required(),
-        responses: joi.object().required()
+        responses: joi.object().required(),
     });
 
     try {
@@ -193,5 +215,6 @@ export default {
     updateFeedback,
     deleteFeedback,
     generateQuestionsUsingAI,
-    submitFeedback
+    submitFeedback,
+    getFeedbackResponses,
 };
