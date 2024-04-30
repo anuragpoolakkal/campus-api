@@ -37,7 +37,7 @@ const getFeedbackResponses = async (feedbackId) => {
 
     const feedback = await feedbackModel.findById(feedbackId);
 
-    for (const questionId of feedbackResponse.responses) {
+    for (const questionId of Object.keys(feedbackResponse.responses)) {
         const question = feedback.questions.find((q) => q._id == questionId);
         questions[question.question] = feedbackResponse.responses[questionId];
     }
