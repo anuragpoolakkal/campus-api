@@ -14,7 +14,7 @@ router.post(
     validateUser,
     feedbackController.generateQuestionsUsingAI,
 );
-router.get("/responses/:id", validateUser, feedbackController.getFeedbackResponses);
+router.get("/responses/:id", feedbackController.getFeedbackResponses);
 router.post("/submit", validateStudent, feedbackController.submitFeedback);
 
 export default router;

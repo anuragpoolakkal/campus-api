@@ -27,9 +27,9 @@ const getAllByCourseId = async (courseId) => {
 };
 
 const getFeedbackResponses = async (feedbackId) => {
-    const feedbackResponse = await feedbackResponseModel.findOne({ feedbackId: feedbackId });
+    const feedbackResponses = await feedbackResponseModel.find({ feedbackId: feedbackId }).lean();
 
-    if (!feedbackResponse) {
+    if (!feedbackResponses) {
         throw { status: 404, message: "Feedback not found" };
     }
 
@@ -37,9 +37,26 @@ const getFeedbackResponses = async (feedbackId) => {
 
     const feedback = await feedbackModel.findById(feedbackId);
 
-    for (const questionId of Object.keys(feedbackResponse.responses)) {
-        const question = feedback.questions.find((q) => q._id == questionId);
-        questions[question.question] = feedbackResponse.responses[questionId];
+    for (const response of feedbackResponses) {
+        for (const questionId of Object.keys(response.responses)) {
+            const question = feedback.questions.find((q) => q._id == questionId);
+            if (!question) {
+                continue;
+            }
+
+            const student = await studentModel.findById(response.studentId).lean();
+            if (!student) {
+                throw { status: 404, message: "Student not found" };
+            }
+
+            const studentData = await userModel.findById(student.userId).lean();
+
+            if (!questions[studentData.name]) {
+                questions[studentData.name] = {};
+            }
+
+            questions[studentData.name][question.question] = response.responses[questionId];
+        }
     }
 
     return questions;
