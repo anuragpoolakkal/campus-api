@@ -44,11 +44,9 @@ const getFeedbackResponses = async (feedbackId) => {
                 continue;
             }
 
-            console.log(response.studentId);
 
             const studentData = await userModel.findById(response.studentId).lean();
 
-            console.log(studentData);
 
             if (!studentData) {
                 throw { status: 404, message: "Student not found" };
