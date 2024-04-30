@@ -28,11 +28,21 @@ const getAllByCourseId = async (courseId) => {
 
 const getFeedbackResponses = async (feedbackId) => {
     const feedbackResponse = await feedbackResponseModel.findOne({ feedbackId: feedbackId });
+
     if (!feedbackResponse) {
         throw { status: 404, message: "Feedback not found" };
     }
 
-    return feedbackResponse;
+    let questions = {};
+
+    const feedback = await feedbackModel.findById(feedbackId);
+
+    for (const questionId of feedbackResponse.responses) {
+        const question = feedback.questions.find((q) => q._id == questionId);
+        questions[question.question] = feedbackResponse.responses[questionId];
+    }
+
+    return questions;
 };
 
 const getAllByCollege = async (collegeId) => {
