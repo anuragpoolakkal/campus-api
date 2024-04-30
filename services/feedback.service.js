@@ -44,12 +44,15 @@ const getFeedbackResponses = async (feedbackId) => {
                 continue;
             }
 
-            const student = await studentModel.findById(response.studentId).lean();
-            if (!student) {
+            console.log(response.studentId);
+
+            const studentData = await userModel.findById(response.studentId).lean();
+
+            console.log(studentData);
+
+            if (!studentData) {
                 throw { status: 404, message: "Student not found" };
             }
-
-            const studentData = await userModel.findById(student.userId).lean();
 
             if (!questions[studentData.name]) {
                 questions[studentData.name] = {};

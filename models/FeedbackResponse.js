@@ -1,4 +1,4 @@
-    import mongoose from "mongoose";
+import mongoose from "mongoose";
 
 const FeedbackResponseSchema = new mongoose.Schema(
     {
@@ -8,7 +8,7 @@ const FeedbackResponseSchema = new mongoose.Schema(
         },
         studentId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Student",
+            ref: "User",
         },
         responses: {
             // { "questionId": "response"}
