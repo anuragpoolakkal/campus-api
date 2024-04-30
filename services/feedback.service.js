@@ -33,7 +33,7 @@ const getFeedbackResponses = async (feedbackId) => {
         throw { status: 404, message: "Feedback not found" };
     }
 
-    let questions = {};
+    let questions = [];
 
     const feedback = await feedbackModel.findById(feedbackId);
 
@@ -44,19 +44,21 @@ const getFeedbackResponses = async (feedbackId) => {
                 continue;
             }
 
-
             const studentData = await userModel.findById(response.studentId).lean();
-
 
             if (!studentData) {
                 throw { status: 404, message: "Student not found" };
             }
 
-            if (!questions[studentData.name]) {
-                questions[studentData.name] = {};
-            }
+            questions.push({ [studentData.name]: {} });
 
-            questions[studentData.name][question.question] = response.responses[questionId];
+            questions.forEach((q) => {
+                if (q[studentData.name][question.question]) {
+                    q[studentData.name][question.question].push(response.responses[questionId]);
+                } else {
+                    q[studentData.name][question.question] = [response.responses[questionId]];
+                }
+            });
         }
     }
 
